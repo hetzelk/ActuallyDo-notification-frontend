@@ -130,7 +130,7 @@ A user snoozes their recurring "Water plants" task because they're on vacation. 
 - **FR-011**: Recurrence options MUST be hidden or disabled for tasks without a due date (backlog tasks)
 - **FR-012**: The completion toast for a recurring task MUST indicate when the next occurrence is due (e.g., "Task completed — next due April 1")
 - **FR-013**: System MUST stop generating new occurrences when the recurrence end condition is met (end date passed or repeat count exhausted)
-- **FR-014**: Recurring tasks MUST count toward the free-tier active task limit individually (each occurrence is one task) [NEEDS CLARIFICATION: Should the recurrence feature itself be available on free tier, or gated as a Pro-only feature?]
+- **FR-014**: Recurring tasks MUST count toward the free-tier active task limit individually (each occurrence is one task). The recurrence feature itself is available to all users regardless of tier — the existing 15-task active limit naturally constrains free-tier usage.
 
 ### Key Entities
 
