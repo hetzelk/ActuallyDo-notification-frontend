@@ -83,11 +83,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T034 [P] [US2] Add magic link API functions (requestMagicLink, verifyMagicLink) in src/api/auth.ts
-- [ ] T035 [US2] Create MagicLinkRequestForm component with email field and submit button in src/components/auth/MagicLinkRequestForm.tsx
-- [ ] T036 [US2] Create MagicLinkVerifyForm component with 6-digit code input, auto-submit, resend with 60s cooldown in src/components/auth/MagicLinkVerifyForm.tsx
-- [ ] T037 [US2] Create MagicLinkPage with two-step flow (request → verify), back-to-login link in src/pages/MagicLinkPage.tsx
-- [ ] T038 [US2] Add MSW handlers for POST /platform/auth/magic-link and POST /platform/auth/magic-link/verify in tests/mocks/handlers.ts
+- [X] T034 [P] [US2] Add magic link API functions (requestMagicLink, verifyMagicLink) in src/api/auth.ts
+- [X] T035 [US2] Create MagicLinkRequestForm component with email field and submit button in src/components/auth/MagicLinkRequestForm.tsx
+- [X] T036 [US2] Create MagicLinkVerifyForm component with 6-digit code input, auto-submit, resend with 60s cooldown in src/components/auth/MagicLinkVerifyForm.tsx
+- [X] T037 [US2] Create MagicLinkPage with two-step flow (request → verify), back-to-login link in src/pages/MagicLinkPage.tsx
+- [X] T038 [US2] Add MSW handlers for POST /platform/auth/magic-link and POST /platform/auth/magic-link/verify in tests/mocks/handlers.ts
 
 **Checkpoint**: Full passwordless login flow works end-to-end.
 
