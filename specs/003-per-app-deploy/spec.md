@@ -17,7 +17,7 @@ A developer has finished building a new frontend app (e.g., TuskDue) and wants t
 
 **Acceptance Scenarios**:
 
-1. **Given** a developer has a built frontend app named "tuskdue", **When** they run the infrastructure setup script with "tuskdue" as the app name, **Then** the hosting infrastructure is created with the naming convention `tuskdue.actuallydo.com` and the script outputs the distribution URL and bucket details.
+1. **Given** a developer has a built frontend app named "tuskdue", **When** they run the infrastructure setup script with "tuskdue" as the app name, **Then** the hosting infrastructure is created and the script outputs the distribution URL and bucket details.
 2. **Given** the infrastructure for "tuskdue" has been provisioned, **When** the developer runs the deploy script with "tuskdue", **Then** the app is built, assets are uploaded, the cache is invalidated, and the app is accessible at its URL.
 3. **Given** setup has already been run for "tuskdue", **When** the developer runs the setup script again for "tuskdue", **Then** the script detects existing infrastructure and exits gracefully without duplicating resources.
 
@@ -65,7 +65,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 
 **Acceptance Scenarios**:
 
-1. **Given** a new app "gardendue" has been developed, **When** the developer runs the setup script with "gardendue", **Then** infrastructure is provisioned with the `gardendue.actuallydo.com` naming convention.
+1. **Given** a new app "gardendue" has been developed, **When** the developer runs the setup script with "gardendue", **Then** infrastructure is provisioned following the same pattern as existing apps.
 2. **Given** the new app has been set up, **When** the developer adds the app name to the CI/CD configuration, **Then** automated deployments work for the new app using the same pipeline as existing apps.
 
 ---
@@ -82,7 +82,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 
 ### Functional Requirements
 
-- **FR-001**: The system MUST provide a one-time infrastructure setup command that provisions hosting resources for a named app, following the convention `{app-name}.actuallydo.com`.
+- **FR-001**: The system MUST provide a one-time infrastructure setup command that provisions hosting resources for a named app, with the app's custom domain configured via its environment configuration.
 - **FR-002**: The system MUST provide a deploy command that builds a specified app, uploads built assets to the app's hosting, and invalidates the content cache.
 - **FR-003**: The deploy command MUST apply long-lived cache headers (1 year) to hashed/fingerprinted assets and short-lived cache headers (5 minutes) to the root HTML document.
 - **FR-004**: The deploy command MUST exit with a non-zero status and a clear error message if the build fails, without modifying the currently deployed version.
@@ -114,7 +114,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 
 ## Assumptions
 
-- The domain `actuallydo.com` is owned and DNS is managed by the team, allowing subdomain creation for each app.
+- Each app has its own independent domain (e.g., `tuskdue.com`, `wrenchdue.com`) with DNS managed by the team.
 - Cloud provider credentials are available as secrets in the CI/CD environment and on developer machines (for manual deploys).
 - Each app has its own Vite build configuration or entry point that can be built independently.
 - The repository structure will evolve to support per-app source directories (or per-app build configs) as new apps are added.

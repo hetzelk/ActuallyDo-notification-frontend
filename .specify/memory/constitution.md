@@ -1,7 +1,7 @@
 <!--
 Sync Impact Report
 - Version change: 1.0.0 → 1.1.0
-- Modified principles: None
+- Modified principles: None (VII updated same session to fix domain model)
 - Added sections: Core Principles VII (Per-App Deployment)
 - Removed sections: None
 - Templates requiring updates:
@@ -41,7 +41,7 @@ Every API call MUST handle loading, success, and error states. Loading states MU
 
 ### VII. Per-App Deployment
 
-This repository hosts multiple frontend apps (TuskDue, WrenchDue, and future niche apps). Each app MUST be independently deployable to its own hosting infrastructure. App names MUST map to infrastructure using the convention `{app-name}.actuallydo.com`. All deployments MUST go through version-controlled scripts or CI/CD pipelines — no manual console uploads. Hashed/fingerprinted assets MUST use long-lived cache headers (1 year); root HTML documents MUST use short-lived cache headers (5 minutes). Deploying one app MUST NOT affect any other app's availability, cache, or configuration. Environment configuration MUST use `VITE_*` environment variables per app — no hardcoded values. App names MUST contain only lowercase alphanumeric characters and hyphens. Setup scripts MUST be idempotent — re-running for an existing app MUST NOT create duplicate resources.
+This repository hosts multiple frontend apps (TuskDue, WrenchDue, and future niche apps). Each app MUST be independently deployable to its own hosting infrastructure and its own domain (e.g., `tuskdue.com`, `wrenchdue.com`). Each app's domain MUST be configured as part of its environment configuration. All deployments MUST go through version-controlled scripts or CI/CD pipelines — no manual console uploads. Hashed/fingerprinted assets MUST use long-lived cache headers (1 year); root HTML documents MUST use short-lived cache headers (5 minutes). Deploying one app MUST NOT affect any other app's availability, cache, or configuration. Environment configuration MUST use `VITE_*` environment variables per app — no hardcoded values. App names MUST contain only lowercase alphanumeric characters and hyphens. Setup scripts MUST be idempotent — re-running for an existing app MUST NOT create duplicate resources.
 
 ## Tech Stack Constraints
 
