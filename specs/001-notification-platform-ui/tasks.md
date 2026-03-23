@@ -13,15 +13,15 @@
 
 **Purpose**: Project initialization and tooling
 
-- [ ] T001 Initialize Vite 6 + React 19 + TypeScript project in repository root
-- [ ] T002 Install and configure Tailwind CSS v4 via `@tailwindcss/vite` plugin in vite.config.ts
-- [ ] T003 [P] Install shadcn/ui and add base components (Button, Input, Dialog, Dropdown, Tabs, Toast, Skeleton) in src/components/ui/
-- [ ] T004 [P] Install and configure React Router v7 with route definitions in src/App.tsx
-- [ ] T005 [P] Install and configure TanStack Query v5 with QueryClientProvider in src/App.tsx
-- [ ] T006 [P] Install React Hook Form + Zod + date-fns + Lucide React dependencies
-- [ ] T007 [P] Create .env.example with VITE_API_BASE, VITE_STRIPE_PK, VITE_VAPID_PUBLIC_KEY, VITE_APP_URL
-- [ ] T008 [P] Configure Vitest + Testing Library in vitest.config.ts and test setup file
-- [ ] T009 [P] Configure ESLint + Prettier for TypeScript + React
+- [x] T001 Initialize Vite 6 + React 19 + TypeScript project in repository root
+- [x] T002 Install and configure Tailwind CSS v4 via `@tailwindcss/vite` plugin in vite.config.ts
+- [x] T003 [P] Install shadcn/ui and add base components (Button, Input, Dialog, Dropdown, Tabs, Toast, Skeleton) in src/components/ui/
+- [x] T004 [P] Install and configure React Router v7 with route definitions in src/App.tsx
+- [x] T005 [P] Install and configure TanStack Query v5 with QueryClientProvider in src/App.tsx
+- [x] T006 [P] Install React Hook Form + Zod + date-fns + Lucide React dependencies
+- [x] T007 [P] Create .env.example with VITE_API_BASE, VITE_STRIPE_PK, VITE_VAPID_PUBLIC_KEY, VITE_APP_URL
+- [x] T008 [P] Configure Vitest + Testing Library in vitest.config.ts and test setup file
+- [x] T009 [P] Configure ESLint + Prettier for TypeScript + React
 
 **Checkpoint**: Dev server runs, all tooling configured, empty shell renders.
 
@@ -33,21 +33,21 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T010 Create typed API fetch wrapper with auth headers, JSON parsing, and error handling in src/api/client.ts
-- [ ] T011 [P] Define all shared TypeScript interfaces (AuthTokens, AuthState, PlatformSettings, AppSettings, ApiError) in src/lib/types.ts
-- [ ] T012 [P] Define TuskDue types (Task, TaskListResponse, CreateTaskRequest, UpdateTaskRequest, SnoozeRequest, ActivateRequest) in src/lib/types.ts
-- [ ] T013 [P] Define WrenchDue types (Vehicle, MaintenanceItem, MaintenanceLogEntry, CreateVehicleRequest, LogCompletionRequest, UpdateMileageRequest) in src/lib/types.ts
-- [ ] T014 [P] Create constants file with API_BASE, BREAKPOINTS, SNOOZE_OPTIONS, TIER_LIMITS in src/lib/constants.ts
-- [ ] T015 [P] Create utility functions (formatRelativeDate, formatDate, calculateEstimatedMileage, getTaskGroup) in src/lib/utils.ts
-- [ ] T016 Create AuthContext provider with token storage, login/logout, silent refresh logic in src/context/auth-context.tsx
-- [ ] T017 Create ToastContext provider with toast queue, auto-dismiss, and toast types in src/context/toast-context.tsx
-- [ ] T018 Create useAuth hook consuming AuthContext in src/hooks/use-auth.ts
-- [ ] T019 [P] Create useToast hook consuming ToastContext in src/hooks/use-toast.ts
-- [ ] T020 Create ProtectedRoute component that redirects to /login if unauthenticated in src/components/auth/ProtectedRoute.tsx
-- [ ] T021 Create Shell layout component with Navbar placeholder and PageContainer in src/components/layout/Shell.tsx
-- [ ] T022 Wire up React Router with public routes (/login, /signup, /login/magic-link, /action-result) and authenticated layout route wrapping protected routes in src/App.tsx
-- [ ] T023 [P] Set up MSW with base request handlers for auth endpoints in tests/mocks/handlers.ts
-- [ ] T024 [P] Create Toast UI component (top-right positioned, success/error/info/warning variants, auto-dismiss) in src/components/ui/Toast.tsx
+- [x] T010 Create typed API fetch wrapper with auth headers, JSON parsing, and error handling in src/api/client.ts
+- [x] T011 [P] Define all shared TypeScript interfaces (AuthTokens, AuthState, PlatformSettings, AppSettings, ApiError) in src/lib/types.ts
+- [x] T012 [P] Define TuskDue types (Task, TaskListResponse, CreateTaskRequest, UpdateTaskRequest, SnoozeRequest, ActivateRequest) in src/lib/types.ts
+- [x] T013 [P] Define WrenchDue types (Vehicle, MaintenanceItem, MaintenanceLogEntry, CreateVehicleRequest, LogCompletionRequest, UpdateMileageRequest) in src/lib/types.ts
+- [x] T014 [P] Create constants file with API_BASE, BREAKPOINTS, SNOOZE_OPTIONS, TIER_LIMITS in src/lib/constants.ts
+- [x] T015 [P] Create utility functions (formatRelativeDate, formatDate, calculateEstimatedMileage, getTaskGroup) in src/lib/utils.ts
+- [x] T016 Create AuthContext provider with token storage, login/logout, silent refresh logic in src/context/auth-context.tsx
+- [x] T017 Create ToastContext provider with toast queue, auto-dismiss, and toast types in src/context/toast-context.tsx
+- [x] T018 Create useAuth hook consuming AuthContext in src/hooks/use-auth.ts
+- [x] T019 [P] Create useToast hook consuming ToastContext in src/hooks/use-toast.ts
+- [x] T020 Create ProtectedRoute component that redirects to /login if unauthenticated in src/components/auth/ProtectedRoute.tsx
+- [x] T021 Create Shell layout component with Navbar placeholder and PageContainer in src/components/layout/Shell.tsx
+- [x] T022 Wire up React Router with public routes (/login, /signup, /login/magic-link, /action-result) and authenticated layout route wrapping protected routes in src/App.tsx
+- [x] T023 [P] Set up MSW with base request handlers for auth endpoints in tests/mocks/handlers.ts
+- [x] T024 [P] Create Toast UI component (top-right positioned, success/error/info/warning variants, auto-dismiss) in src/components/ui/Toast.tsx
 
 **Checkpoint**: Foundation ready — auth context works, API client configured, routing in place, types defined.
 
@@ -61,15 +61,15 @@
 
 ### Implementation for User Story 1
 
-- [ ] T025 [P] [US1] Create auth API functions (signup, login, refreshToken) in src/api/auth.ts
-- [ ] T026 [P] [US1] Create Zod schemas for login form (email, password) and signup form (email, password, confirmPassword) in src/lib/schemas.ts
-- [ ] T027 [US1] Create LoginForm component with email/password fields, validation, error states, loading spinner in src/components/auth/LoginForm.tsx
-- [ ] T028 [US1] Create SignupForm component with email/password/confirm fields, validation, error states in src/components/auth/SignupForm.tsx
-- [ ] T029 [US1] Create LoginPage with centered card layout, LoginForm, links to signup and magic link in src/pages/LoginPage.tsx
-- [ ] T030 [US1] Create SignupPage with centered card layout, SignupForm, link to login in src/pages/SignupPage.tsx
-- [ ] T031 [US1] Implement post-signup auto-login flow in SignupForm (call login after successful signup, store tokens, redirect to dashboard)
-- [ ] T032 [US1] Create a minimal TuskDue DashboardPage placeholder (authenticated landing page) in src/pages/tuskdue/DashboardPage.tsx
-- [ ] T033 [US1] Add MSW handlers for POST /platform/auth/signup and POST /platform/auth/login in tests/mocks/handlers.ts
+- [x] T025 [P] [US1] Create auth API functions (signup, login, refreshToken) in src/api/auth.ts
+- [x] T026 [P] [US1] Create Zod schemas for login form (email, password) and signup form (email, password, confirmPassword) in src/lib/schemas.ts
+- [x] T027 [US1] Create LoginForm component with email/password fields, validation, error states, loading spinner in src/components/auth/LoginForm.tsx
+- [x] T028 [US1] Create SignupForm component with email/password/confirm fields, validation, error states in src/components/auth/SignupForm.tsx
+- [x] T029 [US1] Create LoginPage with centered card layout, LoginForm, links to signup and magic link in src/pages/LoginPage.tsx
+- [x] T030 [US1] Create SignupPage with centered card layout, SignupForm, link to login in src/pages/SignupPage.tsx
+- [x] T031 [US1] Implement post-signup auto-login flow in SignupForm (call login after successful signup, store tokens, redirect to dashboard)
+- [x] T032 [US1] Create a minimal TuskDue DashboardPage placeholder (authenticated landing page) in src/pages/tuskdue/DashboardPage.tsx
+- [x] T033 [US1] Add MSW handlers for POST /platform/auth/signup and POST /platform/auth/login in tests/mocks/handlers.ts
 
 **Checkpoint**: User can sign up, auto-login, and land on authenticated dashboard. Can log in with existing credentials. Token refresh works silently.
 
