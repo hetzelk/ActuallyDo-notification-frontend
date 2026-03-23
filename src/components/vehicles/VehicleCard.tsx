@@ -68,11 +68,11 @@ export function VehicleCard({ vehicle, onUpdateMileage, onViewDetails }: Vehicle
           )}
         </div>
 
-        <div className="flex items-center justify-between pt-1">
-          <Button variant="outline" size="sm" onClick={() => onUpdateMileage(vehicle)}>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-1">
+          <Button variant="outline" size="default" className="sm:h-7 sm:text-[0.8rem] sm:px-2.5" onClick={() => onUpdateMileage(vehicle)}>
             Update mileage
           </Button>
-          <Button variant="ghost" size="sm" onClick={() => onViewDetails(vehicle.vehicle_id)}>
+          <Button variant="ghost" size="default" className="sm:h-7 sm:text-[0.8rem] sm:px-2.5" onClick={() => onViewDetails(vehicle.vehicle_id)}>
             View details →
           </Button>
         </div>

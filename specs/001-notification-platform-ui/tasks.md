@@ -298,14 +298,14 @@
 
 **Purpose**: Navigation, app switching, responsive refinements, keyboard shortcuts
 
-- [ ] T110 Build Navbar component with app logo (links to dashboard), settings gear icon, user dropdown (Settings, Switch App, Sign Out) in src/components/layout/Navbar.tsx
-- [ ] T111 Create AppSwitcher component showing enabled apps with icons, current app highlighted in src/components/layout/AppSwitcher.tsx
-- [ ] T112 Wire Navbar and AppSwitcher into Shell layout
-- [ ] T113 Add keyboard shortcuts for TuskDue desktop: "n" (new task), Esc (close modal), 1/2/3 (switch tabs), "?" (help) in src/hooks/use-keyboard-shortcuts.ts
-- [ ] T114 [P] Responsive pass — verify all pages at 640/768/1024px breakpoints, fix any overflow or touch target issues
-- [ ] T115 [P] Add dark mode support via Tailwind dark: variant with system preference detection
-- [ ] T116 [P] Lazy-load settings, task detail, and WrenchDue pages via React.lazy() in src/App.tsx
-- [ ] T117 Run quickstart.md verification checklist (dev server, signup/login, routing, tests, typecheck, build size)
+- [x] T110 Build Navbar component with app logo (links to dashboard), settings gear icon, user dropdown (Settings, Switch App, Sign Out) in src/components/layout/Navbar.tsx
+- [x] T111 Create AppSwitcher component showing enabled apps with icons, current app highlighted in src/components/layout/AppSwitcher.tsx
+- [x] T112 Wire Navbar and AppSwitcher into Shell layout
+- [x] T113 Add keyboard shortcuts for TuskDue desktop: "n" (new task), Esc (close modal), 1/2/3 (switch tabs), "?" (help) in src/hooks/use-keyboard-shortcuts.ts
+- [x] T114 [P] Responsive pass — verify all pages at 640/768/1024px breakpoints, fix any overflow or touch target issues
+- [x] T115 [P] Add dark mode support via Tailwind dark: variant with system preference detection
+- [x] T116 [P] Lazy-load settings, task detail, and WrenchDue pages via React.lazy() in src/App.tsx
+- [x] T117 Run quickstart.md verification checklist (dev server, signup/login, routing, tests, typecheck, build size)
 
 ---
 

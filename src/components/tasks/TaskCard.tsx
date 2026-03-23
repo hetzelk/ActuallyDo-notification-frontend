@@ -67,10 +67,11 @@ export function TaskCard({ task, onComplete, onSnooze, isPro }: TaskCardProps) {
       </div>
 
       {!isSnoozed && (
-        <div className="flex gap-2 mt-3 ml-8" onClick={(e) => e.stopPropagation()}>
+        <div className="flex gap-2 mt-3 ml-0 sm:ml-8" onClick={(e) => e.stopPropagation()}>
           <Button
             variant="outline"
-            size="sm"
+            size="default"
+            className="sm:h-7 sm:text-[0.8rem] sm:px-2.5"
             onClick={() => onComplete(task.task_id)}
           >
             <Check className="mr-1 h-3.5 w-3.5" />
