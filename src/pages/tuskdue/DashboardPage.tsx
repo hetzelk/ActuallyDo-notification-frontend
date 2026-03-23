@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus, ListTodo, Inbox, CheckSquare } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast'
 import { ApiRequestError } from '@/api/client'
 import { FREE_TIER_LIMITS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
 import type { CreateTaskRequest } from '@/lib/types'
 
 export function DashboardPage() {
@@ -75,6 +76,9 @@ export function DashboardPage() {
       }
     },
   })
+
+  const handleNewTask = useCallback(() => setShowAddTask(true), [])
+  useKeyboardShortcuts({ onNewTask: handleNewTask, onSwitchTab: setActiveTab })
 
   const activeCount = activeTasks.data?.data.count ?? 0
   const backlogCount = backlogTasks.data?.data.count ?? 0

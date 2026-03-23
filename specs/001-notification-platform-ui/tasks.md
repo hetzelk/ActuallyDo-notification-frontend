@@ -13,15 +13,15 @@
 
 **Purpose**: Project initialization and tooling
 
-- [ ] T001 Initialize Vite 6 + React 19 + TypeScript project in repository root
-- [ ] T002 Install and configure Tailwind CSS v4 via `@tailwindcss/vite` plugin in vite.config.ts
-- [ ] T003 [P] Install shadcn/ui and add base components (Button, Input, Dialog, Dropdown, Tabs, Toast, Skeleton) in src/components/ui/
-- [ ] T004 [P] Install and configure React Router v7 with route definitions in src/App.tsx
-- [ ] T005 [P] Install and configure TanStack Query v5 with QueryClientProvider in src/App.tsx
-- [ ] T006 [P] Install React Hook Form + Zod + date-fns + Lucide React dependencies
-- [ ] T007 [P] Create .env.example with VITE_API_BASE, VITE_STRIPE_PK, VITE_VAPID_PUBLIC_KEY, VITE_APP_URL
-- [ ] T008 [P] Configure Vitest + Testing Library in vitest.config.ts and test setup file
-- [ ] T009 [P] Configure ESLint + Prettier for TypeScript + React
+- [x] T001 Initialize Vite 6 + React 19 + TypeScript project in repository root
+- [x] T002 Install and configure Tailwind CSS v4 via `@tailwindcss/vite` plugin in vite.config.ts
+- [x] T003 [P] Install shadcn/ui and add base components (Button, Input, Dialog, Dropdown, Tabs, Toast, Skeleton) in src/components/ui/
+- [x] T004 [P] Install and configure React Router v7 with route definitions in src/App.tsx
+- [x] T005 [P] Install and configure TanStack Query v5 with QueryClientProvider in src/App.tsx
+- [x] T006 [P] Install React Hook Form + Zod + date-fns + Lucide React dependencies
+- [x] T007 [P] Create .env.example with VITE_API_BASE, VITE_STRIPE_PK, VITE_VAPID_PUBLIC_KEY, VITE_APP_URL
+- [x] T008 [P] Configure Vitest + Testing Library in vitest.config.ts and test setup file
+- [x] T009 [P] Configure ESLint + Prettier for TypeScript + React
 
 **Checkpoint**: Dev server runs, all tooling configured, empty shell renders.
 
@@ -33,21 +33,21 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T010 Create typed API fetch wrapper with auth headers, JSON parsing, and error handling in src/api/client.ts
-- [ ] T011 [P] Define all shared TypeScript interfaces (AuthTokens, AuthState, PlatformSettings, AppSettings, ApiError) in src/lib/types.ts
-- [ ] T012 [P] Define TuskDue types (Task, TaskListResponse, CreateTaskRequest, UpdateTaskRequest, SnoozeRequest, ActivateRequest) in src/lib/types.ts
-- [ ] T013 [P] Define WrenchDue types (Vehicle, MaintenanceItem, MaintenanceLogEntry, CreateVehicleRequest, LogCompletionRequest, UpdateMileageRequest) in src/lib/types.ts
-- [ ] T014 [P] Create constants file with API_BASE, BREAKPOINTS, SNOOZE_OPTIONS, TIER_LIMITS in src/lib/constants.ts
-- [ ] T015 [P] Create utility functions (formatRelativeDate, formatDate, calculateEstimatedMileage, getTaskGroup) in src/lib/utils.ts
-- [ ] T016 Create AuthContext provider with token storage, login/logout, silent refresh logic in src/context/auth-context.tsx
-- [ ] T017 Create ToastContext provider with toast queue, auto-dismiss, and toast types in src/context/toast-context.tsx
-- [ ] T018 Create useAuth hook consuming AuthContext in src/hooks/use-auth.ts
-- [ ] T019 [P] Create useToast hook consuming ToastContext in src/hooks/use-toast.ts
-- [ ] T020 Create ProtectedRoute component that redirects to /login if unauthenticated in src/components/auth/ProtectedRoute.tsx
-- [ ] T021 Create Shell layout component with Navbar placeholder and PageContainer in src/components/layout/Shell.tsx
-- [ ] T022 Wire up React Router with public routes (/login, /signup, /login/magic-link, /action-result) and authenticated layout route wrapping protected routes in src/App.tsx
-- [ ] T023 [P] Set up MSW with base request handlers for auth endpoints in tests/mocks/handlers.ts
-- [ ] T024 [P] Create Toast UI component (top-right positioned, success/error/info/warning variants, auto-dismiss) in src/components/ui/Toast.tsx
+- [x] T010 Create typed API fetch wrapper with auth headers, JSON parsing, and error handling in src/api/client.ts
+- [x] T011 [P] Define all shared TypeScript interfaces (AuthTokens, AuthState, PlatformSettings, AppSettings, ApiError) in src/lib/types.ts
+- [x] T012 [P] Define TuskDue types (Task, TaskListResponse, CreateTaskRequest, UpdateTaskRequest, SnoozeRequest, ActivateRequest) in src/lib/types.ts
+- [x] T013 [P] Define WrenchDue types (Vehicle, MaintenanceItem, MaintenanceLogEntry, CreateVehicleRequest, LogCompletionRequest, UpdateMileageRequest) in src/lib/types.ts
+- [x] T014 [P] Create constants file with API_BASE, BREAKPOINTS, SNOOZE_OPTIONS, TIER_LIMITS in src/lib/constants.ts
+- [x] T015 [P] Create utility functions (formatRelativeDate, formatDate, calculateEstimatedMileage, getTaskGroup) in src/lib/utils.ts
+- [x] T016 Create AuthContext provider with token storage, login/logout, silent refresh logic in src/context/auth-context.tsx
+- [x] T017 Create ToastContext provider with toast queue, auto-dismiss, and toast types in src/context/toast-context.tsx
+- [x] T018 Create useAuth hook consuming AuthContext in src/hooks/use-auth.ts
+- [x] T019 [P] Create useToast hook consuming ToastContext in src/hooks/use-toast.ts
+- [x] T020 Create ProtectedRoute component that redirects to /login if unauthenticated in src/components/auth/ProtectedRoute.tsx
+- [x] T021 Create Shell layout component with Navbar placeholder and PageContainer in src/components/layout/Shell.tsx
+- [x] T022 Wire up React Router with public routes (/login, /signup, /login/magic-link, /action-result) and authenticated layout route wrapping protected routes in src/App.tsx
+- [x] T023 [P] Set up MSW with base request handlers for auth endpoints in tests/mocks/handlers.ts
+- [x] T024 [P] Create Toast UI component (top-right positioned, success/error/info/warning variants, auto-dismiss) in src/components/ui/Toast.tsx
 
 **Checkpoint**: Foundation ready — auth context works, API client configured, routing in place, types defined.
 
@@ -61,15 +61,15 @@
 
 ### Implementation for User Story 1
 
-- [ ] T025 [P] [US1] Create auth API functions (signup, login, refreshToken) in src/api/auth.ts
-- [ ] T026 [P] [US1] Create Zod schemas for login form (email, password) and signup form (email, password, confirmPassword) in src/lib/schemas.ts
-- [ ] T027 [US1] Create LoginForm component with email/password fields, validation, error states, loading spinner in src/components/auth/LoginForm.tsx
-- [ ] T028 [US1] Create SignupForm component with email/password/confirm fields, validation, error states in src/components/auth/SignupForm.tsx
-- [ ] T029 [US1] Create LoginPage with centered card layout, LoginForm, links to signup and magic link in src/pages/LoginPage.tsx
-- [ ] T030 [US1] Create SignupPage with centered card layout, SignupForm, link to login in src/pages/SignupPage.tsx
-- [ ] T031 [US1] Implement post-signup auto-login flow in SignupForm (call login after successful signup, store tokens, redirect to dashboard)
-- [ ] T032 [US1] Create a minimal TuskDue DashboardPage placeholder (authenticated landing page) in src/pages/tuskdue/DashboardPage.tsx
-- [ ] T033 [US1] Add MSW handlers for POST /platform/auth/signup and POST /platform/auth/login in tests/mocks/handlers.ts
+- [x] T025 [P] [US1] Create auth API functions (signup, login, refreshToken) in src/api/auth.ts
+- [x] T026 [P] [US1] Create Zod schemas for login form (email, password) and signup form (email, password, confirmPassword) in src/lib/schemas.ts
+- [x] T027 [US1] Create LoginForm component with email/password fields, validation, error states, loading spinner in src/components/auth/LoginForm.tsx
+- [x] T028 [US1] Create SignupForm component with email/password/confirm fields, validation, error states in src/components/auth/SignupForm.tsx
+- [x] T029 [US1] Create LoginPage with centered card layout, LoginForm, links to signup and magic link in src/pages/LoginPage.tsx
+- [x] T030 [US1] Create SignupPage with centered card layout, SignupForm, link to login in src/pages/SignupPage.tsx
+- [x] T031 [US1] Implement post-signup auto-login flow in SignupForm (call login after successful signup, store tokens, redirect to dashboard)
+- [x] T032 [US1] Create a minimal TuskDue DashboardPage placeholder (authenticated landing page) in src/pages/tuskdue/DashboardPage.tsx
+- [x] T033 [US1] Add MSW handlers for POST /platform/auth/signup and POST /platform/auth/login in tests/mocks/handlers.ts
 
 **Checkpoint**: User can sign up, auto-login, and land on authenticated dashboard. Can log in with existing credentials. Token refresh works silently.
 
@@ -188,10 +188,10 @@
 
 ### Implementation for User Story 7
 
-- [ ] T074 [US7] Install @stripe/stripe-js and create Stripe checkout helper with price IDs and metadata in src/lib/stripe.ts
-- [ ] T075 [US7] Wire pricing buttons in SubscriptionSection to Stripe redirectToCheckout with user_id and app_id metadata
-- [ ] T076 [US7] Handle ?payment=success return URL in SettingsPage — re-fetch settings after 2-3s delay to reflect tier update
-- [ ] T077 [US7] Handle ?payment=cancelled return URL in SettingsPage — show info toast, no action needed
+- [x] T074 [US7] Install @stripe/stripe-js and create Stripe checkout helper with price IDs and metadata in src/lib/stripe.ts
+- [x] T075 [US7] Wire pricing buttons in SubscriptionSection to Stripe redirectToCheckout with user_id and app_id metadata
+- [x] T076 [US7] Handle ?payment=success return URL in SettingsPage — re-fetch settings after 2-3s delay to reflect tier update
+- [x] T077 [US7] Handle ?payment=cancelled return URL in SettingsPage — show info toast, no action needed
 
 **Checkpoint**: Full payment flow works — upgrade, return, tier updated.
 
@@ -223,16 +223,16 @@
 
 ### Implementation for User Story 9
 
-- [ ] T083 [P] [US9] Create WrenchDue vehicle API functions (listVehicles, createVehicle, getVehicle, updateVehicle, deleteVehicle, updateMileage) in src/api/wrenchdue.ts
-- [ ] T084 [P] [US9] Create useVehicles hook with TanStack Query for vehicle list in src/hooks/use-vehicles.ts
-- [ ] T085 [P] [US9] Create Zod schemas for add-vehicle form and mileage update form in src/lib/schemas.ts
-- [ ] T086 [US9] Create VehicleCard component with name, estimated mileage, status summary (overdue/coming up/all clear), update mileage and view details buttons in src/components/vehicles/VehicleCard.tsx
-- [ ] T087 [US9] Create VehicleList component rendering VehicleCard array in src/components/vehicles/VehicleList.tsx
-- [ ] T088 [US9] Create AddVehicleForm component with year, make, model, nickname, odometer, weekly miles fields in src/components/vehicles/AddVehicleForm.tsx
-- [ ] T089 [US9] Create MileageCheckInModal with odometer input (pre-filled estimate), optional weekly estimate update in src/components/vehicles/MileageCheckInModal.tsx
-- [ ] T090 [US9] Build WrenchDue DashboardPage with vehicle list, add vehicle button (with free-tier lock), empty state in src/pages/wrenchdue/DashboardPage.tsx
-- [ ] T091 [US9] Build AddVehiclePage with AddVehicleForm, redirect to vehicle detail on success in src/pages/wrenchdue/AddVehiclePage.tsx
-- [ ] T092 [US9] Add MSW handlers for all WrenchDue vehicle endpoints in tests/mocks/handlers.ts
+- [x] T083 [P] [US9] Create WrenchDue vehicle API functions (listVehicles, createVehicle, getVehicle, updateVehicle, deleteVehicle, updateMileage) in src/api/wrenchdue.ts
+- [x] T084 [P] [US9] Create useVehicles hook with TanStack Query for vehicle list in src/hooks/use-vehicles.ts
+- [x] T085 [P] [US9] Create Zod schemas for add-vehicle form and mileage update form in src/lib/schemas.ts
+- [x] T086 [US9] Create VehicleCard component with name, estimated mileage, status summary (overdue/coming up/all clear), update mileage and view details buttons in src/components/vehicles/VehicleCard.tsx
+- [x] T087 [US9] Create VehicleList component rendering VehicleCard array in src/components/vehicles/VehicleList.tsx
+- [x] T088 [US9] Create AddVehicleForm component with year, make, model, nickname, odometer, weekly miles fields in src/components/vehicles/AddVehicleForm.tsx
+- [x] T089 [US9] Create MileageCheckInModal with odometer input (pre-filled estimate), optional weekly estimate update in src/components/vehicles/MileageCheckInModal.tsx
+- [x] T090 [US9] Build WrenchDue DashboardPage with vehicle list, add vehicle button (with free-tier lock), empty state in src/pages/wrenchdue/DashboardPage.tsx
+- [x] T091 [US9] Build AddVehiclePage with AddVehicleForm, redirect to vehicle detail on success in src/pages/wrenchdue/AddVehiclePage.tsx
+- [x] T092 [US9] Add MSW handlers for all WrenchDue vehicle endpoints in tests/mocks/handlers.ts
 
 **Checkpoint**: Vehicle dashboard works — list, add, update mileage.
 
@@ -246,15 +246,15 @@
 
 ### Implementation for User Story 10
 
-- [ ] T093 [P] [US10] Add maintenance API functions (listItems, createItem, updateItem, deleteItem, logCompletion, getLog) to src/api/wrenchdue.ts
-- [ ] T094 [P] [US10] Create useVehicle hook for single vehicle + items fetch in src/hooks/use-vehicle.ts
-- [ ] T095 [US10] Create MaintenanceItem component with name, last completed line, interval line, "Log as done" button, overflow menu in src/components/maintenance/MaintenanceItem.tsx
-- [ ] T096 [US10] Create MaintenanceList component grouping items by urgency (Overdue/Coming Up/All Clear) with section headers in src/components/maintenance/MaintenanceList.tsx
-- [ ] T097 [US10] Create CompletionForm modal with date, mileage, cost (Pro only), shop (Pro only), notes in src/components/maintenance/CompletionForm.tsx
-- [ ] T098 [US10] Create MaintenanceHistory component with log entries (date, item, mileage, cost/shop for Pro) in src/components/maintenance/MaintenanceHistory.tsx
-- [ ] T099 [US10] Build VehicleDetailPage with vehicle header, maintenance tabs (Active/History), stale mileage warning, edit vehicle link in src/pages/wrenchdue/VehicleDetailPage.tsx
-- [ ] T100 [US10] Add routes for /wrenchdue, /wrenchdue/vehicles/new, /wrenchdue/vehicles/:id in src/App.tsx
-- [ ] T101 [US10] Add MSW handlers for maintenance item and log endpoints in tests/mocks/handlers.ts
+- [x] T093 [P] [US10] Add maintenance API functions (listItems, createItem, updateItem, deleteItem, logCompletion, getLog) to src/api/wrenchdue.ts
+- [x] T094 [P] [US10] Create useVehicle hook for single vehicle + items fetch in src/hooks/use-vehicle.ts
+- [x] T095 [US10] Create MaintenanceItem component with name, last completed line, interval line, "Log as done" button, overflow menu in src/components/maintenance/MaintenanceItem.tsx
+- [x] T096 [US10] Create MaintenanceList component grouping items by urgency (Overdue/Coming Up/All Clear) with section headers in src/components/maintenance/MaintenanceList.tsx
+- [x] T097 [US10] Create CompletionForm modal with date, mileage, cost (Pro only), shop (Pro only), notes in src/components/maintenance/CompletionForm.tsx
+- [x] T098 [US10] Create MaintenanceHistory component with log entries (date, item, mileage, cost/shop for Pro) in src/components/maintenance/MaintenanceHistory.tsx
+- [x] T099 [US10] Build VehicleDetailPage with vehicle header, maintenance tabs (Active/History), stale mileage warning, edit vehicle link in src/pages/wrenchdue/VehicleDetailPage.tsx
+- [x] T100 [US10] Add routes for /wrenchdue, /wrenchdue/vehicles/new, /wrenchdue/vehicles/:id in src/App.tsx
+- [x] T101 [US10] Add MSW handlers for maintenance item and log endpoints in tests/mocks/handlers.ts
 
 **Checkpoint**: Full vehicle detail with maintenance tracking — view items, log completions, view history.
 
@@ -268,10 +268,10 @@
 
 ### Implementation for User Story 11
 
-- [ ] T102 [US11] Create PushNotificationSection component with enable/disable toggle, status indicator, browser-blocked message in src/components/settings/PushNotificationSection.tsx
-- [ ] T103 [US11] Implement push subscription flow — request browser permission, get subscription from service worker, send to backend via PUT /platform/settings
-- [ ] T104 [US11] Implement push unsubscribe flow — unsubscribe from browser, send null push_subscription to backend
-- [ ] T105 [US11] Add PushNotificationSection to SettingsPage
+- [x] T102 [US11] Create PushNotificationSection component with enable/disable toggle, status indicator, browser-blocked message in src/components/settings/PushNotificationSection.tsx
+- [x] T103 [US11] Implement push subscription flow — request browser permission, get subscription from service worker, send to backend via PUT /platform/settings
+- [x] T104 [US11] Implement push unsubscribe flow — unsubscribe from browser, send null push_subscription to backend
+- [x] T105 [US11] Add PushNotificationSection to SettingsPage
 
 **Checkpoint**: Push notification toggle works with browser permission and backend sync.
 
@@ -285,10 +285,10 @@
 
 ### Implementation for User Story 12
 
-- [ ] T106 [US12] Install and configure vite-plugin-pwa in vite.config.ts with manifest, icons, and workbox precaching
-- [ ] T107 [US12] Create service worker with push notification display handler and click-to-open routing
-- [ ] T108 [US12] Create OfflineBanner component shown when navigator.onLine is false in src/components/shared/OfflineBanner.tsx
-- [ ] T109 [US12] Add offline detection to Shell layout, show OfflineBanner when offline
+- [x] T106 [US12] Install and configure vite-plugin-pwa in vite.config.ts with manifest, icons, and workbox precaching
+- [x] T107 [US12] Create service worker with push notification display handler and click-to-open routing
+- [x] T108 [US12] Create OfflineBanner component shown when navigator.onLine is false in src/components/shared/OfflineBanner.tsx
+- [x] T109 [US12] Add offline detection to Shell layout, show OfflineBanner when offline
 
 **Checkpoint**: App installable, shows cached data offline with banner, push notifications display.
 
@@ -298,14 +298,14 @@
 
 **Purpose**: Navigation, app switching, responsive refinements, keyboard shortcuts
 
-- [ ] T110 Build Navbar component with app logo (links to dashboard), settings gear icon, user dropdown (Settings, Switch App, Sign Out) in src/components/layout/Navbar.tsx
-- [ ] T111 Create AppSwitcher component showing enabled apps with icons, current app highlighted in src/components/layout/AppSwitcher.tsx
-- [ ] T112 Wire Navbar and AppSwitcher into Shell layout
-- [ ] T113 Add keyboard shortcuts for TuskDue desktop: "n" (new task), Esc (close modal), 1/2/3 (switch tabs), "?" (help) in src/hooks/use-keyboard-shortcuts.ts
-- [ ] T114 [P] Responsive pass — verify all pages at 640/768/1024px breakpoints, fix any overflow or touch target issues
-- [ ] T115 [P] Add dark mode support via Tailwind dark: variant with system preference detection
-- [ ] T116 [P] Lazy-load settings, task detail, and WrenchDue pages via React.lazy() in src/App.tsx
-- [ ] T117 Run quickstart.md verification checklist (dev server, signup/login, routing, tests, typecheck, build size)
+- [x] T110 Build Navbar component with app logo (links to dashboard), settings gear icon, user dropdown (Settings, Sign Out) in src/components/layout/Navbar.tsx
+- ~~T111 Create AppSwitcher component~~ *(removed — apps are separate deployments, no in-app switching needed)*
+- [x] T112 Wire Navbar into Shell layout
+- [x] T113 Add keyboard shortcuts for TuskDue desktop: "n" (new task), Esc (close modal), 1/2/3 (switch tabs), "?" (help) in src/hooks/use-keyboard-shortcuts.ts
+- [x] T114 [P] Responsive pass — verify all pages at 640/768/1024px breakpoints, fix any overflow or touch target issues
+- [x] T115 [P] Add dark mode support via Tailwind dark: variant with system preference detection
+- [x] T116 [P] Lazy-load settings, task detail, and WrenchDue pages via React.lazy() in src/App.tsx
+- [x] T117 Run quickstart.md verification checklist (dev server, signup/login, routing, tests, typecheck, build size)
 
 ---
 

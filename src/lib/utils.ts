@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { formatDistanceToNow, isToday, isBefore, parseISO, differenceInDays, format } from "date-fns"
-import type { Task, TaskGroup } from "./types"
+import { formatDistanceToNow, isToday, isBefore, parseISO, differenceInDays, differenceInMonths, format } from "date-fns"
+import type { Task, TaskGroup, MaintenanceItem, MaintenanceUrgency } from "./types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -69,4 +69,53 @@ export function calculateEstimatedMileage(
 ): number {
   const daysSinceUpdate = differenceInDays(new Date(), parseISO(lastUpdated))
   return Math.round(currentMileage + (daysSinceUpdate * weeklyEstimate) / 7)
+}
+
+export function getMaintenanceUrgency(
+  item: MaintenanceItem,
+  estimatedMileage: number,
+): MaintenanceUrgency {
+  const now = new Date()
+
+  // Check mileage-based overdue
+  if (item.interval_miles && item.last_completed_mileage !== null) {
+    const nextDueMileage = item.last_completed_mileage + item.interval_miles
+    if (estimatedMileage >= nextDueMileage) return 'overdue'
+  }
+
+  // Check time-based overdue
+  if (item.interval_months && item.last_completed_date) {
+    const monthsSince = differenceInMonths(now, parseISO(item.last_completed_date))
+    if (monthsSince >= item.interval_months) return 'overdue'
+  }
+
+  // Never completed — treat as overdue
+  if (item.last_completed_mileage === null && item.last_completed_date === null) {
+    return 'overdue'
+  }
+
+  // Check if coming up (within 80% of interval)
+  if (item.interval_miles && item.last_completed_mileage !== null) {
+    const nextDueMileage = item.last_completed_mileage + item.interval_miles
+    const threshold = item.last_completed_mileage + item.interval_miles * 0.8
+    if (estimatedMileage >= threshold && estimatedMileage < nextDueMileage) return 'coming-up'
+  }
+
+  if (item.interval_months && item.last_completed_date) {
+    const monthsSince = differenceInMonths(now, parseISO(item.last_completed_date))
+    const threshold = item.interval_months * 0.8
+    if (monthsSince >= threshold && monthsSince < item.interval_months) return 'coming-up'
+  }
+
+  return 'all-clear'
+}
+
+export function getNextDueMileage(item: MaintenanceItem): number | null {
+  if (!item.interval_miles || item.last_completed_mileage === null) return null
+  return item.last_completed_mileage + item.interval_miles
+}
+
+export function getMilesSinceService(item: MaintenanceItem, estimatedMileage: number): number | null {
+  if (item.last_completed_mileage === null) return null
+  return estimatedMileage - item.last_completed_mileage
 }

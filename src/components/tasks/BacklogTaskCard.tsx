@@ -43,7 +43,8 @@ export function BacklogTaskCard({ task, onActivate, onDelete }: BacklogTaskCardP
           <div className="flex gap-2 flex-shrink-0">
             <Button
               variant="outline"
-              size="sm"
+              size="default"
+              className="sm:h-7 sm:text-[0.8rem] sm:px-2.5"
               onClick={() => setShowDatePicker(true)}
             >
               <ArrowRight className="mr-1 h-3.5 w-3.5" />
@@ -51,7 +52,7 @@ export function BacklogTaskCard({ task, onActivate, onDelete }: BacklogTaskCardP
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-8 w-8"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-10 w-10 sm:h-8 sm:w-8"
               >
                 <MoreHorizontal className="h-4 w-4" />
               </DropdownMenuTrigger>
