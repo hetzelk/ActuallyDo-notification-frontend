@@ -19,9 +19,9 @@
 
 **Purpose**: Create directory structure and shared script libraries
 
-- [ ] T001 Create `deploy/` directory structure with `deploy/lib/` subdirectory
-- [ ] T002 [P] Create shared validation, logging, and AWS helper functions in `deploy/lib/common.sh` — includes `validate_app_name()` (regex `^[a-z0-9][a-z0-9-]*[a-z0-9]$`), `log_info()`, `log_error()`, `log_success()`, and `require_command()` for checking AWS CLI availability
-- [ ] T003 [P] Create environment config loader in `deploy/lib/config.sh` — includes `load_config()` to source `deploy/{app}.env`, `export_vite_vars()` using `set -a/+a`, and `get_config_value()` for reading individual values like `VITE_APP_DOMAIN`
+- [x] T001 Create `deploy/` directory structure with `deploy/lib/` subdirectory
+- [x] T002 [P] Create shared validation, logging, and AWS helper functions in `deploy/lib/common.sh` — includes `validate_app_name()` (regex `^[a-z0-9][a-z0-9-]*[a-z0-9]$`), `log_info()`, `log_error()`, `log_success()`, and `require_command()` for checking AWS CLI availability
+- [x] T003 [P] Create environment config loader in `deploy/lib/config.sh` — includes `load_config()` to source `deploy/{app}.env`, `export_vite_vars()` using `set -a/+a`, and `get_config_value()` for reading individual values like `VITE_APP_DOMAIN`
 
 ---
 
@@ -31,12 +31,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Parameterize `vite.config.ts` to read `VITE_APP` environment variable — dynamically set `root` to `src/apps/${app}/`, `build.outDir` to `dist/${app}/`, preserve existing `@` alias resolving to top-level `src/`, and keep React + Tailwind CSS plugins. Fall back to current behavior when `VITE_APP` is not set.
-- [ ] T005 [P] Create TuskDue entry point at `src/apps/tuskdue/index.html` and `src/apps/tuskdue/main.tsx` — HTML references `./main.tsx`, main.tsx bootstraps TuskDue app importing shared components from `@/`
-- [ ] T006 [P] Create WrenchDue entry point at `src/apps/wrenchdue/index.html` and `src/apps/wrenchdue/main.tsx` — same structure as TuskDue, bootstraps WrenchDue app
-- [ ] T007 [P] Create TuskDue environment config at `deploy/tuskdue.env` with fields: `VITE_APP_NAME`, `VITE_APP_DOMAIN`, `VITE_API_BASE`, `VITE_STRIPE_PK`, `VITE_VAPID_PUBLIC_KEY`, `VITE_APP_URL` per data-model.md schema
-- [ ] T008 [P] Create WrenchDue environment config at `deploy/wrenchdue.env` with same field structure as `deploy/tuskdue.env`
-- [ ] T009 Add per-app npm scripts to `package.json`: `dev:tuskdue`, `dev:wrenchdue`, `build:tuskdue`, `build:wrenchdue`, `build:all` — using `VITE_APP={name}` prefix before vite commands
+- [x] T004 Parameterize `vite.config.ts` to read `VITE_APP` environment variable — dynamically set `root` to `src/apps/${app}/`, `build.outDir` to `dist/${app}/`, preserve existing `@` alias resolving to top-level `src/`, and keep React + Tailwind CSS plugins. Fall back to current behavior when `VITE_APP` is not set.
+- [x] T005 [P] Create TuskDue entry point at `src/apps/tuskdue/index.html` and `src/apps/tuskdue/main.tsx` — HTML references `./main.tsx`, main.tsx bootstraps TuskDue app importing shared components from `@/`
+- [x] T006 [P] Create WrenchDue entry point at `src/apps/wrenchdue/index.html` and `src/apps/wrenchdue/main.tsx` — same structure as TuskDue, bootstraps WrenchDue app
+- [x] T007 [P] Create TuskDue environment config at `deploy/tuskdue.env` with fields: `VITE_APP_NAME`, `VITE_APP_DOMAIN`, `VITE_API_BASE`, `VITE_STRIPE_PK`, `VITE_VAPID_PUBLIC_KEY`, `VITE_APP_URL` per data-model.md schema
+- [x] T008 [P] Create WrenchDue environment config at `deploy/wrenchdue.env` with same field structure as `deploy/tuskdue.env`
+- [x] T009 Add per-app npm scripts to `package.json`: `dev:tuskdue`, `dev:wrenchdue`, `build:tuskdue`, `build:wrenchdue`, `build:all` — using `VITE_APP={name}` prefix before vite commands
 
 **Checkpoint**: Foundation ready — per-app builds work locally via `npm run build:tuskdue`
 
@@ -50,15 +50,15 @@
 
 ### Implementation for User Story 1
 
-- [ ] T010 [US1] Implement S3 bucket provisioning in `deploy/setup.sh` — source `deploy/lib/common.sh` and `deploy/lib/config.sh`, validate app name, load config, create private S3 bucket (`{app}-frontend`), block all public access via `put-public-access-block`
-- [ ] T011 [US1] Add Origin Access Control creation to `deploy/setup.sh` — create OAC named `{app}-frontend-oac` with sigv4 signing protocol and `s3` origin type
-- [ ] T012 [US1] Add ACM certificate provisioning to `deploy/setup.sh` — request certificate in `us-east-1` for the app's domain, create DNS validation CNAME in Route 53 via `change-resource-record-sets` with UPSERT, wait for certificate validation with `aws acm wait certificate-validated`
-- [ ] T013 [US1] Add CloudFront distribution creation to `deploy/setup.sh` — create distribution config JSON with: S3 origin via OAC, HTTPS redirect, ACM certificate, custom error responses (403→/index.html, 404→/index.html for SPA routing), HTTP/2+3, domain alias. Use `CallerReference` with timestamp for idempotency.
-- [ ] T014 [US1] Add S3 bucket policy and Route 53 DNS record to `deploy/setup.sh` — set bucket policy allowing CloudFront service principal with source ARN condition, create Route 53 A ALIAS record pointing to CloudFront (hosted zone ID `Z2FDTNDATAQYW2`)
-- [ ] T015 [US1] Add idempotency checks to `deploy/setup.sh` — check each resource before creating: `head-bucket` for S3, `list-certificates` by domain for ACM, `list-origin-access-controls` by name for OAC, `list-distributions` by alias for CloudFront. Skip creation if exists, report existing infrastructure details. Output summary per cli-contract.md format.
-- [ ] T016 [US1] Implement build and validation step in `deploy/deploy.sh` — source shared libs, validate app name, load config, verify infrastructure exists (check S3 bucket + CloudFront distribution ID), run `VITE_APP={app} npx vite build`, validate `dist/{app}/` is non-empty, exit with distinct error codes per cli-contract.md (1=invalid name, 2=missing config, 3=no infra, 4=build failed, 5=empty output)
-- [ ] T017 [US1] Add S3 upload with differentiated cache headers to `deploy/deploy.sh` — sync `dist/{app}/assets/` to `s3://{app}-frontend/assets/` with `Cache-Control: public, max-age=31536000, immutable` and `--delete` flag, then copy `dist/{app}/index.html` to `s3://{app}-frontend/index.html` with `Cache-Control: public, max-age=300, s-maxage=300`. Upload assets before index.html.
-- [ ] T018 [US1] Add CloudFront invalidation with wait and deployment reporting to `deploy/deploy.sh` — create invalidation for `/index.html` and `/`, wait for completion with `aws cloudfront wait invalidation-completed`, report success with URL, commit hash (`git rev-parse --short HEAD`), and elapsed time per cli-contract.md output format
+- [x] T010 [US1] Implement S3 bucket provisioning in `deploy/setup.sh` — source `deploy/lib/common.sh` and `deploy/lib/config.sh`, validate app name, load config, create private S3 bucket (`{app}-frontend`), block all public access via `put-public-access-block`
+- [x] T011 [US1] Add Origin Access Control creation to `deploy/setup.sh` — create OAC named `{app}-frontend-oac` with sigv4 signing protocol and `s3` origin type
+- [x] T012 [US1] Add ACM certificate provisioning to `deploy/setup.sh` — request certificate in `us-east-1` for the app's domain, create DNS validation CNAME in Route 53 via `change-resource-record-sets` with UPSERT, wait for certificate validation with `aws acm wait certificate-validated`
+- [x] T013 [US1] Add CloudFront distribution creation to `deploy/setup.sh` — create distribution config JSON with: S3 origin via OAC, HTTPS redirect, ACM certificate, custom error responses (403→/index.html, 404→/index.html for SPA routing), HTTP/2+3, domain alias. Use `CallerReference` with timestamp for idempotency.
+- [x] T014 [US1] Add S3 bucket policy and Route 53 DNS record to `deploy/setup.sh` — set bucket policy allowing CloudFront service principal with source ARN condition, create Route 53 A ALIAS record pointing to CloudFront (hosted zone ID `Z2FDTNDATAQYW2`)
+- [x] T015 [US1] Add idempotency checks to `deploy/setup.sh` — check each resource before creating: `head-bucket` for S3, `list-certificates` by domain for ACM, `list-origin-access-controls` by name for OAC, `list-distributions` by alias for CloudFront. Skip creation if exists, report existing infrastructure details. Output summary per cli-contract.md format.
+- [x] T016 [US1] Implement build and validation step in `deploy/deploy.sh` — source shared libs, validate app name, load config, verify infrastructure exists (check S3 bucket + CloudFront distribution ID), run `VITE_APP={app} npx vite build`, validate `dist/{app}/` is non-empty, exit with distinct error codes per cli-contract.md (1=invalid name, 2=missing config, 3=no infra, 4=build failed, 5=empty output)
+- [x] T017 [US1] Add S3 upload with differentiated cache headers to `deploy/deploy.sh` — sync `dist/{app}/assets/` to `s3://{app}-frontend/assets/` with `Cache-Control: public, max-age=31536000, immutable` and `--delete` flag, then copy `dist/{app}/index.html` to `s3://{app}-frontend/index.html` with `Cache-Control: public, max-age=300, s-maxage=300`. Upload assets before index.html.
+- [x] T018 [US1] Add CloudFront invalidation with wait and deployment reporting to `deploy/deploy.sh` — create invalidation for `/index.html` and `/`, wait for completion with `aws cloudfront wait invalidation-completed`, report success with URL, commit hash (`git rev-parse --short HEAD`), and elapsed time per cli-contract.md output format
 
 **Checkpoint**: User Story 1 complete — `./deploy/setup.sh tuskdue` provisions infrastructure, `./deploy/deploy.sh tuskdue` builds and deploys the app
 
@@ -72,9 +72,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T019 [US2] Add graceful build failure handling to `deploy/deploy.sh` — capture build exit code, on failure print clear error message (`Build failed. No changes deployed. Previous version remains live.`), exit with code 4 without uploading anything (FR-004)
-- [ ] T020 [US2] Add empty build output detection to `deploy/deploy.sh` — after successful build, verify `dist/{app}/index.html` exists and `dist/{app}/assets/` is non-empty, exit with code 5 and clear error if empty
-- [ ] T021 [US2] Add exponential backoff retry for transient AWS API failures to `deploy/lib/common.sh` — implement `retry_with_backoff()` function (max 3 retries, 2s/4s/8s delays) and use it in `deploy/deploy.sh` for S3 sync and CloudFront invalidation calls, and in `deploy/setup.sh` for AWS resource creation calls
+- [x] T019 [US2] Add graceful build failure handling to `deploy/deploy.sh` — capture build exit code, on failure print clear error message (`Build failed. No changes deployed. Previous version remains live.`), exit with code 4 without uploading anything (FR-004)
+- [x] T020 [US2] Add empty build output detection to `deploy/deploy.sh` — after successful build, verify `dist/{app}/index.html` exists and `dist/{app}/assets/` is non-empty, exit with code 5 and clear error if empty
+- [x] T021 [US2] Add exponential backoff retry for transient AWS API failures to `deploy/lib/common.sh` — implement `retry_with_backoff()` function (max 3 retries, 2s/4s/8s delays) and use it in `deploy/deploy.sh` for S3 sync and CloudFront invalidation calls, and in `deploy/setup.sh` for AWS resource creation calls
 
 **Checkpoint**: User Stories 1 AND 2 complete — deployments are safe, idempotent, and isolated per app
 
@@ -88,10 +88,10 @@
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Create `.github/workflows/deploy.yml` with triggers and permissions — `push` to `main` branch + `workflow_dispatch` with `app` choice input (`tuskdue`, `wrenchdue`, `all`), set `permissions: { id-token: write, contents: read }`
-- [ ] T023 [US3] Add change detection job to `.github/workflows/deploy.yml` — use `dorny/paths-filter` with filters: `tuskdue` (`src/apps/tuskdue/**`, `deploy/tuskdue.env`), `wrenchdue` (`src/apps/wrenchdue/**`, `deploy/wrenchdue.env`), `shared` (`src/components/**`, `src/hooks/**`, `src/lib/**`, `src/context/**`, `src/api/**`, `src/index.css`). Output boolean per app.
-- [ ] T024 [US3] Add TuskDue deploy job to `.github/workflows/deploy.yml` — conditional on `changes.outputs.tuskdue == 'true' || changes.outputs.shared == 'true' || github.event.inputs.app == 'tuskdue' || github.event.inputs.app == 'all'`, concurrency group `deploy-tuskdue` with `cancel-in-progress: false`, use `aws-actions/configure-aws-credentials` with OIDC `role-to-assume`, checkout code, `npm ci`, run `./deploy/deploy.sh tuskdue`
-- [ ] T025 [US3] Add WrenchDue deploy job to `.github/workflows/deploy.yml` — same structure as TuskDue job with `wrenchdue` substituted, concurrency group `deploy-wrenchdue`
+- [x] T022 [US3] Create `.github/workflows/deploy.yml` with triggers and permissions — `push` to `main` branch + `workflow_dispatch` with `app` choice input (`tuskdue`, `wrenchdue`, `all`), set `permissions: { id-token: write, contents: read }`
+- [x] T023 [US3] Add change detection job to `.github/workflows/deploy.yml` — use `dorny/paths-filter` with filters: `tuskdue` (`src/apps/tuskdue/**`, `deploy/tuskdue.env`), `wrenchdue` (`src/apps/wrenchdue/**`, `deploy/wrenchdue.env`), `shared` (`src/components/**`, `src/hooks/**`, `src/lib/**`, `src/context/**`, `src/api/**`, `src/index.css`). Output boolean per app.
+- [x] T024 [US3] Add TuskDue deploy job to `.github/workflows/deploy.yml` — conditional on `changes.outputs.tuskdue == 'true' || changes.outputs.shared == 'true' || github.event.inputs.app == 'tuskdue' || github.event.inputs.app == 'all'`, concurrency group `deploy-tuskdue` with `cancel-in-progress: false`, use `aws-actions/configure-aws-credentials` with OIDC `role-to-assume`, checkout code, `npm ci`, run `./deploy/deploy.sh tuskdue`
+- [x] T025 [US3] Add WrenchDue deploy job to `.github/workflows/deploy.yml` — same structure as TuskDue job with `wrenchdue` substituted, concurrency group `deploy-wrenchdue`
 
 **Checkpoint**: Automated deployments work — pushes to main trigger selective deploys, manual dispatch works for on-demand deploys
 
@@ -105,8 +105,8 @@
 
 ### Implementation for User Story 4
 
-- [ ] T026 [US4] Validate generic script behavior by adding onboarding documentation as comments in `deploy/setup.sh` and `deploy/deploy.sh` — add header comments explaining how to add a new app (create env file, create entry point, run setup, run deploy), verify no app-specific hardcoding exists in scripts
-- [ ] T027 [US4] Add new app onboarding instructions to `.github/workflows/deploy.yml` — add comments explaining how to add a new app's deploy job (copy existing job, update app name, add paths-filter entry, add to workflow_dispatch choices)
+- [x] T026 [US4] Validate generic script behavior by adding onboarding documentation as comments in `deploy/setup.sh` and `deploy/deploy.sh` — add header comments explaining how to add a new app (create env file, create entry point, run setup, run deploy), verify no app-specific hardcoding exists in scripts
+- [x] T027 [US4] Add new app onboarding instructions to `.github/workflows/deploy.yml` — add comments explaining how to add a new app's deploy job (copy existing job, update app name, add paths-filter entry, add to workflow_dispatch choices)
 
 **Checkpoint**: All 4 user stories complete — scripts are generic, documented, and any new app can be onboarded
 
@@ -116,8 +116,8 @@
 
 **Purpose**: Final hardening and validation
 
-- [ ] T028 [P] Set executable permissions on all deploy scripts (`chmod +x deploy/setup.sh deploy/deploy.sh`) and ensure proper shebang lines (`#!/usr/bin/env bash`) and `set -euo pipefail` in all `.sh` files
-- [ ] T029 Validate end-to-end flow against quickstart.md — verify all documented commands, file paths, and troubleshooting steps match actual implementation
+- [x] T028 [P] Set executable permissions on all deploy scripts (`chmod +x deploy/setup.sh deploy/deploy.sh`) and ensure proper shebang lines (`#!/usr/bin/env bash`) and `set -euo pipefail` in all `.sh` files
+- [x] T029 Validate end-to-end flow against quickstart.md — verify all documented commands, file paths, and troubleshooting steps match actual implementation
 
 ---
 
