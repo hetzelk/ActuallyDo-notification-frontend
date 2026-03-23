@@ -39,13 +39,7 @@ mkdir -p src/apps/newapp
 # Create src/apps/newapp/index.html (HTML template)
 ```
 
-### 3. Create the Vite config
-
-```bash
-# Create vite.config.newapp.ts extending the shared base config
-```
-
-### 4. Provision infrastructure
+### 3. Provision infrastructure
 
 ```bash
 ./deploy/setup.sh newapp
@@ -53,13 +47,13 @@ mkdir -p src/apps/newapp
 
 This creates the S3 bucket, CloudFront distribution, ACM certificate, and Route 53 record. Takes ~5-10 minutes (mostly waiting for ACM certificate validation).
 
-### 5. Deploy
+### 4. Deploy
 
 ```bash
 ./deploy/deploy.sh newapp
 ```
 
-### 6. Add to CI/CD (optional)
+### 5. Add to CI/CD (optional)
 
 Add the new app's paths to `.github/workflows/deploy.yml`:
 - Add a path filter for `src/apps/newapp/**`
@@ -89,8 +83,7 @@ src/apps/
     ├── main.tsx         # WrenchDue entry point
     └── index.html       # WrenchDue HTML template
 
-vite.config.tuskdue.ts   # TuskDue build config
-vite.config.wrenchdue.ts # WrenchDue build config
+vite.config.ts           # Shared build config (parameterized via VITE_APP env var)
 ```
 
 ## Troubleshooting

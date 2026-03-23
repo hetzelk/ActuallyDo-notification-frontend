@@ -68,7 +68,7 @@ deploy/
     └── deploy.yml       # GitHub Actions workflow (auto + manual deploy)
 ```
 
-**Structure Decision**: Deploy scripts and per-app configs live in a top-level `deploy/` directory, separate from `src/`. GitHub Actions workflow in `.github/workflows/`. No changes to existing `src/` structure — the scripts invoke `vite build` with the appropriate app-specific config.
+**Structure Decision**: Deploy scripts and per-app configs live in a top-level `deploy/` directory, separate from `src/`. GitHub Actions workflow in `.github/workflows/`. The existing single `vite.config.ts` is parameterized via a `VITE_APP` env var to dynamically set `root` and `build.outDir` per app. Per-app entry points live in `src/apps/{name}/`.
 
 ## Post-Design Constitution Re-Check
 

@@ -4,20 +4,20 @@
 
 ## R1: Multi-App Vite Build Strategy
 
-**Decision**: Separate Vite config files per app extending a shared base config.
+**Decision**: Single parameterized `vite.config.ts` using a `VITE_APP` environment variable to select the app.
 
-**Rationale**: Each app needs its own entry point HTML, main.tsx, and build output directory. A parameterized single config adds complexity with environment variable switching. Separate configs are explicit, debuggable, and work naturally with `vite build --config`.
+**Rationale**: All apps share the same plugins (React, Tailwind), aliases, and build pipeline — only the entry point and output directory differ. A single config with dynamic `root` avoids duplicating shared settings across per-app config files. The `VITE_APP` env var keeps `--mode` free for its standard purpose (development/production).
 
 **Approach**:
 - Create `src/apps/{name}/index.html` and `src/apps/{name}/main.tsx` per app
-- Create `vite.config.{name}.ts` per app, extending a shared base config
-- Build via `vite build --config vite.config.{name}.ts`
-- Output to `dist/{name}/` per app
-- Shared code stays in `src/` accessed via the existing `@` alias
-- Add npm scripts: `build:tuskdue`, `build:wrenchdue`
+- Single `vite.config.ts` reads `VITE_APP` env var to set `root` to `src/apps/{app}/` and `build.outDir` to `dist/{app}/`
+- Build via `VITE_APP=tuskdue vite build`
+- The `@` alias still resolves to top-level `src/` for shared code imports
+- Add npm scripts: `build:tuskdue`, `build:wrenchdue`, `dev:tuskdue`, `dev:wrenchdue`
 
 **Alternatives considered**:
-- Single parameterized config via env vars: Works but error-prone, harder to debug, mixes concerns
+- Separate config files per app (`vite.config.tuskdue.ts`): Works but duplicates shared plugin/alias setup across files
+- Vite `--mode` flag for app selection: Conflicts with standard mode usage (development/production/staging) and `.env` file loading
 - Vite multi-page mode (`build.rollupOptions.input`): Designed for MPA, not separate SPAs with independent routing
 - Turborepo/Nx workspaces: Overkill for 2-3 apps sharing a single `src/` directory
 

@@ -73,7 +73,7 @@
 1. Validates app name format
 2. Loads `deploy/{app-name}.env`
 3. Verifies infrastructure exists (S3 bucket + CloudFront distribution)
-4. Runs `vite build --config vite.config.{app-name}.ts`
+4. Runs `VITE_APP={app-name} vite build`
 5. Validates build output is non-empty
 6. Syncs hashed assets to S3 with 1-year immutable cache headers
 7. Copies index.html to S3 with 5-minute cache headers
@@ -137,8 +137,8 @@
 
 | Filter | Paths | Deploys |
 |--------|-------|---------|
-| `tuskdue` | `src/apps/tuskdue/**`, `deploy/tuskdue.env`, `vite.config.tuskdue.ts` | TuskDue only |
-| `wrenchdue` | `src/apps/wrenchdue/**`, `deploy/wrenchdue.env`, `vite.config.wrenchdue.ts` | WrenchDue only |
+| `tuskdue` | `src/apps/tuskdue/**`, `deploy/tuskdue.env` | TuskDue only |
+| `wrenchdue` | `src/apps/wrenchdue/**`, `deploy/wrenchdue.env` | WrenchDue only |
 | `shared` | `src/components/**`, `src/hooks/**`, `src/lib/**`, `src/context/**`, `src/api/**`, `src/index.css` | All apps |
 
 ### Concurrency
