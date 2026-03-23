@@ -13,6 +13,7 @@
 - Q: Where is the per-app configuration stored? → A: Dedicated config directory with a file per app (`deploy/tuskdue.env`, `deploy/wrenchdue.env`).
 - Q: Should deploy scripts handle SSL/TLS certificate provisioning for each app's custom domain? → A: Yes — the setup script provisions SSL certificates automatically via ACM (AWS Certificate Manager) as part of infrastructure setup.
 - Q: How should the deploy script handle the cache invalidation wait time? → A: Wait for completion — the deploy script blocks until CloudFront confirms full cache propagation before exiting successfully.
+- Q: What language/runtime should the deploy scripts be written in? → A: Bash scripts using AWS CLI commands — lightweight, no additional runtime dependencies beyond the AWS CLI.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -125,6 +126,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 ## Assumptions
 
 - Each app has its own independent domain (e.g., `tuskdue.com`, `wrenchdue.com`) with DNS managed by the team.
+- Deploy scripts are written in Bash and require the AWS CLI to be installed and configured.
 - Cloud provider credentials are available as secrets in the CI/CD environment and on developer machines (for manual deploys).
 - Each app has its own Vite build configuration or entry point that can be built independently.
 - The repository uses a single `src/` directory with per-app entry points under `src/apps/{app-name}/main.tsx` and shared platform code in `src/`. Each app has its own Vite config or build target referencing its entry point.
