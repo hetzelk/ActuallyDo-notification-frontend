@@ -10,6 +10,7 @@ import { MagicLinkPage } from '@/pages/MagicLinkPage'
 import { ActionResultPage } from '@/pages/ActionResultPage'
 import { DashboardPage } from '@/pages/nagme/DashboardPage'
 import { TaskDetailPage } from '@/pages/nagme/TaskDetailPage'
+import { SettingsPage } from '@/pages/SettingsPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +37,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<Shell />}>
                 <Route path="/" element={<Navigate to="/nagme" replace />} />
-                <Route path="/settings" element={<div>Settings (coming soon)</div>} />
+                <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/nagme" element={<DashboardPage />} />
                 <Route path="/nagme/tasks/:taskId" element={<TaskDetailPage />} />
                 <Route path="/milesahead" element={<div>MilesAhead Dashboard (coming soon)</div>} />
