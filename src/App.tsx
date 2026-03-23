@@ -13,6 +13,7 @@ import { TaskDetailPage } from '@/pages/tuskdue/TaskDetailPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { WrenchDueDashboardPage } from '@/pages/wrenchdue/DashboardPage'
 import { AddVehiclePage } from '@/pages/wrenchdue/AddVehiclePage'
+import { VehicleDetailPage } from '@/pages/wrenchdue/VehicleDetailPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,7 +45,7 @@ function App() {
                 <Route path="/tuskdue/tasks/:taskId" element={<TaskDetailPage />} />
                 <Route path="/wrenchdue" element={<WrenchDueDashboardPage />} />
                 <Route path="/wrenchdue/vehicles/new" element={<AddVehiclePage />} />
-                <Route path="/wrenchdue/vehicles/:id" element={<div>Vehicle Detail (coming soon)</div>} />
+                <Route path="/wrenchdue/vehicles/:id" element={<VehicleDetailPage />} />
               </Route>
             </Route>
 

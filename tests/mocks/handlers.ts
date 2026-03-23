@@ -1,12 +1,18 @@
 import { http, HttpResponse, delay } from 'msw'
-import { mockTasks, mockVehicles } from './data'
-import type { Task, Vehicle } from '@/lib/types'
+import { mockTasks, mockVehicles, mockMaintenanceItems, mockMaintenanceLog } from './data'
+import type { Task, Vehicle, MaintenanceItem, MaintenanceLogEntry } from '@/lib/types'
 
 const API = import.meta.env.VITE_API_BASE || 'http://localhost:3000'
 
 // Mutable copies so mutations persist during the session
 let tasks = structuredClone(mockTasks)
 let vehicles = structuredClone(mockVehicles)
+const maintenanceItems: Record<string, MaintenanceItem[]> = {
+  'vehicle-001': structuredClone(mockMaintenanceItems),
+}
+const maintenanceLog: Record<string, MaintenanceLogEntry[]> = {
+  'vehicle-001': structuredClone(mockMaintenanceLog),
+}
 
 // Fake JWT — just enough to decode an email from payload
 function makeFakeJwt(email: string): string {
@@ -265,5 +271,108 @@ export const handlers = [
       vehicle.weekly_miles_estimate = body.weekly_miles_estimate
     }
     return HttpResponse.json({ message: 'Mileage updated' })
+  }),
+
+  // === WrenchDue Maintenance Items ===
+  http.get(`${API}/apps/wrenchdue/vehicles/:vehicleId/items`, async ({ params }) => {
+    await delay(200)
+    const vid = params.vehicleId as string
+    const items = maintenanceItems[vid] ?? []
+    return HttpResponse.json({ data: { items } })
+  }),
+
+  http.post(`${API}/apps/wrenchdue/vehicles/:vehicleId/items`, async ({ params, request }) => {
+    await delay(300)
+    const vid = params.vehicleId as string
+    const body = await request.json() as { name: string; interval_miles?: number | null; interval_months?: number | null; notes?: string }
+    const newItem: MaintenanceItem = {
+      item_id: `item-${Date.now()}`,
+      name: body.name,
+      interval_miles: body.interval_miles ?? null,
+      interval_months: body.interval_months ?? null,
+      last_completed_mileage: null,
+      last_completed_date: null,
+      notify: true,
+      is_custom: true,
+      notes: body.notes ?? null,
+    }
+    if (!maintenanceItems[vid]) maintenanceItems[vid] = []
+    maintenanceItems[vid].push(newItem)
+    return HttpResponse.json(
+      { data: { item_id: newItem.item_id }, message: 'Maintenance item added' },
+      { status: 201 },
+    )
+  }),
+
+  http.put(`${API}/apps/wrenchdue/vehicles/:vehicleId/items/:itemId`, async ({ params, request }) => {
+    await delay(200)
+    const vid = params.vehicleId as string
+    const items = maintenanceItems[vid]
+    if (!items) {
+      return HttpResponse.json({ error: 'not_found', message: 'Not found' }, { status: 404 })
+    }
+    const idx = items.findIndex((i) => i.item_id === params.itemId)
+    if (idx === -1) {
+      return HttpResponse.json({ error: 'not_found', message: 'Item not found' }, { status: 404 })
+    }
+    const body = await request.json() as Partial<MaintenanceItem>
+    items[idx] = { ...items[idx], ...body }
+    return HttpResponse.json({ message: 'Item updated' })
+  }),
+
+  http.delete(`${API}/apps/wrenchdue/vehicles/:vehicleId/items/:itemId`, async ({ params }) => {
+    await delay(200)
+    const vid = params.vehicleId as string
+    if (maintenanceItems[vid]) {
+      maintenanceItems[vid] = maintenanceItems[vid].filter((i) => i.item_id !== params.itemId)
+    }
+    return HttpResponse.json({ message: 'Item deleted' })
+  }),
+
+  http.post(`${API}/apps/wrenchdue/vehicles/:vehicleId/items/:itemId/complete`, async ({ params, request }) => {
+    await delay(300)
+    const vid = params.vehicleId as string
+    const items = maintenanceItems[vid]
+    const item = items?.find((i) => i.item_id === params.itemId)
+    if (!item) {
+      return HttpResponse.json({ error: 'not_found', message: 'Item not found' }, { status: 404 })
+    }
+    const body = await request.json() as {
+      completed_at: string; mileage_at_completion: number;
+      cost?: number; shop?: string; notes?: string
+    }
+    // Update the item
+    item.last_completed_mileage = body.mileage_at_completion
+    item.last_completed_date = body.completed_at
+    // Add log entry
+    const entry: MaintenanceLogEntry = {
+      log_id: `log-${Date.now()}`,
+      item_name: item.name,
+      completed_at: body.completed_at,
+      mileage_at_completion: body.mileage_at_completion,
+      cost: body.cost ?? null,
+      shop: body.shop ?? null,
+      notes: body.notes ?? null,
+    }
+    if (!maintenanceLog[vid]) maintenanceLog[vid] = []
+    maintenanceLog[vid].unshift(entry)
+    // Update vehicle mileage
+    const vehicle = vehicles.find((v) => v.vehicle_id === vid)
+    if (vehicle && body.mileage_at_completion > vehicle.current_mileage) {
+      vehicle.current_mileage = body.mileage_at_completion
+      vehicle.mileage_updated_at = new Date().toISOString()
+    }
+    return HttpResponse.json({
+      data: { log_id: entry.log_id },
+      message: `${item.name} logged at ${body.mileage_at_completion.toLocaleString()} mi`,
+    })
+  }),
+
+  // === WrenchDue Maintenance Log ===
+  http.get(`${API}/apps/wrenchdue/vehicles/:vehicleId/log`, async ({ params }) => {
+    await delay(200)
+    const vid = params.vehicleId as string
+    const entries = maintenanceLog[vid] ?? []
+    return HttpResponse.json({ data: { entries } })
   }),
 ]
