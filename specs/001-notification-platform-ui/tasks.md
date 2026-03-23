@@ -285,10 +285,10 @@
 
 ### Implementation for User Story 12
 
-- [ ] T106 [US12] Install and configure vite-plugin-pwa in vite.config.ts with manifest, icons, and workbox precaching
-- [ ] T107 [US12] Create service worker with push notification display handler and click-to-open routing
-- [ ] T108 [US12] Create OfflineBanner component shown when navigator.onLine is false in src/components/shared/OfflineBanner.tsx
-- [ ] T109 [US12] Add offline detection to Shell layout, show OfflineBanner when offline
+- [x] T106 [US12] Install and configure vite-plugin-pwa in vite.config.ts with manifest, icons, and workbox precaching
+- [x] T107 [US12] Create service worker with push notification display handler and click-to-open routing
+- [x] T108 [US12] Create OfflineBanner component shown when navigator.onLine is false in src/components/shared/OfflineBanner.tsx
+- [x] T109 [US12] Add offline detection to Shell layout, show OfflineBanner when offline
 
 **Checkpoint**: App installable, shows cached data offline with banner, push notifications display.
 
