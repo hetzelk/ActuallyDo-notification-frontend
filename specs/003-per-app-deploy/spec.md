@@ -11,6 +11,7 @@
 
 - Q: How is per-app source code organized in the repository? → A: Single `src/` with per-app entry points (`src/apps/tuskdue/main.tsx`, `src/apps/wrenchdue/main.tsx`) and shared code in `src/`.
 - Q: Where is the per-app configuration stored? → A: Dedicated config directory with a file per app (`deploy/tuskdue.env`, `deploy/wrenchdue.env`).
+- Q: Should deploy scripts handle SSL/TLS certificate provisioning for each app's custom domain? → A: Yes — the setup script provisions SSL certificates automatically via ACM (AWS Certificate Manager) as part of infrastructure setup.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -101,6 +102,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 - **FR-010**: The deploy command MUST validate that infrastructure exists for the target app before attempting to upload, and provide a clear error if it does not.
 - **FR-011**: App names MUST be validated to contain only lowercase alphanumeric characters and hyphens.
 - **FR-012**: The CI/CD pipeline MUST serialize concurrent deployments of the same app to prevent race conditions.
+- **FR-013**: The setup script MUST provision an SSL/TLS certificate via AWS Certificate Manager (ACM) for the app's custom domain and attach it to the CloudFront distribution automatically.
 
 ### Key Entities
 
