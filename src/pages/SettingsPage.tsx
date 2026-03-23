@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProfileSection } from '@/components/settings/ProfileSection'
@@ -6,11 +8,38 @@ import { SubscriptionSection } from '@/components/settings/SubscriptionSection'
 import { EmailDisabledBanner } from '@/components/settings/EmailDisabledBanner'
 import { useSettings, useUpdateSettings } from '@/hooks/use-settings'
 import { useAuth } from '@/hooks/use-auth'
+import { useToast } from '@/hooks/use-toast'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function SettingsPage() {
   const { user } = useAuth()
   const settingsQuery = useSettings()
   const { debouncedUpdate, showSaved, isPending } = useUpdateSettings()
+  const toast = useToast()
+  const queryClient = useQueryClient()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  // Handle Stripe payment return URLs
+  useEffect(() => {
+    const payment = searchParams.get('payment')
+    if (!payment) return
+
+    if (payment === 'success') {
+      toast.success('Payment successful! Upgrading your account...')
+      // Re-fetch settings after a short delay to allow webhook processing
+      const timer = setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['settings'] })
+      }, 3000)
+      // Clean up the query param
+      setSearchParams({}, { replace: true })
+      return () => clearTimeout(timer)
+    }
+
+    if (payment === 'cancelled') {
+      toast.info('Payment cancelled. No changes made.')
+      setSearchParams({}, { replace: true })
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (settingsQuery.isLoading) {
     return (
