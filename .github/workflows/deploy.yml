@@ -1,0 +1,122 @@
+# Per-App Deployment Pipeline
+#
+# Automatically deploys affected apps when code is pushed to main.
+# Supports manual deployment via workflow_dispatch.
+#
+# To add a new app:
+#   1. Add a new filter under the "changes" job (paths-filter step)
+#   2. Add a new deploy job (copy an existing one, update app name)
+#   3. Add the app name to the workflow_dispatch choices
+#   4. Create deploy/<app-name>.env and src/apps/<app-name>/ entry point
+#   5. Run ./deploy/setup.sh <app-name> to provision infrastructure
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      app:
+        description: 'App to deploy'
+        required: true
+        type: choice
+        options:
+          - all
+          - tuskdue
+          - wrenchdue
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  # --- Change Detection ---
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    outputs:
+      tuskdue: ${{ steps.filter.outputs.tuskdue }}
+      wrenchdue: ${{ steps.filter.outputs.wrenchdue }}
+      shared: ${{ steps.filter.outputs.shared }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            tuskdue:
+              - 'src/apps/tuskdue/**'
+              - 'deploy/tuskdue.env'
+            wrenchdue:
+              - 'src/apps/wrenchdue/**'
+              - 'deploy/wrenchdue.env'
+            shared:
+              - 'src/components/**'
+              - 'src/hooks/**'
+              - 'src/lib/**'
+              - 'src/context/**'
+              - 'src/api/**'
+              - 'src/index.css'
+              - 'vite.config.ts'
+              - 'package.json'
+              - 'package-lock.json'
+
+  # --- Deploy TuskDue ---
+  deploy-tuskdue:
+    name: Deploy TuskDue
+    runs-on: ubuntu-latest
+    needs: [changes]
+    if: |
+      always() && (
+        (github.event_name == 'push' && (needs.changes.outputs.tuskdue == 'true' || needs.changes.outputs.shared == 'true')) ||
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.app == 'tuskdue' || github.event.inputs.app == 'all'))
+      )
+    concurrency:
+      group: deploy-tuskdue
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - run: npm ci
+      - run: ./deploy/deploy.sh tuskdue
+
+  # --- Deploy WrenchDue ---
+  deploy-wrenchdue:
+    name: Deploy WrenchDue
+    runs-on: ubuntu-latest
+    needs: [changes]
+    if: |
+      always() && (
+        (github.event_name == 'push' && (needs.changes.outputs.wrenchdue == 'true' || needs.changes.outputs.shared == 'true')) ||
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.app == 'wrenchdue' || github.event.inputs.app == 'all'))
+      )
+    concurrency:
+      group: deploy-wrenchdue
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - run: npm ci
+      - run: ./deploy/deploy.sh wrenchdue
