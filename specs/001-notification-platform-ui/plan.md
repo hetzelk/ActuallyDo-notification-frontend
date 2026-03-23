@@ -5,7 +5,7 @@
 
 ## Summary
 
-Build the complete frontend for the ActuallyDo notification platform: a multi-app React SPA hosting NagMe (task reminders) and MilesAhead (vehicle maintenance) under a shared platform shell with authentication, settings, navigation, Stripe payments, push notifications, and PWA support. The frontend communicates with a separate backend API via JWT-authenticated REST calls. The approach uses React 19 + Vite 6 + TypeScript + Tailwind CSS v4 + shadcn/ui with TanStack Query for server state management.
+Build the complete frontend for the ActuallyDo notification platform: a multi-app React SPA hosting TuskDue (task reminders) and WrenchDue (vehicle maintenance) under a shared platform shell with authentication, settings, navigation, Stripe payments, push notifications, and PWA support. The frontend communicates with a separate backend API via JWT-authenticated REST calls. The approach uses React 19 + Vite 6 + TypeScript + Tailwind CSS v4 + shadcn/ui with TanStack Query for server state management.
 
 ## Technical Context
 
@@ -17,7 +17,7 @@ Build the complete frontend for the ActuallyDo notification platform: a multi-ap
 **Project Type**: Single-page web application (SPA)
 **Performance Goals**: LCP < 1.5s, initial bundle < 150 KB gzipped, 60fps interactions
 **Constraints**: Offline-capable (PWA), mobile-first responsive (640/768/1024px breakpoints), 44px minimum touch targets
-**Scale/Scope**: ~20 screens/views, 2 apps (NagMe + MilesAhead), shared platform layer
+**Scale/Scope**: ~20 screens/views, 2 apps (TuskDue + WrenchDue), shared platform layer
 
 ## Constitution Check
 
@@ -57,8 +57,8 @@ src/
 │   ├── client.ts         # Base fetch wrapper with auth headers, error parsing
 │   ├── auth.ts           # Login, signup, magic-link, token refresh
 │   ├── settings.ts       # GET/PUT platform settings
-│   ├── nagme.ts          # NagMe task CRUD, complete, snooze, activate
-│   └── milesahead.ts     # MilesAhead vehicle/maintenance CRUD
+│   ├── tuskdue.ts          # TuskDue task CRUD, complete, snooze, activate
+│   └── wrenchdue.ts     # WrenchDue vehicle/maintenance CRUD
 ├── components/
 │   ├── ui/               # shadcn/ui components (Button, Input, Dialog, etc.)
 │   ├── layout/           # Shell, Navbar, AppSwitcher, PageContainer
@@ -74,18 +74,18 @@ src/
 │   ├── MagicLinkPage.tsx
 │   ├── SettingsPage.tsx
 │   ├── ActionResultPage.tsx
-│   ├── nagme/
+│   ├── tuskdue/
 │   │   ├── DashboardPage.tsx
 │   │   └── TaskDetailPage.tsx
-│   └── milesahead/
+│   └── wrenchdue/
 │       ├── DashboardPage.tsx
 │       ├── VehicleDetailPage.tsx
 │       └── AddVehiclePage.tsx
 ├── hooks/
 │   ├── use-auth.ts       # Auth context consumer, token management
 │   ├── use-settings.ts   # TanStack Query wrapper for settings
-│   ├── use-tasks.ts      # TanStack Query wrapper for NagMe tasks
-│   ├── use-vehicles.ts   # TanStack Query wrapper for MilesAhead vehicles
+│   ├── use-tasks.ts      # TanStack Query wrapper for TuskDue tasks
+│   ├── use-vehicles.ts   # TanStack Query wrapper for WrenchDue vehicles
 │   ├── use-tier.ts       # Derive tier from settings, gate features
 │   └── use-toast.ts      # Toast context consumer
 ├── context/
@@ -110,7 +110,7 @@ tests/
 └── mocks/                # MSW handlers matching api-integration.md
 ```
 
-**Structure Decision**: Single SPA project (not separate frontend/backend — backend is in a different repo). Both NagMe and MilesAhead share the same React app with app-specific route namespaces (`/nagme/*`, `/milesahead/*`) and shared platform routes (`/login`, `/signup`, `/settings`, `/action-result`).
+**Structure Decision**: Single SPA project (not separate frontend/backend — backend is in a different repo). Both TuskDue and WrenchDue share the same React app with app-specific route namespaces (`/tuskdue/*`, `/wrenchdue/*`) and shared platform routes (`/login`, `/signup`, `/settings`, `/action-result`).
 
 ## Complexity Tracking
 

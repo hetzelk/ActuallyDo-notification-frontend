@@ -25,11 +25,11 @@ export function TaskCard({ task, onComplete, onSnooze, isPro }: TaskCardProps) {
         'border border-border rounded-lg p-4 cursor-pointer hover:bg-accent/50 transition-colors',
         isSnoozed && 'opacity-60'
       )}
-      onClick={() => navigate(`/nagme/tasks/${task.task_id}`)}
+      onClick={() => navigate(`/tuskdue/tasks/${task.task_id}`)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') navigate(`/nagme/tasks/${task.task_id}`)
+        if (e.key === 'Enter') navigate(`/tuskdue/tasks/${task.task_id}`)
       }}
     >
       <div className="flex items-start gap-3">

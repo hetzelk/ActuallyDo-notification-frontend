@@ -1,11 +1,11 @@
-# Implementation Plan: NagMe Recurring Tasks
+# Implementation Plan: TuskDue Recurring Tasks
 
-**Branch**: `002-nagme-recurring-tasks` | **Date**: 2026-03-22 | **Spec**: [spec.md](spec.md)
-**Input**: Feature specification from `/specs/002-nagme-recurring-tasks/spec.md`
+**Branch**: `002-tuskdue-recurring-tasks` | **Date**: 2026-03-22 | **Spec**: [spec.md](spec.md)
+**Input**: Feature specification from `/specs/002-tuskdue-recurring-tasks/spec.md`
 
 ## Summary
 
-Add recurring/repeating task support to the NagMe frontend: recurrence configuration UI in the add/edit task forms, recurrence indicators on task cards, enhanced completion toasts showing next occurrence dates, and a delete confirmation dialog that distinguishes between "delete this only" and "delete and stop recurrence." The backend handles auto-creation of next occurrences — the frontend sends recurrence metadata and displays what the API returns.
+Add recurring/repeating task support to the TuskDue frontend: recurrence configuration UI in the add/edit task forms, recurrence indicators on task cards, enhanced completion toasts showing next occurrence dates, and a delete confirmation dialog that distinguishes between "delete this only" and "delete and stop recurrence." The backend handles auto-creation of next occurrences — the frontend sends recurrence metadata and displays what the API returns.
 
 ## Technical Context
 
@@ -39,7 +39,7 @@ No violations. All gates pass.
 ### Documentation (this feature)
 
 ```text
-specs/002-nagme-recurring-tasks/
+specs/002-tuskdue-recurring-tasks/
 ├── plan.md              # This file
 ├── research.md          # Phase 0 output
 ├── data-model.md        # Phase 1 output
@@ -54,7 +54,7 @@ specs/002-nagme-recurring-tasks/
 ```text
 src/
 ├── api/
-│   └── nagme.ts              # Extended: recurrence fields in create/update, delete with stop_recurrence param
+│   └── tuskdue.ts              # Extended: recurrence fields in create/update, delete with stop_recurrence param
 ├── components/
 │   ├── tasks/
 │   │   ├── AddTaskForm.tsx    # Extended: RecurrenceConfig section (shown when due_date is set)
@@ -70,7 +70,7 @@ src/
 │   ├── schemas.ts             # Extended: recurrenceSchema Zod validation
 │   └── utils.ts               # Extended: getRecurrenceLabel() display helper
 ├── pages/
-│   └── nagme/
+│   └── tuskdue/
 │       └── DashboardPage.tsx  # Extended: completion toast shows next due date
 └── mocks/
     └── handlers.ts            # Extended: MSW handlers for recurrence in task CRUD + complete

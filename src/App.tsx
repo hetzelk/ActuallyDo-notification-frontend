@@ -8,8 +8,8 @@ import { LoginPage } from '@/pages/LoginPage'
 import { SignupPage } from '@/pages/SignupPage'
 import { MagicLinkPage } from '@/pages/MagicLinkPage'
 import { ActionResultPage } from '@/pages/ActionResultPage'
-import { DashboardPage } from '@/pages/nagme/DashboardPage'
-import { TaskDetailPage } from '@/pages/nagme/TaskDetailPage'
+import { DashboardPage } from '@/pages/tuskdue/DashboardPage'
+import { TaskDetailPage } from '@/pages/tuskdue/TaskDetailPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 
 const queryClient = new QueryClient({
@@ -36,13 +36,13 @@ function App() {
             {/* Authenticated routes */}
             <Route element={<ProtectedRoute />}>
               <Route element={<Shell />}>
-                <Route path="/" element={<Navigate to="/nagme" replace />} />
+                <Route path="/" element={<Navigate to="/tuskdue" replace />} />
                 <Route path="/settings" element={<SettingsPage />} />
-                <Route path="/nagme" element={<DashboardPage />} />
-                <Route path="/nagme/tasks/:taskId" element={<TaskDetailPage />} />
-                <Route path="/milesahead" element={<div>MilesAhead Dashboard (coming soon)</div>} />
-                <Route path="/milesahead/vehicles/new" element={<div>Add Vehicle (coming soon)</div>} />
-                <Route path="/milesahead/vehicles/:id" element={<div>Vehicle Detail (coming soon)</div>} />
+                <Route path="/tuskdue" element={<DashboardPage />} />
+                <Route path="/tuskdue/tasks/:taskId" element={<TaskDetailPage />} />
+                <Route path="/wrenchdue" element={<div>WrenchDue Dashboard (coming soon)</div>} />
+                <Route path="/wrenchdue/vehicles/new" element={<div>Add Vehicle (coming soon)</div>} />
+                <Route path="/wrenchdue/vehicles/:id" element={<div>Vehicle Detail (coming soon)</div>} />
               </Route>
             </Route>
 

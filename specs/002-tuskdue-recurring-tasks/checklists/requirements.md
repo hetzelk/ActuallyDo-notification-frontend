@@ -1,4 +1,4 @@
-# Specification Quality Checklist: NagMe Recurring Tasks
+# Specification Quality Checklist: TuskDue Recurring Tasks
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-03-22

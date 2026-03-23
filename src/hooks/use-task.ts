@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getTask, updateTask } from '@/api/nagme'
+import { getTask, updateTask } from '@/api/tuskdue'
 import type { UpdateTaskRequest } from '@/lib/types'
 
 export function useTask(taskId: string) {

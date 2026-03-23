@@ -72,7 +72,7 @@ After setup, verify each of these works:
 1. `npm run dev` starts without errors on `http://localhost:5173`
 2. Navigate to `/signup` — form renders with email, password, confirm password fields
 3. Navigate to `/login` — form renders with email, password fields
-4. Navigate to `/nagme` (unauthenticated) — redirects to `/login`
+4. Navigate to `/tuskdue` (unauthenticated) — redirects to `/login`
 5. `npm test` passes all unit/component tests
 6. `npm run typecheck` exits with no errors
 7. `npm run build` produces output in `dist/` under 150 KB gzipped (JS)
@@ -84,7 +84,7 @@ After setup, verify each of these works:
 | `VITE_API_BASE` | Yes | Backend API base URL | `https://abc123.execute-api.us-east-1.amazonaws.com` |
 | `VITE_STRIPE_PK` | For payments | Stripe publishable key | `pk_test_...` |
 | `VITE_VAPID_PUBLIC_KEY` | For push | VAPID public key for push notifications | `BEl62i...` |
-| `VITE_APP_URL` | For redirects | This app's public URL | `https://app.nagme.com` |
+| `VITE_APP_URL` | For redirects | This app's public URL | `https://app.tuskdue.com` |
 
 ## Project Structure Overview
 

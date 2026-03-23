@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { listTasks, completeTask, snoozeTask, deleteTask } from '@/api/nagme'
+import { listTasks, completeTask, snoozeTask, deleteTask } from '@/api/tuskdue'
 import type { Task, TaskListResponse } from '@/lib/types'
 import { useToast } from './use-toast'
 

@@ -32,5 +32,5 @@
 ## Notes
 
 - All items pass validation. The spec is derived from comprehensive existing documentation in the `overview/` folder which pre-answered most clarification questions.
-- MilesAhead user stories (US9, US10) are included but noted as dependent on backend (Phase 3) — the UI can be built and tested with mocked APIs.
+- WrenchDue user stories (US9, US10) are included but noted as dependent on backend (Phase 3) — the UI can be built and tested with mocked APIs.
 - The spec intentionally covers the full platform scope (all apps, all features) since the user confirmed "Full spec" scope.

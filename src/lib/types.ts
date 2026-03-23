@@ -46,7 +46,7 @@ export interface UpdateSettingsRequest {
   apps?: Record<string, Partial<Pick<AppSettings, 'enabled' | 'frequency' | 'preferred_day'>>>
 }
 
-// NagMe types
+// TuskDue types
 export type TaskStatus = 'active' | 'snoozed' | 'backlog' | 'completed'
 export type TaskGroup = 'overdue' | 'due-today' | 'snoozed' | 'upcoming'
 
@@ -91,7 +91,7 @@ export interface ActivateRequest {
   due_date: string
 }
 
-// MilesAhead types
+// WrenchDue types
 export interface Vehicle {
   vehicle_id: string
   year: number

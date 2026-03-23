@@ -1,13 +1,13 @@
-# Feature Specification: NagMe Recurring Tasks
+# Feature Specification: TuskDue Recurring Tasks
 
-**Feature Branch**: `002-nagme-recurring-tasks`
+**Feature Branch**: `002-tuskdue-recurring-tasks`
 **Created**: 2026-03-22
 **Status**: Draft
-**Input**: User description: "Add recurring/repeating tasks to NagMe so users can be reminded about repeating obligations like monthly bills, weekly chores, and annual renewals."
+**Input**: User description: "Add recurring/repeating tasks to TuskDue so users can be reminded about repeating obligations like monthly bills, weekly chores, and annual renewals."
 
 ## Assumptions
 
-- Recurring tasks build on the existing NagMe task model — a recurring task is a regular task with additional recurrence metadata
+- Recurring tasks build on the existing TuskDue task model — a recurring task is a regular task with additional recurrence metadata
 - When a recurring task is completed, the system (backend) automatically creates the next occurrence with the correct future due date — the frontend does not create the next task itself
 - Recurrence is anchored to the original schedule, not the completion date. Example: a monthly task due on the 1st that is completed late on the 10th still generates the next occurrence for the 1st of the following month
 - Snoozing a recurring task only affects the current occurrence — completing it still generates the next occurrence on the original schedule
@@ -135,7 +135,7 @@ A user snoozes their recurring "Water plants" task because they're on vacation. 
 ### Key Entities
 
 - **Recurrence Rule**: Defines the repeat pattern for a task — includes frequency (daily/weekly/monthly/yearly), interval (every N periods), optional day anchoring (day of week for weekly, day of month for monthly), and end condition (forever, until date, or count)
-- **Recurring Task**: A standard NagMe task extended with a recurrence rule. Each occurrence is a separate task linked by a shared recurrence group identifier
+- **Recurring Task**: A standard TuskDue task extended with a recurrence rule. Each occurrence is a separate task linked by a shared recurrence group identifier
 - **Recurrence Group**: A logical grouping connecting all occurrences of the same recurring task, enabling "delete all future" and recurrence history
 
 ## Success Criteria *(mandatory)*

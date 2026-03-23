@@ -1,6 +1,6 @@
 import { useSettings } from './use-settings'
 
-export function useTier(appId: string = 'nagme') {
+export function useTier(appId: string = 'tuskdue') {
   const settingsQuery = useSettings()
   const tier = settingsQuery.data?.apps[appId]?.tier ?? 'free'
 

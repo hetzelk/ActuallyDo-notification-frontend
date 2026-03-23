@@ -63,7 +63,7 @@ Adding new dependencies MUST be justified — prefer the existing stack. No jQue
 
 ### Multi-App Repository Structure
 
-This repository hosts multiple apps (NagMe, MilesAhead, and future apps) under a shared codebase. Shared platform code (auth, settings, layout, action results) MUST be co-located and imported — not duplicated per app. Each app MUST have its own route namespace and page components.
+This repository hosts multiple apps (TuskDue, WrenchDue, and future apps) under a shared codebase. Shared platform code (auth, settings, layout, action results) MUST be co-located and imported — not duplicated per app. Each app MUST have its own route namespace and page components.
 
 ### Commit Discipline
 

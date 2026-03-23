@@ -32,10 +32,10 @@
 **Rationale**: Handles caching, background refetching, optimistic updates, and request deduplication. This keeps components simple — they just call hooks. Query keys follow the pattern `['tasks', status]`, `['task', taskId]`, `['settings']`, `['vehicles']`.
 
 **Query key conventions**:
-- `['tasks', { status }]` — NagMe task list by tab
+- `['tasks', { status }]` — TuskDue task list by tab
 - `['task', taskId]` — Single task detail
 - `['settings']` — Platform settings
-- `['vehicles']` — MilesAhead vehicle list
+- `['vehicles']` — WrenchDue vehicle list
 - `['vehicle', vehicleId]` — Single vehicle with maintenance items
 - `['maintenance-log', vehicleId]` — Maintenance history
 
@@ -72,14 +72,14 @@
 /login/magic-link         → MagicLinkPage
 /action-result            → ActionResultPage
 /settings                 → SettingsPage (authenticated)
-/nagme                    → NagMe DashboardPage (authenticated, default)
-/nagme/tasks/:taskId      → NagMe TaskDetailPage (authenticated)
-/milesahead               → MilesAhead DashboardPage (authenticated)
-/milesahead/vehicles/new  → AddVehiclePage (authenticated)
-/milesahead/vehicles/:id  → VehicleDetailPage (authenticated)
+/tuskdue                    → TuskDue DashboardPage (authenticated, default)
+/tuskdue/tasks/:taskId      → TuskDue TaskDetailPage (authenticated)
+/wrenchdue               → WrenchDue DashboardPage (authenticated)
+/wrenchdue/vehicles/new  → AddVehiclePage (authenticated)
+/wrenchdue/vehicles/:id  → VehicleDetailPage (authenticated)
 ```
 
-**Rationale**: App-specific route prefixes (`/nagme`, `/milesahead`) keep namespaces clean. Shared routes (`/login`, `/settings`) are at the root level since they serve all apps. Default redirect from `/` goes to the user's primary app (NagMe by default).
+**Rationale**: App-specific route prefixes (`/tuskdue`, `/wrenchdue`) keep namespaces clean. Shared routes (`/login`, `/settings`) are at the root level since they serve all apps. Default redirect from `/` goes to the user's primary app (TuskDue by default).
 
 ## R6: Form Handling with React Hook Form + Zod
 

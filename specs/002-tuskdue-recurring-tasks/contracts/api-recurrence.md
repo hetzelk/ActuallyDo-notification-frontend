@@ -1,10 +1,10 @@
 # API Recurrence Contract Extensions
 
-**Feature**: 002-nagme-recurring-tasks
+**Feature**: 002-tuskdue-recurring-tasks
 **Date**: 2026-03-22
 **Status**: Frontend-defined (backend not yet implemented)
 
-This documents the API contract changes required for recurring task support. These extend the existing NagMe task endpoints documented in `overview/api-integration.md`.
+This documents the API contract changes required for recurring task support. These extend the existing TuskDue task endpoints documented in `overview/api-integration.md`.
 
 ---
 
@@ -13,7 +13,7 @@ This documents the API contract changes required for recurring task support. The
 ### 1. Create Task (extended)
 
 ```
-POST /apps/nagme/tasks
+POST /apps/tuskdue/tasks
 Authorization: Bearer {id_token}
 Content-Type: application/json
 ```
@@ -110,7 +110,7 @@ Task objects in GET responses now include optional recurrence fields:
 ### 3. Update Task (extended)
 
 ```
-PUT /apps/nagme/tasks/{task_id}
+PUT /apps/tuskdue/tasks/{task_id}
 Authorization: Bearer {id_token}
 Content-Type: application/json
 ```
@@ -152,7 +152,7 @@ This converts the task to a regular one-time task. The recurrence indicator disa
 ### 4. Complete Task (extended response)
 
 ```
-POST /apps/nagme/tasks/{task_id}/complete
+POST /apps/tuskdue/tasks/{task_id}/complete
 Authorization: Bearer {id_token}
 ```
 
@@ -202,7 +202,7 @@ Authorization: Bearer {id_token}
 ### 5. Delete Task (extended)
 
 ```
-DELETE /apps/nagme/tasks/{task_id}?stop_recurrence=true
+DELETE /apps/tuskdue/tasks/{task_id}?stop_recurrence=true
 Authorization: Bearer {id_token}
 ```
 
@@ -252,10 +252,10 @@ For development, MSW handlers should simulate:
 
 | Method | Path | Changes | Notes |
 |--------|------|---------|-------|
-| POST | `/apps/nagme/tasks` | Request: optional `recurrence` field | Create recurring task |
-| GET | `/apps/nagme/tasks?status={s}` | Response: tasks include recurrence fields | Display recurrence indicator |
-| GET | `/apps/nagme/tasks/{id}` | Response: task includes recurrence fields | Task detail with recurrence config |
-| PUT | `/apps/nagme/tasks/{id}` | Request: optional `recurrence` field (null to disable) | Edit/disable recurrence |
-| DELETE | `/apps/nagme/tasks/{id}` | Query param: `stop_recurrence` | Delete with recurrence control |
-| POST | `/apps/nagme/tasks/{id}/complete` | Response: optional `next_occurrence` | Completion with next task info |
-| POST | `/apps/nagme/tasks/{id}/snooze` | No changes | Snooze affects current only |
+| POST | `/apps/tuskdue/tasks` | Request: optional `recurrence` field | Create recurring task |
+| GET | `/apps/tuskdue/tasks?status={s}` | Response: tasks include recurrence fields | Display recurrence indicator |
+| GET | `/apps/tuskdue/tasks/{id}` | Response: task includes recurrence fields | Task detail with recurrence config |
+| PUT | `/apps/tuskdue/tasks/{id}` | Request: optional `recurrence` field (null to disable) | Edit/disable recurrence |
+| DELETE | `/apps/tuskdue/tasks/{id}` | Query param: `stop_recurrence` | Delete with recurrence control |
+| POST | `/apps/tuskdue/tasks/{id}/complete` | Response: optional `next_occurrence` | Completion with next task info |
+| POST | `/apps/tuskdue/tasks/{id}/snooze` | No changes | Snooze affects current only |

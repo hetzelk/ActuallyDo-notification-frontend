@@ -69,8 +69,8 @@ export const handlers = [
       push_subscription: null,
       email_disabled: false,
       apps: {
-        nagme: { enabled: true, frequency: 'daily', preferred_day: null, app_name: 'NagMe', tier: 'free' },
-        milesahead: { enabled: true, frequency: 'weekly', preferred_day: 'monday', app_name: 'MilesAhead', tier: 'free' },
+        tuskdue: { enabled: true, frequency: 'daily', preferred_day: null, app_name: 'TuskDue', tier: 'free' },
+        wrenchdue: { enabled: true, frequency: 'weekly', preferred_day: 'monday', app_name: 'WrenchDue', tier: 'free' },
       },
     })
   }),
@@ -80,8 +80,8 @@ export const handlers = [
     return HttpResponse.json({ message: 'Settings updated' })
   }),
 
-  // === NagMe Tasks ===
-  http.get(`${API}/apps/nagme/tasks`, async ({ request }) => {
+  // === TuskDue Tasks ===
+  http.get(`${API}/apps/tuskdue/tasks`, async ({ request }) => {
     await delay(250)
     const url = new URL(request.url)
     const status = url.searchParams.get('status') || 'active'
@@ -96,7 +96,7 @@ export const handlers = [
     return HttpResponse.json({ data: { tasks: filtered, count: filtered.length } })
   }),
 
-  http.get(`${API}/apps/nagme/tasks/:taskId`, async ({ params }) => {
+  http.get(`${API}/apps/tuskdue/tasks/:taskId`, async ({ params }) => {
     await delay(150)
     const task = tasks.find((t) => t.task_id === params.taskId)
     if (!task) {
@@ -108,7 +108,7 @@ export const handlers = [
     return HttpResponse.json({ data: task })
   }),
 
-  http.post(`${API}/apps/nagme/tasks`, async ({ request }) => {
+  http.post(`${API}/apps/tuskdue/tasks`, async ({ request }) => {
     await delay(300)
     const body = await request.json() as { title: string; notes?: string; due_date?: string }
     const newTask: Task = {
@@ -130,7 +130,7 @@ export const handlers = [
     )
   }),
 
-  http.put(`${API}/apps/nagme/tasks/:taskId`, async ({ params, request }) => {
+  http.put(`${API}/apps/tuskdue/tasks/:taskId`, async ({ params, request }) => {
     await delay(200)
     const idx = tasks.findIndex((t) => t.task_id === params.taskId)
     if (idx === -1) {
@@ -141,13 +141,13 @@ export const handlers = [
     return HttpResponse.json({ data: tasks[idx], message: 'Task updated' })
   }),
 
-  http.delete(`${API}/apps/nagme/tasks/:taskId`, async ({ params }) => {
+  http.delete(`${API}/apps/tuskdue/tasks/:taskId`, async ({ params }) => {
     await delay(200)
     tasks = tasks.filter((t) => t.task_id !== params.taskId)
     return HttpResponse.json({ message: 'Task deleted' })
   }),
 
-  http.post(`${API}/apps/nagme/tasks/:taskId/complete`, async ({ params }) => {
+  http.post(`${API}/apps/tuskdue/tasks/:taskId/complete`, async ({ params }) => {
     await delay(200)
     const task = tasks.find((t) => t.task_id === params.taskId)
     if (!task) {
@@ -161,7 +161,7 @@ export const handlers = [
     })
   }),
 
-  http.post(`${API}/apps/nagme/tasks/:taskId/snooze`, async ({ params, request }) => {
+  http.post(`${API}/apps/tuskdue/tasks/:taskId/snooze`, async ({ params, request }) => {
     await delay(200)
     const task = tasks.find((t) => t.task_id === params.taskId)
     if (!task) {
@@ -178,7 +178,7 @@ export const handlers = [
     })
   }),
 
-  http.post(`${API}/apps/nagme/tasks/:taskId/activate`, async ({ params, request }) => {
+  http.post(`${API}/apps/tuskdue/tasks/:taskId/activate`, async ({ params, request }) => {
     await delay(200)
     const task = tasks.find((t) => t.task_id === params.taskId)
     if (!task) {

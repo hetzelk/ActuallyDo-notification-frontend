@@ -10,8 +10,8 @@ export const BREAKPOINTS = {
 } as const
 
 export const FREE_TIER_LIMITS = {
-  nagme: { maxActiveTasks: 15 },
-  milesahead: { maxVehicles: 1 },
+  tuskdue: { maxActiveTasks: 15 },
+  wrenchdue: { maxVehicles: 1 },
 } as const
 
 export const SNOOZE_OPTIONS = {

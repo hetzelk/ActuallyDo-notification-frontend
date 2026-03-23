@@ -42,7 +42,7 @@ Returned by `GET /platform/settings`.
 | reminder_time | string or null | HH:MM format (e.g., "09:00"). Null if never set. |
 | push_subscription | PushSubscription or null | Null if not subscribed |
 | email_disabled | boolean | True if email bounced — show warning banner |
-| apps | Record<string, AppSettings> | Keyed by app_id (e.g., "nagme", "milesahead") |
+| apps | Record<string, AppSettings> | Keyed by app_id (e.g., "tuskdue", "wrenchdue") |
 
 ### AppSettings
 
@@ -51,14 +51,14 @@ Returned by `GET /platform/settings`.
 | enabled | boolean | Whether the app sends notifications |
 | frequency | "daily" or "weekly" or "monthly" | Notification frequency |
 | preferred_day | string or null | Day for weekly (Monday-Sunday) or monthly (1st, 15th) |
-| app_name | string | Display name (e.g., "NagMe") |
+| app_name | string | Display name (e.g., "TuskDue") |
 | tier | "free" or "pro" | User's subscription tier for this app |
 
-## NagMe Types
+## TuskDue Types
 
 ### Task
 
-Returned by `GET /apps/nagme/tasks` (in array) and `GET /apps/nagme/tasks/{id}`.
+Returned by `GET /apps/tuskdue/tasks` (in array) and `GET /apps/tuskdue/tasks/{id}`.
 
 | Field | Type | Notes |
 |-------|------|-------|
@@ -111,7 +111,7 @@ All fields optional — send only what changed.
 |-------|------|-------|
 | due_date | string (YYYY-MM-DD) | Required to activate a backlog task |
 
-## MilesAhead Types
+## WrenchDue Types
 
 ### Vehicle
 

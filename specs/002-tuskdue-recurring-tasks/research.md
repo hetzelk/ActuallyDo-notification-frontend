@@ -1,6 +1,6 @@
-# Research: NagMe Recurring Tasks
+# Research: TuskDue Recurring Tasks
 
-**Feature**: 002-nagme-recurring-tasks
+**Feature**: 002-tuskdue-recurring-tasks
 **Date**: 2026-03-22
 
 ## R1: Recurrence Rule Data Model
@@ -132,10 +132,10 @@ The dialog uses a RadioGroup within a Dialog for clear, accessible selection.
 
 **Rationale**: Per Constitution Principle I (API-Contract First), we document the expected shapes before implementation. Since this is a cross-repo feature and the backend hasn't implemented recurrence yet, the frontend defines what it needs:
 
-1. **Create task with recurrence**: `POST /apps/nagme/tasks` adds optional `recurrence` field to request body
-2. **Update task recurrence**: `PUT /apps/nagme/tasks/{id}` adds optional `recurrence` field (set to null to disable)
+1. **Create task with recurrence**: `POST /apps/tuskdue/tasks` adds optional `recurrence` field to request body
+2. **Update task recurrence**: `PUT /apps/tuskdue/tasks/{id}` adds optional `recurrence` field (set to null to disable)
 3. **Complete recurring task**: Response includes `next_occurrence` object
-4. **Delete with stop_recurrence**: `DELETE /apps/nagme/tasks/{id}` adds optional `stop_recurrence` query parameter
+4. **Delete with stop_recurrence**: `DELETE /apps/tuskdue/tasks/{id}` adds optional `stop_recurrence` query parameter
 5. **Task response**: All GET endpoints include the recurrence fields when present
 
 MSW handlers will mock these behaviors for development and testing.

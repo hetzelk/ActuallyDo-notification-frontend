@@ -3,12 +3,12 @@
 **Feature Branch**: `001-notification-platform-ui`
 **Created**: 2026-03-22
 **Status**: Draft
-**Input**: User description: "Build the full UI frontend for the ActuallyDo notification platform including shared platform components (auth, settings, navigation), NagMe task management app, and MilesAhead vehicle maintenance app"
+**Input**: User description: "Build the full UI frontend for the ActuallyDo notification platform including shared platform components (auth, settings, navigation), TuskDue task management app, and WrenchDue vehicle maintenance app"
 
 ## Assumptions
 
 - The backend API is deployed separately (ActuallyDo-notification-backend repo) and accessed via a configurable base URL
-- Both NagMe and MilesAhead apps live in this single repository under a shared codebase with app-specific routes
+- Both TuskDue and WrenchDue apps live in this single repository under a shared codebase with app-specific routes
 - Email templates are rendered server-side — this spec covers only the web UI
 - Cognito handles user management — the frontend interacts via the backend's auth endpoints, not directly with Cognito
 - All apps share a single user account (one login, one settings page, app-specific dashboards)
@@ -19,7 +19,7 @@
 
 ### User Story 1 - Sign Up and First Login (Priority: P1)
 
-A new user discovers NagMe or MilesAhead and creates an account. They enter their email and password on the signup screen, are automatically logged in, and land on the app dashboard ready to use the product.
+A new user discovers TuskDue or WrenchDue and creates an account. They enter their email and password on the signup screen, are automatically logged in, and land on the app dashboard ready to use the product.
 
 **Why this priority**: Without authentication, no other feature is accessible. This is the gateway to the entire platform.
 
@@ -53,11 +53,11 @@ A returning user who doesn't remember their password uses the magic link flow. T
 
 ---
 
-### User Story 3 - NagMe Task Management (Priority: P1)
+### User Story 3 - TuskDue Task Management (Priority: P1)
 
-A user manages their todo list through NagMe. They can view active tasks (grouped by overdue, due today, snoozed, upcoming), add new tasks with optional due dates, complete tasks, snooze tasks for later, and manage a backlog of undated tasks.
+A user manages their todo list through TuskDue. They can view active tasks (grouped by overdue, due today, snoozed, upcoming), add new tasks with optional due dates, complete tasks, snooze tasks for later, and manage a backlog of undated tasks.
 
-**Why this priority**: This is the core product experience for NagMe — the primary app with a working backend. Users interact with tasks daily.
+**Why this priority**: This is the core product experience for TuskDue — the primary app with a working backend. Users interact with tasks daily.
 
 **Independent Test**: Log in, add a task with a due date, verify it appears in the Active tab, mark it as done, verify it moves to Completed tab.
 
@@ -73,7 +73,7 @@ A user manages their todo list through NagMe. They can view active tasks (groupe
 
 ---
 
-### User Story 4 - NagMe Task Detail and Editing (Priority: P2)
+### User Story 4 - TuskDue Task Detail and Editing (Priority: P2)
 
 A user clicks on a task to view and edit its details. They can change the title, notes, due date, and notification toggle. Changes auto-save with debounce. They can also delete a task from the detail view.
 
@@ -109,7 +109,7 @@ A user configures their profile settings (timezone, daily digest time), manages 
 
 ### User Story 6 - Free Tier Limits and Upgrade Prompts (Priority: P2)
 
-A free-tier NagMe user sees how many of their 15 active task slots are used. When they hit the limit, they see an upgrade prompt. Snooze options are restricted to 1/3/7 days with a locked "Custom" option showing a Pro badge.
+A free-tier TuskDue user sees how many of their 15 active task slots are used. When they hit the limit, they see an upgrade prompt. Snooze options are restricted to 1/3/7 days with a locked "Custom" option showing a Pro badge.
 
 **Why this priority**: Monetization is essential for the business but users can use the free tier fully before encountering limits.
 
@@ -142,7 +142,7 @@ A user upgrades to Pro by clicking a pricing button, completing Stripe Checkout,
 
 ### User Story 8 - Action Result Pages (Priority: P2)
 
-A user clicks an action link from a NagMe email (e.g., "Done" or "Snooze 3d") in their browser. The backend processes the action and redirects them to a confirmation screen showing the result (success, already used, expired, or error).
+A user clicks an action link from a TuskDue email (e.g., "Done" or "Snooze 3d") in their browser. The backend processes the action and redirects them to a confirmation screen showing the result (success, already used, expired, or error).
 
 **Why this priority**: This is critical to the email-first experience — most users interact via email, not the web app. But it's a simple read-only screen.
 
@@ -157,28 +157,28 @@ A user clicks an action link from a NagMe email (e.g., "Done" or "Snooze 3d") in
 
 ---
 
-### User Story 9 - MilesAhead Vehicle Dashboard (Priority: P3)
+### User Story 9 - WrenchDue Vehicle Dashboard (Priority: P3)
 
-A user manages their vehicles in MilesAhead. They can view a list of vehicles with maintenance status summaries, add new vehicles with make/model/year/mileage, update odometer readings, and view vehicle details with maintenance items.
+A user manages their vehicles in WrenchDue. They can view a list of vehicles with maintenance status summaries, add new vehicles with make/model/year/mileage, update odometer readings, and view vehicle details with maintenance items.
 
-**Why this priority**: MilesAhead backend is not yet built (Phase 3). The UI can be built now but won't be functional until the backend is ready.
+**Why this priority**: WrenchDue backend is not yet built (Phase 3). The UI can be built now but won't be functional until the backend is ready.
 
-**Independent Test**: Navigate to the MilesAhead dashboard, add a vehicle, verify it appears in the vehicle list.
+**Independent Test**: Navigate to the WrenchDue dashboard, add a vehicle, verify it appears in the vehicle list.
 
 **Acceptance Scenarios**:
 
-1. **Given** an authenticated MilesAhead user, **When** the dashboard loads, **Then** they see vehicle cards with name, estimated mileage, and maintenance status summary
+1. **Given** an authenticated WrenchDue user, **When** the dashboard loads, **Then** they see vehicle cards with name, estimated mileage, and maintenance status summary
 2. **Given** no vehicles exist, **When** the dashboard loads, **Then** the user sees an empty state with "Add your first vehicle" CTA
 3. **Given** a vehicle, **When** the user clicks "Update mileage", **Then** a modal appears with pre-filled estimated mileage for them to update
 4. **Given** a vehicle detail page, **When** it loads, **Then** maintenance items are grouped by Overdue, Coming Up, and All Clear
 
 ---
 
-### User Story 10 - MilesAhead Maintenance Logging (Priority: P3)
+### User Story 10 - WrenchDue Maintenance Logging (Priority: P3)
 
 A user logs completed maintenance on a vehicle by entering the date, mileage at completion, and optional cost/shop details (Pro only). The maintenance item's next-due estimate resets based on the new completion data.
 
-**Why this priority**: Dependent on MilesAhead backend (Phase 3). Core maintenance tracking flow.
+**Why this priority**: Dependent on WrenchDue backend (Phase 3). Core maintenance tracking flow.
 
 **Independent Test**: Open a vehicle detail, click "Log as done" on a maintenance item, fill in the form, verify the item moves to "All Clear."
 
@@ -225,7 +225,7 @@ The app is installable as a Progressive Web App. Users can add it to their home 
 ### Edge Cases
 
 - What happens when the user's session expires mid-action (e.g., completing a task)? Token refresh should fire silently; if refresh fails, queue the action and redirect to login
-- What happens when a user has both NagMe and MilesAhead enabled? The nav should show an app switcher to toggle between dashboards
+- What happens when a user has both TuskDue and WrenchDue enabled? The nav should show an app switcher to toggle between dashboards
 - What happens when a free-tier user with 15 active tasks tries to activate a backlog task? The same upgrade prompt as adding a 16th active task
 - What happens when settings auto-save fails? Show a persistent error toast with retry, revert the field to its previous value
 - What happens when a user clicks an action link but the backend is down? The action-result page shows the error state
@@ -240,7 +240,7 @@ The app is installable as a Progressive Web App. Users can add it to their home 
 - **FR-002**: System MUST authenticate users via email/password login and return JWT tokens
 - **FR-003**: System MUST support passwordless login via 6-digit magic link code
 - **FR-004**: System MUST silently refresh auth tokens before expiry and redirect to login on refresh failure
-- **FR-005**: System MUST display NagMe tasks in three tabs: Active (including snoozed), Backlog, and Completed
+- **FR-005**: System MUST display TuskDue tasks in three tabs: Active (including snoozed), Backlog, and Completed
 - **FR-006**: System MUST allow users to create tasks with a title (required), notes (optional), and due date (optional)
 - **FR-007**: System MUST allow users to complete tasks with a single click and animate the task out of the list
 - **FR-008**: System MUST allow users to snooze tasks for 1, 3, or 7 days (free tier) or custom durations (Pro tier)
@@ -249,10 +249,10 @@ The app is installable as a Progressive Web App. Users can add it to their home 
 - **FR-011**: System MUST allow users to delete tasks with a confirmation dialog
 - **FR-012**: System MUST display user settings including timezone, reminder time, app preferences, and subscription status
 - **FR-013**: System MUST auto-save settings changes with debounce and show inline "Saved" confirmation
-- **FR-014**: System MUST enforce free-tier limits (15 active tasks for NagMe, 1 vehicle for MilesAhead) with upgrade prompts
+- **FR-014**: System MUST enforce free-tier limits (15 active tasks for TuskDue, 1 vehicle for WrenchDue) with upgrade prompts
 - **FR-015**: System MUST redirect users to Stripe Checkout for Pro upgrades and reflect updated tier on return
 - **FR-016**: System MUST render action result pages (success, already-used, expired, error) for email action link redirects
-- **FR-017**: System MUST display MilesAhead vehicle dashboard with vehicle cards, mileage estimates, and maintenance status
+- **FR-017**: System MUST display WrenchDue vehicle dashboard with vehicle cards, mileage estimates, and maintenance status
 - **FR-018**: System MUST allow users to add vehicles with year, make, model, nickname, odometer, and weekly miles estimate
 - **FR-019**: System MUST allow users to update odometer readings via a quick check-in modal
 - **FR-020**: System MUST display maintenance items grouped by urgency (overdue, coming up, all clear)
@@ -264,11 +264,11 @@ The app is installable as a Progressive Web App. Users can add it to their home 
 ### Key Entities
 
 - **User**: Has an email, auth tokens, timezone, reminder time, push subscription, and one or more app registrations
-- **App Registration**: Links a user to an app (NagMe, MilesAhead) with enabled status, notification frequency, preferred day, and tier (free/pro)
-- **Task (NagMe)**: Has a title, notes, due date, status (active/snoozed/backlog/completed), notification toggle, snooze-until date, and timestamps
-- **Vehicle (MilesAhead)**: Has year, make, model, nickname, current mileage, weekly miles estimate, mileage update timestamp, and associated maintenance items
-- **Maintenance Item (MilesAhead)**: Has a name, mileage interval, time interval, last completed mileage/date, notification toggle, and completion log entries
-- **Maintenance Log Entry (MilesAhead)**: Records a completion with date, mileage, cost (Pro), shop (Pro), and notes
+- **App Registration**: Links a user to an app (TuskDue, WrenchDue) with enabled status, notification frequency, preferred day, and tier (free/pro)
+- **Task (TuskDue)**: Has a title, notes, due date, status (active/snoozed/backlog/completed), notification toggle, snooze-until date, and timestamps
+- **Vehicle (WrenchDue)**: Has year, make, model, nickname, current mileage, weekly miles estimate, mileage update timestamp, and associated maintenance items
+- **Maintenance Item (WrenchDue)**: Has a name, mileage interval, time interval, last completed mileage/date, notification toggle, and completion log entries
+- **Maintenance Log Entry (WrenchDue)**: Records a completion with date, mileage, cost (Pro), shop (Pro), and notes
 
 ## Success Criteria *(mandatory)*
 

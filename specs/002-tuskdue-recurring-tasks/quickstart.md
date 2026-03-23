@@ -1,6 +1,6 @@
-# Quickstart: NagMe Recurring Tasks
+# Quickstart: TuskDue Recurring Tasks
 
-**Feature**: 002-nagme-recurring-tasks
+**Feature**: 002-tuskdue-recurring-tasks
 **Date**: 2026-03-22
 
 ## Prerequisites
@@ -34,7 +34,7 @@ npm run dev
 - `src/lib/schemas.ts` — Added `recurrenceRuleSchema`, `recurrenceEndConditionSchema`
 
 ### API Layer
-- `src/api/nagme.ts` — Updated `createTask`, `updateTask`, `deleteTask` signatures for recurrence fields
+- `src/api/tuskdue.ts` — Updated `createTask`, `updateTask`, `deleteTask` signatures for recurrence fields
 
 ### Components
 - `src/components/tasks/RecurrenceConfig.tsx` — NEW: frequency/interval/end condition form section
@@ -47,13 +47,13 @@ npm run dev
 - `src/hooks/use-tasks.ts` — Updated: `useCompleteTask` handles `next_occurrence` in toast, `useDeleteTask` accepts `stop_recurrence` param
 
 ### Pages
-- `src/pages/nagme/DashboardPage.tsx` — Updated: passes recurrence data through to forms and handles delete dialog
+- `src/pages/tuskdue/DashboardPage.tsx` — Updated: passes recurrence data through to forms and handles delete dialog
 
 ### Utilities
 - `src/lib/utils.ts` — Added `getRecurrenceLabel()` display helper
 
 ### Mocks
-- `src/mocks/handlers.ts` — NEW: MSW handlers for all NagMe task endpoints with recurrence support
+- `src/mocks/handlers.ts` — NEW: MSW handlers for all TuskDue task endpoints with recurrence support
 - `src/mocks/browser.ts` — NEW: MSW browser setup
 
 ## Verification Checklist

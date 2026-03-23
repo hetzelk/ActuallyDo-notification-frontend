@@ -13,7 +13,7 @@ import { UpgradePrompt } from '@/components/shared/UpgradePrompt'
 import { ProTeaser } from '@/components/tasks/ProTeaser'
 import { useTasks, useCompleteTask, useSnoozeTask, useDeleteTask } from '@/hooks/use-tasks'
 import { useTier } from '@/hooks/use-tier'
-import { createTask, activateTask } from '@/api/nagme'
+import { createTask, activateTask } from '@/api/tuskdue'
 import { useToast } from '@/hooks/use-toast'
 import { ApiRequestError } from '@/api/client'
 import { FREE_TIER_LIMITS } from '@/lib/constants'
@@ -28,7 +28,7 @@ export function DashboardPage() {
   const activeTasks = useTasks('active')
   const backlogTasks = useTasks('backlog')
   const completedTasks = useTasks('completed')
-  const { isFree, isPro } = useTier('nagme')
+  const { isFree, isPro } = useTier('tuskdue')
 
   const completeTaskMutation = useCompleteTask()
   const snoozeTaskMutation = useSnoozeTask()
@@ -78,7 +78,7 @@ export function DashboardPage() {
 
   const activeCount = activeTasks.data?.data.count ?? 0
   const backlogCount = backlogTasks.data?.data.count ?? 0
-  const maxActive = FREE_TIER_LIMITS.nagme.maxActiveTasks
+  const maxActive = FREE_TIER_LIMITS.tuskdue.maxActiveTasks
   const nearLimit = isFree && activeCount >= maxActive - 2 // warning at 13+
 
   function activeTabLabel() {
@@ -94,7 +94,7 @@ export function DashboardPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">NagMe</h1>
+        <h1 className="text-2xl font-bold">TuskDue</h1>
         <Button onClick={() => setShowAddTask(true)} className="hidden sm:flex">
           <Plus className="mr-2 h-4 w-4" />
           Add task

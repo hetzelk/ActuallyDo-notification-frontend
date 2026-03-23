@@ -20,13 +20,13 @@ This documents every frontend route, what it renders, and what API calls it make
 
 | Route | Page Component | API Calls on Load | Purpose |
 |-------|---------------|-------------------|---------|
-| `/` | Redirect | None | Redirects to `/nagme` (default app) |
+| `/` | Redirect | None | Redirects to `/tuskdue` (default app) |
 | `/settings` | SettingsPage | `GET /platform/settings` | Profile, app prefs, push, subscription |
-| `/nagme` | NagMe DashboardPage | `GET /apps/nagme/tasks?status=active` | Task list with tabs |
-| `/nagme/tasks/:taskId` | NagMe TaskDetailPage | `GET /apps/nagme/tasks/:taskId` | Task detail/edit view |
-| `/milesahead` | MilesAhead DashboardPage | `GET /apps/milesahead/vehicles` | Vehicle list |
-| `/milesahead/vehicles/new` | AddVehiclePage | None | Add vehicle form |
-| `/milesahead/vehicles/:id` | VehicleDetailPage | `GET /apps/milesahead/vehicles/:id`, `GET .../items`, `GET .../log` | Vehicle detail + maintenance |
+| `/tuskdue` | TuskDue DashboardPage | `GET /apps/tuskdue/tasks?status=active` | Task list with tabs |
+| `/tuskdue/tasks/:taskId` | TuskDue TaskDetailPage | `GET /apps/tuskdue/tasks/:taskId` | Task detail/edit view |
+| `/wrenchdue` | WrenchDue DashboardPage | `GET /apps/wrenchdue/vehicles` | Vehicle list |
+| `/wrenchdue/vehicles/new` | AddVehiclePage | None | Add vehicle form |
+| `/wrenchdue/vehicles/:id` | VehicleDetailPage | `GET /apps/wrenchdue/vehicles/:id`, `GET .../items`, `GET .../log` | Vehicle detail + maintenance |
 
 ### Action Result Query Parameters
 
@@ -35,7 +35,7 @@ This documents every frontend route, what it renders, and what API calls it make
 | `status` | `success`, `already-used`, `expired`, `error` | Backend redirect after action link processing |
 | `message` | URL-encoded string | Optional context message from backend |
 
-### NagMe-Specific Result Routes (redirected from backend action handler)
+### TuskDue-Specific Result Routes (redirected from backend action handler)
 
 | Route | Purpose |
 |-------|---------|
@@ -69,35 +69,35 @@ All endpoints use JSON. Authenticated endpoints require `Authorization: Bearer {
 | GET | `/platform/settings` | — | 200 `{timezone, reminder_time, push_subscription, email_disabled, apps}` | 401, 404 |
 | PUT | `/platform/settings` | `{timezone?, reminder_time?, push_subscription?, apps?}` | 200 `{message}` | 400 invalid values |
 
-### NagMe Endpoints (auth required)
+### TuskDue Endpoints (auth required)
 
 | Method | Path | Request | Success | Key Errors |
 |--------|------|---------|---------|------------|
-| GET | `/apps/nagme/tasks?status={s}` | — | 200 `{data: {tasks[], count}}` | 401 |
-| POST | `/apps/nagme/tasks` | `{title, notes?, due_date?}` | 201 `{data: {task_id, status}, message}` | 400, 403 limit |
-| GET | `/apps/nagme/tasks/:id` | — | 200 `{data: {task}}` | 404 |
-| PUT | `/apps/nagme/tasks/:id` | `{title?, notes?, due_date?, notify?}` | 200 `{data: {task}, message}` | 404 |
-| DELETE | `/apps/nagme/tasks/:id` | — | 200 `{message}` | 404 |
-| POST | `/apps/nagme/tasks/:id/activate` | `{due_date}` | 200 `{data, message}` | 400, 403 limit |
-| POST | `/apps/nagme/tasks/:id/complete` | — | 200 `{data, message}` | 404 |
-| POST | `/apps/nagme/tasks/:id/snooze` | `{days}` | 200 `{data, message}` | 400 tier restriction |
+| GET | `/apps/tuskdue/tasks?status={s}` | — | 200 `{data: {tasks[], count}}` | 401 |
+| POST | `/apps/tuskdue/tasks` | `{title, notes?, due_date?}` | 201 `{data: {task_id, status}, message}` | 400, 403 limit |
+| GET | `/apps/tuskdue/tasks/:id` | — | 200 `{data: {task}}` | 404 |
+| PUT | `/apps/tuskdue/tasks/:id` | `{title?, notes?, due_date?, notify?}` | 200 `{data: {task}, message}` | 404 |
+| DELETE | `/apps/tuskdue/tasks/:id` | — | 200 `{message}` | 404 |
+| POST | `/apps/tuskdue/tasks/:id/activate` | `{due_date}` | 200 `{data, message}` | 400, 403 limit |
+| POST | `/apps/tuskdue/tasks/:id/complete` | — | 200 `{data, message}` | 404 |
+| POST | `/apps/tuskdue/tasks/:id/snooze` | `{days}` | 200 `{data, message}` | 400 tier restriction |
 
-### MilesAhead Endpoints (auth required, backend not yet built)
+### WrenchDue Endpoints (auth required, backend not yet built)
 
 | Method | Path | Request | Success | Key Errors |
 |--------|------|---------|---------|------------|
-| GET | `/apps/milesahead/vehicles` | — | 200 `{data: {vehicles[]}}` | 401 |
-| POST | `/apps/milesahead/vehicles` | `{year, make, model, nickname?, current_mileage, weekly_miles_estimate}` | 201 | 403 limit |
-| GET | `/apps/milesahead/vehicles/:id` | — | 200 `{data: {vehicle}}` | 404 |
-| PUT | `/apps/milesahead/vehicles/:id` | partial vehicle fields | 200 | 404 |
-| DELETE | `/apps/milesahead/vehicles/:id` | — | 200 | 404 |
-| PUT | `/apps/milesahead/vehicles/:id/mileage` | `{current_mileage, weekly_miles_estimate?}` | 200 | 400 |
-| GET | `/apps/milesahead/vehicles/:id/items` | — | 200 `{data: {items[]}}` | 404 |
-| POST | `/apps/milesahead/vehicles/:id/items` | `{name, interval_miles?, interval_months?, notes?}` | 201 | 403 free tier |
-| PUT | `/apps/milesahead/vehicles/:id/items/:itemId` | partial item fields | 200 | 404 |
-| DELETE | `/apps/milesahead/vehicles/:id/items/:itemId` | — | 200 | 404 |
-| POST | `/apps/milesahead/vehicles/:id/items/:itemId/complete` | `{completed_at, mileage_at_completion, cost?, shop?, notes?}` | 200 | 400 |
-| GET | `/apps/milesahead/vehicles/:id/log` | — | 200 `{data: {entries[]}}` | 404 |
+| GET | `/apps/wrenchdue/vehicles` | — | 200 `{data: {vehicles[]}}` | 401 |
+| POST | `/apps/wrenchdue/vehicles` | `{year, make, model, nickname?, current_mileage, weekly_miles_estimate}` | 201 | 403 limit |
+| GET | `/apps/wrenchdue/vehicles/:id` | — | 200 `{data: {vehicle}}` | 404 |
+| PUT | `/apps/wrenchdue/vehicles/:id` | partial vehicle fields | 200 | 404 |
+| DELETE | `/apps/wrenchdue/vehicles/:id` | — | 200 | 404 |
+| PUT | `/apps/wrenchdue/vehicles/:id/mileage` | `{current_mileage, weekly_miles_estimate?}` | 200 | 400 |
+| GET | `/apps/wrenchdue/vehicles/:id/items` | — | 200 `{data: {items[]}}` | 404 |
+| POST | `/apps/wrenchdue/vehicles/:id/items` | `{name, interval_miles?, interval_months?, notes?}` | 201 | 403 free tier |
+| PUT | `/apps/wrenchdue/vehicles/:id/items/:itemId` | partial item fields | 200 | 404 |
+| DELETE | `/apps/wrenchdue/vehicles/:id/items/:itemId` | — | 200 | 404 |
+| POST | `/apps/wrenchdue/vehicles/:id/items/:itemId/complete` | `{completed_at, mileage_at_completion, cost?, shop?, notes?}` | 200 | 400 |
+| GET | `/apps/wrenchdue/vehicles/:id/log` | — | 200 `{data: {entries[]}}` | 404 |
 
 ## Error Response Contract
 

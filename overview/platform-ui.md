@@ -150,7 +150,7 @@ For each registered app, show a card:
 
 ```
 ┌─────────────────────────────────────────────┐
-│  [App Icon]  NagMe                    [ON]  │
+│  [App Icon]  TuskDue                    [ON]  │
 │  Todo reminders that nag until done         │
 │                                             │
 │  Frequency:  [Daily ▾]                      │
@@ -158,7 +158,7 @@ For each registered app, show a card:
 └─────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────┐
-│  [App Icon]  MilesAhead               [ON]  │
+│  [App Icon]  WrenchDue               [ON]  │
 │  Car maintenance reminders                  │
 │                                             │
 │  Frequency:  [Weekly ▾]                     │
@@ -169,7 +169,7 @@ For each registered app, show a card:
 
 **Elements per app card** (populated from `GET /platform/settings` → `apps.{app_id}`):
 - **App name + description**: from `app_name` field (static text)
-- **Enable/disable toggle**: maps to `apps.{app_id}.enabled` — saves via `PUT /platform/settings { apps: { nagme: { enabled: true/false } } }`
+- **Enable/disable toggle**: maps to `apps.{app_id}.enabled` — saves via `PUT /platform/settings { apps: { tuskdue: { enabled: true/false } } }`
 - **Frequency dropdown**: maps to `apps.{app_id}.frequency` — valid values: "daily", "weekly", "monthly"
   - When "weekly" selected: show "Preferred day" dropdown → `preferred_day` (Monday-Sunday)
   - When "monthly" selected: show "Preferred day" dropdown → `preferred_day` (1st, 15th)
@@ -251,7 +251,7 @@ These pages are shown after a user clicks an action link from an email. They are
 - Green checkmark icon (large)
 - Heading: "Done!"
 - Message: dynamic from URL param (e.g., "'Pay electric bill' marked complete.")
-- **"Open NagMe" button** (or relevant app)
+- **"Open TuskDue" button** (or relevant app)
 - Auto-close hint: "You can close this tab."
 
 ### 3.2 Already Used
@@ -304,8 +304,8 @@ Shown inline when a user hits a free-tier limitation:
 ```
 
 Context-specific examples:
-- NagMe: "You've reached 15 active tasks. Upgrade to Pro for unlimited tasks."
-- MilesAhead: "Free accounts support 1 vehicle. Upgrade to Pro for unlimited vehicles."
+- TuskDue: "You've reached 15 active tasks. Upgrade to Pro for unlimited tasks."
+- WrenchDue: "Free accounts support 1 vehicle. Upgrade to Pro for unlimited vehicles."
 - Snooze: "Custom snooze durations are a Pro feature. Upgrade to set any number of days."
 
 ### 4.3 Toast Notifications

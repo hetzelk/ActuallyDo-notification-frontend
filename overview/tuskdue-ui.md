@@ -1,8 +1,8 @@
-# NagMe UI Specification
+# TuskDue UI Specification
 
 **App tagline**: "A todo list that won't let you forget."
-**Primary URL**: https://app.nagme.com
-**Email FROM**: reminders@nagme.com
+**Primary URL**: https://app.tuskdue.com
+**Email FROM**: reminders@tuskdue.com
 
 ---
 
@@ -14,7 +14,7 @@
 
 ### 1.1 Tab Navigation
 
-**API Call per tab**: `GET /apps/nagme/tasks?status={status}` — see [api-integration.md §3.1](api-integration.md#31-list-tasks)
+**API Call per tab**: `GET /apps/tuskdue/tasks?status={status}` — see [api-integration.md §3.1](api-integration.md#31-list-tasks)
 
 Three tabs at the top of the task list:
 
@@ -74,15 +74,15 @@ Three tabs at the top of the task list:
   - Snoozed: "Snoozed until {date}" (gray text)
   - Upcoming: "Due in {N} days"
   - Future: "Due {formatted_date}"
-- **Done button**: `POST /apps/nagme/tasks/{task_id}/complete` — see [api-integration.md §3.7](api-integration.md#37-complete-task)
+- **Done button**: `POST /apps/tuskdue/tasks/{task_id}/complete` — see [api-integration.md §3.7](api-integration.md#37-complete-task)
   - No request body needed. Animate task out on 200, show toast "Task completed"
-- **Snooze dropdown**: `POST /apps/nagme/tasks/{task_id}/snooze` with `{ "days": N }` — see [api-integration.md §3.8](api-integration.md#38-snooze-task)
+- **Snooze dropdown**: `POST /apps/tuskdue/tasks/{task_id}/snooze` with `{ "days": N }` — see [api-integration.md §3.8](api-integration.md#38-snooze-task)
   - Free: 1 day, 3 days, 7 days (server rejects other values with 400)
   - Pro: 1 day, 3 days, 7 days, Custom...
   - Custom (Pro): date picker or "N days" input
   - On 400 "Free tier allows snoozing for 1, 3, or 7 days only": show upgrade prompt
 
-**Click behavior**: clicking the task card (not buttons) navigates to `/tasks/{task_id}` → calls `GET /apps/nagme/tasks/{task_id}` — see [api-integration.md §3.3](api-integration.md#33-get-single-task)
+**Click behavior**: clicking the task card (not buttons) navigates to `/tasks/{task_id}` → calls `GET /apps/tuskdue/tasks/{task_id}` — see [api-integration.md §3.3](api-integration.md#33-get-single-task)
 
 ### 1.3 Backlog Tab
 
@@ -100,11 +100,11 @@ Three tabs at the top of the task list:
 **Elements**:
 - **Title**: task title
 - **Subtitle**: "Added {date}"
-- **Activate button**: opens date picker → `POST /apps/nagme/tasks/{task_id}/activate` with `{ "due_date": "YYYY-MM-DD" }` — see [api-integration.md §3.6](api-integration.md#36-activate-backlog-task)
+- **Activate button**: opens date picker → `POST /apps/tuskdue/tasks/{task_id}/activate` with `{ "due_date": "YYYY-MM-DD" }` — see [api-integration.md §3.6](api-integration.md#36-activate-backlog-task)
   - On 403 `limit_reached`: show upgrade prompt
 - **Overflow menu (···)**:
   - Edit → navigate to `/tasks/{task_id}`
-  - Delete → confirmation dialog → `DELETE /apps/nagme/tasks/{task_id}` — see [api-integration.md §3.5](api-integration.md#35-delete-task)
+  - Delete → confirmation dialog → `DELETE /apps/tuskdue/tasks/{task_id}` — see [api-integration.md §3.5](api-integration.md#35-delete-task)
 
 **No completion circle** — backlog tasks can't be completed directly (must activate first, or complete from edit view).
 
@@ -176,7 +176,7 @@ Three tabs at the top of the task list:
   - Only future dates or today allowed
   - Helper text: "Leave empty to add to your backlog"
 
-**API Call**: `POST /apps/nagme/tasks` — see [api-integration.md §3.2](api-integration.md#32-create-task)
+**API Call**: `POST /apps/tuskdue/tasks` — see [api-integration.md §3.2](api-integration.md#32-create-task)
 ```
 Request:  { "title": "...", "notes": "...", "due_date": "YYYY-MM-DD" }
 Success (201): { "data": { "task_id": "uuid", "status": "active|backlog" }, "message": "Task created" }
@@ -241,15 +241,15 @@ On desktop, pressing "n" (with no input focused) opens the add task form with fo
 - **Notifications toggle**: on/off (only relevant when due date is set)
 
 **API Calls**:
-- **Load**: `GET /apps/nagme/tasks/{task_id}` — see [api-integration.md §3.3](api-integration.md#33-get-single-task)
-- **Edit fields**: `PUT /apps/nagme/tasks/{task_id}` with changed fields only — see [api-integration.md §3.4](api-integration.md#34-update-task)
+- **Load**: `GET /apps/tuskdue/tasks/{task_id}` — see [api-integration.md §3.3](api-integration.md#33-get-single-task)
+- **Edit fields**: `PUT /apps/tuskdue/tasks/{task_id}` with changed fields only — see [api-integration.md §3.4](api-integration.md#34-update-task)
   ```
   Request: { "title"?, "notes"?, "due_date"?, "notify"? }  (send only what changed)
   Response (200): { "data": { ...full task object }, "message": "Task updated" }
   ```
-- **Mark as done**: `POST /apps/nagme/tasks/{task_id}/complete` → navigate back to list, show toast
-- **Snooze**: `POST /apps/nagme/tasks/{task_id}/snooze` with `{ "days": N }` → update local state, show toast
-- **Delete**: confirmation dialog → `DELETE /apps/nagme/tasks/{task_id}` → navigate back, show toast "Task deleted"
+- **Mark as done**: `POST /apps/tuskdue/tasks/{task_id}/complete` → navigate back to list, show toast
+- **Snooze**: `POST /apps/tuskdue/tasks/{task_id}/snooze` with `{ "days": N }` → update local state, show toast
+- **Delete**: confirmation dialog → `DELETE /apps/tuskdue/tasks/{task_id}` → navigate back, show toast "Task deleted"
 
 **Auto-save**: debounce 500ms on field blur/change, send only changed fields via PUT. Show inline "Saved" that fades after 2s. On 404: show error toast, redirect to list.
 
@@ -267,8 +267,8 @@ On desktop, pressing "n" (with no input focused) opens the add task form with fo
 
 ### 4.1 Task Counter
 
-**How to determine tier**: `GET /platform/settings` → `apps.nagme.tier` ("free" or "pro")
-**How to count active tasks**: from `GET /apps/nagme/tasks?status=active` → `data.count` (includes snoozed)
+**How to determine tier**: `GET /platform/settings` → `apps.tuskdue.tier` ("free" or "pro")
+**How to count active tasks**: from `GET /apps/tuskdue/tasks?status=active` → `data.count` (includes snoozed)
 
 Visible on the Active tab header when on free tier:
 
@@ -337,7 +337,7 @@ On the Active tab, if the user is free tier, subtly show a Pro teaser below the 
 
 ---
 
-## 6. Action Result Screens (NagMe-specific)
+## 6. Action Result Screens (TuskDue-specific)
 
 These are the redirect destinations after email action links are processed.
 
@@ -349,7 +349,7 @@ These are the redirect destinations after email action links are processed.
 │           "Pay electric bill"               │
 │            marked complete.                 │
 │                                             │
-│  [Open NagMe]         [Close tab]           │
+│  [Open TuskDue]         [Close tab]           │
 └─────────────────────────────────────────────┘
 ```
 
@@ -362,7 +362,7 @@ These are the redirect destinations after email action links are processed.
 │          snoozed for 3 days.                │
 │       You'll be reminded on Mar 25.         │
 │                                             │
-│  [Open NagMe]         [Close tab]           │
+│  [Open TuskDue]         [Close tab]           │
 └─────────────────────────────────────────────┘
 ```
 

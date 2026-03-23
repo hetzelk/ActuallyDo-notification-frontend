@@ -7,7 +7,7 @@ export function SignupPage() {
   const { isAuthenticated } = useAuth()
 
   if (isAuthenticated) {
-    return <Navigate to="/nagme" replace />
+    return <Navigate to="/tuskdue" replace />
   }
 
   return (

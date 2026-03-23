@@ -30,7 +30,7 @@ export function TaskDetailPage() {
 
   function handleDelete() {
     deleteMutation.mutate(taskId!, {
-      onSuccess: () => navigate('/nagme', { replace: true }),
+      onSuccess: () => navigate('/tuskdue', { replace: true }),
     })
   }
 
@@ -49,7 +49,7 @@ export function TaskDetailPage() {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground">Task not found.</p>
-        <Button variant="link" onClick={() => navigate('/nagme')}>
+        <Button variant="link" onClick={() => navigate('/tuskdue')}>
           Back to tasks
         </Button>
       </div>
@@ -64,7 +64,7 @@ export function TaskDetailPage() {
         variant="ghost"
         size="sm"
         className="mb-4"
-        onClick={() => navigate('/nagme')}
+        onClick={() => navigate('/tuskdue')}
       >
         <ArrowLeft className="mr-1 h-4 w-4" />
         Back
@@ -75,12 +75,12 @@ export function TaskDetailPage() {
         onUpdate={(data) => updateMutation.mutate(data)}
         onComplete={(id) => {
           completeMutation.mutate(id, {
-            onSuccess: () => navigate('/nagme', { replace: true }),
+            onSuccess: () => navigate('/tuskdue', { replace: true }),
           })
         }}
         onSnooze={(id, days) => {
           snoozeMutation.mutate({ taskId: id, days }, {
-            onSuccess: () => navigate('/nagme', { replace: true }),
+            onSuccess: () => navigate('/tuskdue', { replace: true }),
           })
         }}
         onDelete={() => setShowDeleteDialog(true)}

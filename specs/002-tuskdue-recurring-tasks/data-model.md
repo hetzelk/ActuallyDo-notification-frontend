@@ -1,6 +1,6 @@
-# Data Model: NagMe Recurring Tasks
+# Data Model: TuskDue Recurring Tasks
 
-**Feature**: 002-nagme-recurring-tasks
+**Feature**: 002-tuskdue-recurring-tasks
 **Date**: 2026-03-22
 
 This documents the TypeScript types added or modified for recurrence support. These mirror the expected API response shapes documented in `contracts/api-recurrence.md`.
@@ -85,7 +85,7 @@ All existing fields remain unchanged and required. The new fields are optional f
 |-------|------|-------|
 | stop_recurrence | boolean | When true, stops all future occurrences. When false or omitted, only deletes the current task — recurrence continues. |
 
-Sent as a query parameter: `DELETE /apps/nagme/tasks/{id}?stop_recurrence=true`
+Sent as a query parameter: `DELETE /apps/tuskdue/tasks/{id}?stop_recurrence=true`
 
 ## New Response Types
 

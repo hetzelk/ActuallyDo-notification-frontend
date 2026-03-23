@@ -10,7 +10,7 @@ export function MagicLinkPage() {
   const [sentToEmail, setSentToEmail] = useState<string | null>(null)
 
   if (isAuthenticated) {
-    return <Navigate to="/nagme" replace />
+    return <Navigate to="/tuskdue" replace />
   }
 
   return (
