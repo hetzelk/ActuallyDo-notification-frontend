@@ -1,4 +1,4 @@
-import type { Task } from '@/lib/types'
+import type { Task, Vehicle } from '@/lib/types'
 import { addDays, subDays, format } from 'date-fns'
 
 const today = new Date()
@@ -165,5 +165,19 @@ export const mockTasks: Task[] = [
     created_at: subDays(today, 25).toISOString(),
     completed_at: subDays(today, 21).toISOString(),
     tags: [],
+  },
+]
+
+export const mockVehicles: Vehicle[] = [
+  {
+    vehicle_id: 'vehicle-001',
+    year: 2019,
+    make: 'Honda',
+    model: 'Civic',
+    nickname: 'Daily Driver',
+    current_mileage: 85200,
+    weekly_miles_estimate: 200,
+    mileage_updated_at: subDays(today, 3).toISOString(),
+    created_at: subDays(today, 180).toISOString(),
   },
 ]

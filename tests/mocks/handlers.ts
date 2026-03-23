@@ -1,11 +1,12 @@
 import { http, HttpResponse, delay } from 'msw'
-import { mockTasks } from './data'
-import type { Task } from '@/lib/types'
+import { mockTasks, mockVehicles } from './data'
+import type { Task, Vehicle } from '@/lib/types'
 
 const API = import.meta.env.VITE_API_BASE || 'http://localhost:3000'
 
-// Mutable copy so mutations persist during the session
+// Mutable copies so mutations persist during the session
 let tasks = structuredClone(mockTasks)
+let vehicles = structuredClone(mockVehicles)
 
 // Fake JWT — just enough to decode an email from payload
 function makeFakeJwt(email: string): string {
@@ -193,5 +194,76 @@ export const handlers = [
       data: { task_id: task.task_id, status: 'active', due_date: body.due_date },
       message: 'Task activated',
     })
+  }),
+
+  // === WrenchDue Vehicles ===
+  http.get(`${API}/apps/wrenchdue/vehicles`, async () => {
+    await delay(250)
+    return HttpResponse.json({ data: { vehicles } })
+  }),
+
+  http.get(`${API}/apps/wrenchdue/vehicles/:vehicleId`, async ({ params }) => {
+    await delay(150)
+    const vehicle = vehicles.find((v) => v.vehicle_id === params.vehicleId)
+    if (!vehicle) {
+      return HttpResponse.json({ error: 'not_found', message: 'Vehicle not found' }, { status: 404 })
+    }
+    return HttpResponse.json({ data: { vehicle } })
+  }),
+
+  http.post(`${API}/apps/wrenchdue/vehicles`, async ({ request }) => {
+    await delay(300)
+    const body = await request.json() as {
+      year: number; make: string; model: string; nickname?: string;
+      current_mileage: number; weekly_miles_estimate: number
+    }
+    const newVehicle: Vehicle = {
+      vehicle_id: `vehicle-${Date.now()}`,
+      year: body.year,
+      make: body.make,
+      model: body.model,
+      nickname: body.nickname || null,
+      current_mileage: body.current_mileage,
+      weekly_miles_estimate: body.weekly_miles_estimate,
+      mileage_updated_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+    }
+    vehicles.push(newVehicle)
+    return HttpResponse.json(
+      { data: { vehicle_id: newVehicle.vehicle_id }, message: 'Vehicle created' },
+      { status: 201 },
+    )
+  }),
+
+  http.put(`${API}/apps/wrenchdue/vehicles/:vehicleId`, async ({ params, request }) => {
+    await delay(200)
+    const idx = vehicles.findIndex((v) => v.vehicle_id === params.vehicleId)
+    if (idx === -1) {
+      return HttpResponse.json({ error: 'not_found', message: 'Vehicle not found' }, { status: 404 })
+    }
+    const body = await request.json() as Partial<Vehicle>
+    vehicles[idx] = { ...vehicles[idx], ...body }
+    return HttpResponse.json({ message: 'Vehicle updated' })
+  }),
+
+  http.delete(`${API}/apps/wrenchdue/vehicles/:vehicleId`, async ({ params }) => {
+    await delay(200)
+    vehicles = vehicles.filter((v) => v.vehicle_id !== params.vehicleId)
+    return HttpResponse.json({ message: 'Vehicle deleted' })
+  }),
+
+  http.put(`${API}/apps/wrenchdue/vehicles/:vehicleId/mileage`, async ({ params, request }) => {
+    await delay(200)
+    const vehicle = vehicles.find((v) => v.vehicle_id === params.vehicleId)
+    if (!vehicle) {
+      return HttpResponse.json({ error: 'not_found', message: 'Vehicle not found' }, { status: 404 })
+    }
+    const body = await request.json() as { current_mileage: number; weekly_miles_estimate?: number }
+    vehicle.current_mileage = body.current_mileage
+    vehicle.mileage_updated_at = new Date().toISOString()
+    if (body.weekly_miles_estimate !== undefined) {
+      vehicle.weekly_miles_estimate = body.weekly_miles_estimate
+    }
+    return HttpResponse.json({ message: 'Mileage updated' })
   }),
 ]

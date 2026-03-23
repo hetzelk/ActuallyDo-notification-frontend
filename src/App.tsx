@@ -11,6 +11,8 @@ import { ActionResultPage } from '@/pages/ActionResultPage'
 import { DashboardPage } from '@/pages/tuskdue/DashboardPage'
 import { TaskDetailPage } from '@/pages/tuskdue/TaskDetailPage'
 import { SettingsPage } from '@/pages/SettingsPage'
+import { WrenchDueDashboardPage } from '@/pages/wrenchdue/DashboardPage'
+import { AddVehiclePage } from '@/pages/wrenchdue/AddVehiclePage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,8 +42,8 @@ function App() {
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/tuskdue" element={<DashboardPage />} />
                 <Route path="/tuskdue/tasks/:taskId" element={<TaskDetailPage />} />
-                <Route path="/wrenchdue" element={<div>WrenchDue Dashboard (coming soon)</div>} />
-                <Route path="/wrenchdue/vehicles/new" element={<div>Add Vehicle (coming soon)</div>} />
+                <Route path="/wrenchdue" element={<WrenchDueDashboardPage />} />
+                <Route path="/wrenchdue/vehicles/new" element={<AddVehiclePage />} />
                 <Route path="/wrenchdue/vehicles/:id" element={<div>Vehicle Detail (coming soon)</div>} />
               </Route>
             </Route>
