@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom'
-import { Settings, LogOut, ArrowLeftRight, CheckSquare, Wrench } from 'lucide-react'
+import { Settings, LogOut, CheckSquare, Wrench } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -58,7 +58,6 @@ export function Navbar() {
                 <Settings className="h-4 w-4" />
                 Settings
               </DropdownMenuItem>
-              <AppSwitcherItems currentApp={currentApp} navigate={navigate} />
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout}>
                 <LogOut className="h-4 w-4" />
@@ -69,24 +68,5 @@ export function Navbar() {
         </div>
       </div>
     </header>
-  )
-}
-
-function AppSwitcherItems({ currentApp, navigate }: { currentApp: string; navigate: ReturnType<typeof useNavigate> }) {
-  const otherApps = Object.entries(APP_META).filter(([key]) => key !== currentApp)
-
-  if (otherApps.length === 0) return null
-
-  return (
-    <>
-      <DropdownMenuSeparator />
-      <DropdownMenuLabel>Switch App</DropdownMenuLabel>
-      {otherApps.map(([key, app]) => (
-        <DropdownMenuItem key={key} onClick={() => navigate(app.path)}>
-          <ArrowLeftRight className="h-4 w-4" />
-          {app.label}
-        </DropdownMenuItem>
-      ))}
-    </>
   )
 }
