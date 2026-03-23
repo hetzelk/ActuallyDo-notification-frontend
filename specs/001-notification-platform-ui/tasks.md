@@ -127,12 +127,12 @@
 
 ### Implementation for User Story 4
 
-- [ ] T052 [P] [US4] Create useTask hook for single task fetch via TanStack Query in src/hooks/use-task.ts
-- [ ] T053 [US4] Create TaskDetail component with editable title, notes, due date picker, notify toggle, status line, Mark as Done, Snooze, Delete buttons in src/components/tasks/TaskDetail.tsx
-- [ ] T054 [US4] Implement auto-save with React Hook Form watch() + 500ms debounce + "Saved" indicator in TaskDetail
-- [ ] T055 [US4] Create TaskDetailPage with back navigation, delete confirmation dialog, routing in src/pages/nagme/TaskDetailPage.tsx
-- [ ] T056 [US4] Add MSW handlers for GET /apps/nagme/tasks/:id and PUT /apps/nagme/tasks/:id in tests/mocks/handlers.ts
-- [ ] T057 [US4] Add route for /nagme/tasks/:taskId in src/App.tsx and make TaskCard clickable to navigate to detail
+- [X] T052 [P] [US4] Create useTask hook for single task fetch via TanStack Query in src/hooks/use-task.ts
+- [X] T053 [US4] Create TaskDetail component with editable title, notes, due date picker, notify toggle, status line, Mark as Done, Snooze, Delete buttons in src/components/tasks/TaskDetail.tsx
+- [X] T054 [US4] Implement auto-save with React Hook Form watch() + 500ms debounce + "Saved" indicator in TaskDetail
+- [X] T055 [US4] Create TaskDetailPage with back navigation, delete confirmation dialog, routing in src/pages/nagme/TaskDetailPage.tsx
+- [X] T056 [US4] Add MSW handlers for GET /apps/nagme/tasks/:id and PUT /apps/nagme/tasks/:id in tests/mocks/handlers.ts
+- [X] T057 [US4] Add route for /nagme/tasks/:taskId in src/App.tsx and make TaskCard clickable to navigate to detail
 
 **Checkpoint**: Task detail view with auto-save, delete, complete, snooze all working.
 
@@ -146,15 +146,15 @@
 
 ### Implementation for User Story 5
 
-- [ ] T058 [P] [US5] Create settings API functions (getSettings, updateSettings) in src/api/settings.ts
-- [ ] T059 [P] [US5] Create useSettings hook with TanStack Query for settings fetch and mutation with debounced auto-save in src/hooks/use-settings.ts
-- [ ] T060 [US5] Create ProfileSection component with read-only email, timezone searchable dropdown, reminder time picker, auto-save in src/components/settings/ProfileSection.tsx
-- [ ] T061 [US5] Create AppPreferenceCard component with enable/disable toggle, frequency dropdown, preferred day dropdown, tier badge in src/components/settings/AppPreferenceCard.tsx
-- [ ] T062 [US5] Create AppPreferencesSection component rendering AppPreferenceCard for each registered app in src/components/settings/AppPreferencesSection.tsx
-- [ ] T063 [US5] Create SubscriptionSection component with free/pro states, pricing buttons, manage/cancel for Pro in src/components/settings/SubscriptionSection.tsx
-- [ ] T064 [US5] Create EmailDisabledBanner warning component for bounced emails in src/components/settings/EmailDisabledBanner.tsx
-- [ ] T065 [US5] Build SettingsPage assembling all settings sections with section headings in src/pages/SettingsPage.tsx
-- [ ] T066 [US5] Add MSW handlers for GET /platform/settings and PUT /platform/settings in tests/mocks/handlers.ts
+- [X] T058 [P] [US5] Create settings API functions (getSettings, updateSettings) in src/api/settings.ts
+- [X] T059 [P] [US5] Create useSettings hook with TanStack Query for settings fetch and mutation with debounced auto-save in src/hooks/use-settings.ts
+- [X] T060 [US5] Create ProfileSection component with read-only email, timezone searchable dropdown, reminder time picker, auto-save in src/components/settings/ProfileSection.tsx
+- [X] T061 [US5] Create AppPreferenceCard component with enable/disable toggle, frequency dropdown, preferred day dropdown, tier badge in src/components/settings/AppPreferenceCard.tsx
+- [X] T062 [US5] Create AppPreferencesSection component rendering AppPreferenceCard for each registered app in src/components/settings/AppPreferencesSection.tsx
+- [X] T063 [US5] Create SubscriptionSection component with free/pro states, pricing buttons, manage/cancel for Pro in src/components/settings/SubscriptionSection.tsx
+- [X] T064 [US5] Create EmailDisabledBanner warning component for bounced emails in src/components/settings/EmailDisabledBanner.tsx
+- [X] T065 [US5] Build SettingsPage assembling all settings sections with section headings in src/pages/SettingsPage.tsx
+- [X] T066 [US5] Add MSW handlers for GET /platform/settings and PUT /platform/settings in tests/mocks/handlers.ts
 
 **Checkpoint**: Settings page fully functional with auto-save, all sections rendering correctly.
 
@@ -168,13 +168,13 @@
 
 ### Implementation for User Story 6
 
-- [ ] T067 [P] [US6] Create useTier hook deriving tier from settings, exposing isFree/isPro and limit checks in src/hooks/use-tier.ts
-- [ ] T068 [US6] Create UpgradePrompt component with context-specific messaging and upgrade button in src/components/shared/UpgradePrompt.tsx
-- [ ] T069 [US6] Create TierBadge component showing "Free" or "Pro" with appropriate styling in src/components/shared/TierBadge.tsx
-- [ ] T070 [US6] Add free-tier task counter to Active tab header ("Active (12 of 15)") with warning color at 13+ in DashboardPage
-- [ ] T071 [US6] Add 403 limit_reached handling to AddTaskForm and activate flow — show UpgradePrompt on limit
-- [ ] T072 [US6] Update SnoozeDropdown to show locked "Custom... Pro" option for free-tier users
-- [ ] T073 [US6] Add Pro teaser card below Active tab task list for free-tier users (heads-up feature promo) in src/components/tasks/ProTeaser.tsx
+- [X] T067 [P] [US6] Create useTier hook deriving tier from settings, exposing isFree/isPro and limit checks in src/hooks/use-tier.ts
+- [X] T068 [US6] Create UpgradePrompt component with context-specific messaging and upgrade button in src/components/shared/UpgradePrompt.tsx
+- [X] T069 [US6] Create TierBadge component showing "Free" or "Pro" with appropriate styling in src/components/shared/TierBadge.tsx
+- [X] T070 [US6] Add free-tier task counter to Active tab header ("Active (12 of 15)") with warning color at 13+ in DashboardPage
+- [X] T071 [US6] Add 403 limit_reached handling to AddTaskForm and activate flow — show UpgradePrompt on limit
+- [X] T072 [US6] Update SnoozeDropdown to show locked "Custom... Pro" option for free-tier users
+- [X] T073 [US6] Add Pro teaser card below Active tab task list for free-tier users (heads-up feature promo) in src/components/tasks/ProTeaser.tsx
 
 **Checkpoint**: Free-tier limits visible and enforced in UI, upgrade prompts show at boundaries.
 
@@ -205,11 +205,11 @@
 
 ### Implementation for User Story 8
 
-- [ ] T078 [P] [US8] Create ActionResultSuccess component with green checkmark, "Done!" heading, dynamic message in src/components/shared/ActionResult.tsx
-- [ ] T079 [P] [US8] Create ActionResultAlreadyUsed component with amber icon, "Already processed" heading in src/components/shared/ActionResult.tsx
-- [ ] T080 [P] [US8] Create ActionResultExpired component with gray clock, "Link expired" heading in src/components/shared/ActionResult.tsx
-- [ ] T081 [P] [US8] Create ActionResultError component with red warning, "Something went wrong" heading in src/components/shared/ActionResult.tsx
-- [ ] T082 [US8] Build ActionResultPage reading status and message from query params, rendering the correct variant in src/pages/ActionResultPage.tsx
+- [X] T078 [P] [US8] Create ActionResultSuccess component with green checkmark, "Done!" heading, dynamic message in src/components/shared/ActionResult.tsx
+- [X] T079 [P] [US8] Create ActionResultAlreadyUsed component with amber icon, "Already processed" heading in src/components/shared/ActionResult.tsx
+- [X] T080 [P] [US8] Create ActionResultExpired component with gray clock, "Link expired" heading in src/components/shared/ActionResult.tsx
+- [X] T081 [P] [US8] Create ActionResultError component with red warning, "Something went wrong" heading in src/components/shared/ActionResult.tsx
+- [X] T082 [US8] Build ActionResultPage reading status and message from query params, rendering the correct variant in src/pages/ActionResultPage.tsx
 
 **Checkpoint**: All four action result states render correctly from query params.
 
