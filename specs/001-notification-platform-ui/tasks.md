@@ -246,15 +246,15 @@
 
 ### Implementation for User Story 10
 
-- [ ] T093 [P] [US10] Add maintenance API functions (listItems, createItem, updateItem, deleteItem, logCompletion, getLog) to src/api/wrenchdue.ts
-- [ ] T094 [P] [US10] Create useVehicle hook for single vehicle + items fetch in src/hooks/use-vehicle.ts
-- [ ] T095 [US10] Create MaintenanceItem component with name, last completed line, interval line, "Log as done" button, overflow menu in src/components/maintenance/MaintenanceItem.tsx
-- [ ] T096 [US10] Create MaintenanceList component grouping items by urgency (Overdue/Coming Up/All Clear) with section headers in src/components/maintenance/MaintenanceList.tsx
-- [ ] T097 [US10] Create CompletionForm modal with date, mileage, cost (Pro only), shop (Pro only), notes in src/components/maintenance/CompletionForm.tsx
-- [ ] T098 [US10] Create MaintenanceHistory component with log entries (date, item, mileage, cost/shop for Pro) in src/components/maintenance/MaintenanceHistory.tsx
-- [ ] T099 [US10] Build VehicleDetailPage with vehicle header, maintenance tabs (Active/History), stale mileage warning, edit vehicle link in src/pages/wrenchdue/VehicleDetailPage.tsx
-- [ ] T100 [US10] Add routes for /wrenchdue, /wrenchdue/vehicles/new, /wrenchdue/vehicles/:id in src/App.tsx
-- [ ] T101 [US10] Add MSW handlers for maintenance item and log endpoints in tests/mocks/handlers.ts
+- [x] T093 [P] [US10] Add maintenance API functions (listItems, createItem, updateItem, deleteItem, logCompletion, getLog) to src/api/wrenchdue.ts
+- [x] T094 [P] [US10] Create useVehicle hook for single vehicle + items fetch in src/hooks/use-vehicle.ts
+- [x] T095 [US10] Create MaintenanceItem component with name, last completed line, interval line, "Log as done" button, overflow menu in src/components/maintenance/MaintenanceItem.tsx
+- [x] T096 [US10] Create MaintenanceList component grouping items by urgency (Overdue/Coming Up/All Clear) with section headers in src/components/maintenance/MaintenanceList.tsx
+- [x] T097 [US10] Create CompletionForm modal with date, mileage, cost (Pro only), shop (Pro only), notes in src/components/maintenance/CompletionForm.tsx
+- [x] T098 [US10] Create MaintenanceHistory component with log entries (date, item, mileage, cost/shop for Pro) in src/components/maintenance/MaintenanceHistory.tsx
+- [x] T099 [US10] Build VehicleDetailPage with vehicle header, maintenance tabs (Active/History), stale mileage warning, edit vehicle link in src/pages/wrenchdue/VehicleDetailPage.tsx
+- [x] T100 [US10] Add routes for /wrenchdue, /wrenchdue/vehicles/new, /wrenchdue/vehicles/:id in src/App.tsx
+- [x] T101 [US10] Add MSW handlers for maintenance item and log endpoints in tests/mocks/handlers.ts
 
 **Checkpoint**: Full vehicle detail with maintenance tracking — view items, log completions, view history.
 
