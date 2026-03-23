@@ -9,19 +9,26 @@ import { BacklogTaskCard } from '@/components/tasks/BacklogTaskCard'
 import { CompletedTaskCard } from '@/components/tasks/CompletedTaskCard'
 import { AddTaskForm } from '@/components/tasks/AddTaskForm'
 import { EmptyState } from '@/components/shared/EmptyState'
+import { UpgradePrompt } from '@/components/shared/UpgradePrompt'
+import { ProTeaser } from '@/components/tasks/ProTeaser'
 import { useTasks, useCompleteTask, useSnoozeTask, useDeleteTask } from '@/hooks/use-tasks'
+import { useTier } from '@/hooks/use-tier'
 import { createTask, activateTask } from '@/api/nagme'
 import { useToast } from '@/hooks/use-toast'
 import { ApiRequestError } from '@/api/client'
+import { FREE_TIER_LIMITS } from '@/lib/constants'
+import { cn } from '@/lib/utils'
 import type { CreateTaskRequest } from '@/lib/types'
 
 export function DashboardPage() {
   const [activeTab, setActiveTab] = useState('active')
   const [showAddTask, setShowAddTask] = useState(false)
+  const [showUpgradePrompt, setShowUpgradePrompt] = useState(false)
 
   const activeTasks = useTasks('active')
   const backlogTasks = useTasks('backlog')
   const completedTasks = useTasks('completed')
+  const { isFree, isPro } = useTier('nagme')
 
   const completeTaskMutation = useCompleteTask()
   const snoozeTaskMutation = useSnoozeTask()
@@ -34,6 +41,7 @@ export function DashboardPage() {
     mutationFn: (data: CreateTaskRequest) => createTask(data),
     onSuccess: (_result, variables) => {
       toast.success('Task created')
+      setShowUpgradePrompt(false)
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
       if (variables.due_date) {
         setActiveTab('active')
@@ -43,7 +51,7 @@ export function DashboardPage() {
     },
     onError: (err) => {
       if (err instanceof ApiRequestError && err.status === 403) {
-        toast.error('Free tier limit reached. Upgrade to Pro for unlimited tasks.')
+        setShowUpgradePrompt(true)
       } else {
         toast.error('Failed to create task')
       }
@@ -55,12 +63,13 @@ export function DashboardPage() {
       activateTask(taskId, { due_date: dueDate }),
     onSuccess: () => {
       toast.success('Task activated')
+      setShowUpgradePrompt(false)
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
       setActiveTab('active')
     },
     onError: (err) => {
       if (err instanceof ApiRequestError && err.status === 403) {
-        toast.error('Free tier limit reached. Upgrade to Pro for unlimited tasks.')
+        setShowUpgradePrompt(true)
       } else {
         toast.error('Failed to activate task')
       }
@@ -69,6 +78,18 @@ export function DashboardPage() {
 
   const activeCount = activeTasks.data?.data.count ?? 0
   const backlogCount = backlogTasks.data?.data.count ?? 0
+  const maxActive = FREE_TIER_LIMITS.nagme.maxActiveTasks
+  const nearLimit = isFree && activeCount >= maxActive - 2 // warning at 13+
+
+  function activeTabLabel() {
+    if (isFree && activeCount > 0) {
+      return `Active (${activeCount} of ${maxActive})`
+    }
+    if (activeCount > 0) {
+      return `Active (${activeCount})`
+    }
+    return 'Active'
+  }
 
   return (
     <div>
@@ -80,10 +101,22 @@ export function DashboardPage() {
         </Button>
       </div>
 
+      {showUpgradePrompt && (
+        <div className="mb-4">
+          <UpgradePrompt
+            message="You've hit the free task limit"
+            description="Upgrade to Pro for unlimited active tasks, custom snooze durations, and more."
+          />
+        </div>
+      )}
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="w-full">
-          <TabsTrigger value="active" className="flex-1">
-            Active{activeCount > 0 ? ` (${activeCount})` : ''}
+          <TabsTrigger
+            value="active"
+            className={cn('flex-1', nearLimit && 'text-amber-600 dark:text-amber-400')}
+          >
+            {activeTabLabel()}
           </TabsTrigger>
           <TabsTrigger value="backlog" className="flex-1">
             Backlog{backlogCount > 0 ? ` (${backlogCount})` : ''}
@@ -109,11 +142,15 @@ export function DashboardPage() {
               onAction={() => setShowAddTask(true)}
             />
           ) : (
-            <TaskList
-              tasks={activeTasks.data?.data.tasks ?? []}
-              onComplete={(taskId) => completeTaskMutation.mutate(taskId)}
-              onSnooze={(taskId, days) => snoozeTaskMutation.mutate({ taskId, days })}
-            />
+            <>
+              <TaskList
+                tasks={activeTasks.data?.data.tasks ?? []}
+                onComplete={(taskId) => completeTaskMutation.mutate(taskId)}
+                onSnooze={(taskId, days) => snoozeTaskMutation.mutate({ taskId, days })}
+                isPro={isPro}
+              />
+              {isFree && <ProTeaser />}
+            </>
           )}
         </TabsContent>
 
