@@ -101,19 +101,19 @@
 
 ### Implementation for User Story 3
 
-- [ ] T039 [P] [US3] Create NagMe task API functions (listTasks, createTask, completeTask, snoozeTask, activateTask, deleteTask) in src/api/nagme.ts
-- [ ] T040 [P] [US3] Create useTasks hook with TanStack Query for task list by status, including optimistic updates for complete/snooze/delete in src/hooks/use-tasks.ts
-- [ ] T041 [P] [US3] Create Zod schema for add-task form (title required, notes optional, due_date optional) in src/lib/schemas.ts
-- [ ] T042 [US3] Create TaskCard component with completion circle, title, subtitle (overdue/due today/snoozed/upcoming), Done button, Snooze dropdown in src/components/tasks/TaskCard.tsx
-- [ ] T043 [US3] Create SnoozeDropdown component with 1/3/7 day options and disabled Custom Pro option in src/components/tasks/SnoozeDropdown.tsx
-- [ ] T044 [US3] Create TaskList component rendering TaskCard array with visual grouping (overdue/due today/snoozed/upcoming sections) in src/components/tasks/TaskList.tsx
-- [ ] T045 [US3] Create AddTaskForm component with title, notes, due date picker, cancel/submit in src/components/tasks/AddTaskForm.tsx
-- [ ] T046 [US3] Create BacklogTaskCard component with title, added date, Activate button (opens date picker), overflow menu in src/components/tasks/BacklogTaskCard.tsx
-- [ ] T047 [US3] Create CompletedTaskCard component with checkmark, title (muted), completed date in src/components/tasks/CompletedTaskCard.tsx
-- [ ] T048 [US3] Build NagMe DashboardPage with tab navigation (Active/Backlog/Completed), task counts, FAB for add task on mobile, inline add button on desktop in src/pages/nagme/DashboardPage.tsx
-- [ ] T049 [US3] Create EmptyState component for each tab (no tasks yet, no backlog, no completions) in src/components/shared/EmptyState.tsx
-- [ ] T050 [US3] Add skeleton loading states for task list in src/components/tasks/TaskListSkeleton.tsx
-- [ ] T051 [US3] Add MSW handlers for all NagMe task endpoints (GET list, POST create, POST complete, POST snooze, POST activate, DELETE) in tests/mocks/handlers.ts
+- [X] T039 [P] [US3] Create NagMe task API functions (listTasks, createTask, completeTask, snoozeTask, activateTask, deleteTask) in src/api/nagme.ts
+- [X] T040 [P] [US3] Create useTasks hook with TanStack Query for task list by status, including optimistic updates for complete/snooze/delete in src/hooks/use-tasks.ts
+- [X] T041 [P] [US3] Create Zod schema for add-task form (title required, notes optional, due_date optional) in src/lib/schemas.ts
+- [X] T042 [US3] Create TaskCard component with completion circle, title, subtitle (overdue/due today/snoozed/upcoming), Done button, Snooze dropdown in src/components/tasks/TaskCard.tsx
+- [X] T043 [US3] Create SnoozeDropdown component with 1/3/7 day options and disabled Custom Pro option in src/components/tasks/SnoozeDropdown.tsx
+- [X] T044 [US3] Create TaskList component rendering TaskCard array with visual grouping (overdue/due today/snoozed/upcoming sections) in src/components/tasks/TaskList.tsx
+- [X] T045 [US3] Create AddTaskForm component with title, notes, due date picker, cancel/submit in src/components/tasks/AddTaskForm.tsx
+- [X] T046 [US3] Create BacklogTaskCard component with title, added date, Activate button (opens date picker), overflow menu in src/components/tasks/BacklogTaskCard.tsx
+- [X] T047 [US3] Create CompletedTaskCard component with checkmark, title (muted), completed date in src/components/tasks/CompletedTaskCard.tsx
+- [X] T048 [US3] Build NagMe DashboardPage with tab navigation (Active/Backlog/Completed), task counts, FAB for add task on mobile, inline add button on desktop in src/pages/nagme/DashboardPage.tsx
+- [X] T049 [US3] Create EmptyState component for each tab (no tasks yet, no backlog, no completions) in src/components/shared/EmptyState.tsx
+- [X] T050 [US3] Add skeleton loading states for task list in src/components/tasks/TaskListSkeleton.tsx
+- [X] T051 [US3] Add MSW handlers for all NagMe task endpoints (GET list, POST create, POST complete, POST snooze, POST activate, DELETE) in tests/mocks/handlers.ts
 
 **Checkpoint**: Full task management works — add, complete, snooze, activate, delete across all three tabs.
 
