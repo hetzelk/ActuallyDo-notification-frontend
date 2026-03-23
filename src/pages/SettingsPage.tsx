@@ -6,6 +6,7 @@ import { ProfileSection } from '@/components/settings/ProfileSection'
 import { AppPreferencesSection } from '@/components/settings/AppPreferencesSection'
 import { SubscriptionSection } from '@/components/settings/SubscriptionSection'
 import { EmailDisabledBanner } from '@/components/settings/EmailDisabledBanner'
+import { PushNotificationSection } from '@/components/settings/PushNotificationSection'
 import { useSettings, useUpdateSettings } from '@/hooks/use-settings'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
@@ -88,6 +89,11 @@ export function SettingsPage() {
 
       <AppPreferencesSection
         settings={settings}
+        onUpdate={debouncedUpdate}
+      />
+
+      <PushNotificationSection
+        pushSubscription={settings.push_subscription}
         onUpdate={debouncedUpdate}
       />
 
