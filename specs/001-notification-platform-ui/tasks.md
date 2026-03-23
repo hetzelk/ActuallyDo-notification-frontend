@@ -223,16 +223,16 @@
 
 ### Implementation for User Story 9
 
-- [ ] T083 [P] [US9] Create WrenchDue vehicle API functions (listVehicles, createVehicle, getVehicle, updateVehicle, deleteVehicle, updateMileage) in src/api/wrenchdue.ts
-- [ ] T084 [P] [US9] Create useVehicles hook with TanStack Query for vehicle list in src/hooks/use-vehicles.ts
-- [ ] T085 [P] [US9] Create Zod schemas for add-vehicle form and mileage update form in src/lib/schemas.ts
-- [ ] T086 [US9] Create VehicleCard component with name, estimated mileage, status summary (overdue/coming up/all clear), update mileage and view details buttons in src/components/vehicles/VehicleCard.tsx
-- [ ] T087 [US9] Create VehicleList component rendering VehicleCard array in src/components/vehicles/VehicleList.tsx
-- [ ] T088 [US9] Create AddVehicleForm component with year, make, model, nickname, odometer, weekly miles fields in src/components/vehicles/AddVehicleForm.tsx
-- [ ] T089 [US9] Create MileageCheckInModal with odometer input (pre-filled estimate), optional weekly estimate update in src/components/vehicles/MileageCheckInModal.tsx
-- [ ] T090 [US9] Build WrenchDue DashboardPage with vehicle list, add vehicle button (with free-tier lock), empty state in src/pages/wrenchdue/DashboardPage.tsx
-- [ ] T091 [US9] Build AddVehiclePage with AddVehicleForm, redirect to vehicle detail on success in src/pages/wrenchdue/AddVehiclePage.tsx
-- [ ] T092 [US9] Add MSW handlers for all WrenchDue vehicle endpoints in tests/mocks/handlers.ts
+- [x] T083 [P] [US9] Create WrenchDue vehicle API functions (listVehicles, createVehicle, getVehicle, updateVehicle, deleteVehicle, updateMileage) in src/api/wrenchdue.ts
+- [x] T084 [P] [US9] Create useVehicles hook with TanStack Query for vehicle list in src/hooks/use-vehicles.ts
+- [x] T085 [P] [US9] Create Zod schemas for add-vehicle form and mileage update form in src/lib/schemas.ts
+- [x] T086 [US9] Create VehicleCard component with name, estimated mileage, status summary (overdue/coming up/all clear), update mileage and view details buttons in src/components/vehicles/VehicleCard.tsx
+- [x] T087 [US9] Create VehicleList component rendering VehicleCard array in src/components/vehicles/VehicleList.tsx
+- [x] T088 [US9] Create AddVehicleForm component with year, make, model, nickname, odometer, weekly miles fields in src/components/vehicles/AddVehicleForm.tsx
+- [x] T089 [US9] Create MileageCheckInModal with odometer input (pre-filled estimate), optional weekly estimate update in src/components/vehicles/MileageCheckInModal.tsx
+- [x] T090 [US9] Build WrenchDue DashboardPage with vehicle list, add vehicle button (with free-tier lock), empty state in src/pages/wrenchdue/DashboardPage.tsx
+- [x] T091 [US9] Build AddVehiclePage with AddVehicleForm, redirect to vehicle detail on success in src/pages/wrenchdue/AddVehiclePage.tsx
+- [x] T092 [US9] Add MSW handlers for all WrenchDue vehicle endpoints in tests/mocks/handlers.ts
 
 **Checkpoint**: Vehicle dashboard works — list, add, update mileage.
 
