@@ -109,7 +109,7 @@ Content-Type: application/json
 
 **Side Effects (server)**:
 - User profile created with defaults (no timezone/reminder_time set)
-- Default-enabled apps auto-registered (NagMe, MilesAhead)
+- Default-enabled apps auto-registered (TuskDue, WrenchDue)
 - No EventBridge schedule created (user must set reminder_time first)
 
 ---
@@ -252,17 +252,17 @@ Authorization: Bearer {id_token}
   "push_subscription": null,
   "email_disabled": false,
   "apps": {
-    "nagme": {
+    "tuskdue": {
       "enabled": true,
       "frequency": "daily",
       "preferred_day": null,
-      "app_name": "NagMe"
+      "app_name": "TuskDue"
     },
-    "milesahead": {
+    "wrenchdue": {
       "enabled": true,
       "frequency": "weekly",
       "preferred_day": "monday",
-      "app_name": "MilesAhead"
+      "app_name": "WrenchDue"
     }
   }
 }
@@ -307,11 +307,11 @@ Content-Type: application/json
     }
   },
   "apps": {
-    "nagme": {
+    "tuskdue": {
       "enabled": true,
       "frequency": "daily"
     },
-    "milesahead": {
+    "wrenchdue": {
       "enabled": true,
       "frequency": "weekly",
       "preferred_day": "monday"
@@ -348,7 +348,7 @@ Content-Type: application/json
 
 ---
 
-## 3. NagMe — Task Management
+## 3. TuskDue — Task Management
 
 ### 3.1 List Tasks
 
@@ -356,7 +356,7 @@ Content-Type: application/json
 **Screen**: `/` (Active/Backlog/Completed tabs)
 
 ```
-GET /apps/nagme/tasks?status={status}
+GET /apps/tuskdue/tasks?status={status}
 Authorization: Bearer {id_token}
 ```
 
@@ -415,7 +415,7 @@ Authorization: Bearer {id_token}
 **Screen**: Add task modal/drawer
 
 ```
-POST /apps/nagme/tasks
+POST /apps/tuskdue/tasks
 Authorization: Bearer {id_token}
 Content-Type: application/json
 ```
@@ -469,7 +469,7 @@ Content-Type: application/json
 **Screen**: `/tasks/{task_id}`
 
 ```
-GET /apps/nagme/tasks/{task_id}
+GET /apps/tuskdue/tasks/{task_id}
 Authorization: Bearer {id_token}
 ```
 
@@ -504,7 +504,7 @@ Authorization: Bearer {id_token}
 **Screen**: `/tasks/{task_id}` (task detail view)
 
 ```
-PUT /apps/nagme/tasks/{task_id}
+PUT /apps/tuskdue/tasks/{task_id}
 Authorization: Bearer {id_token}
 Content-Type: application/json
 ```
@@ -553,7 +553,7 @@ Content-Type: application/json
 **Screen**: `/tasks/{task_id}` (task detail view)
 
 ```
-DELETE /apps/nagme/tasks/{task_id}
+DELETE /apps/tuskdue/tasks/{task_id}
 Authorization: Bearer {id_token}
 ```
 
@@ -582,7 +582,7 @@ Authorization: Bearer {id_token}
 **Screen**: Backlog tab → date picker
 
 ```
-POST /apps/nagme/tasks/{task_id}/activate
+POST /apps/tuskdue/tasks/{task_id}/activate
 Authorization: Bearer {id_token}
 Content-Type: application/json
 ```
@@ -626,7 +626,7 @@ Content-Type: application/json
 **Screen**: Active tab or task detail
 
 ```
-POST /apps/nagme/tasks/{task_id}/complete
+POST /apps/tuskdue/tasks/{task_id}/complete
 Authorization: Bearer {id_token}
 ```
 
@@ -665,7 +665,7 @@ Authorization: Bearer {id_token}
 **Screen**: Active tab or task detail
 
 ```
-POST /apps/nagme/tasks/{task_id}/snooze
+POST /apps/tuskdue/tasks/{task_id}/snooze
 Authorization: Bearer {id_token}
 Content-Type: application/json
 ```
@@ -732,9 +732,9 @@ GET /platform/actions/{token}
 **Frontend Implementation**:
 The frontend app must handle the `/action-result` route and render the appropriate confirmation screen based on the `status` query parameter. The `message` parameter (URL-decoded) provides context like "'Pay electric bill' marked complete."
 
-**NagMe-Specific Redirects** (from action handler):
-- Complete → `https://app.nagme.com/done?task={task_id}`
-- Snooze → `https://app.nagme.com/snoozed?task={task_id}&days={days}`
+**TuskDue-Specific Redirects** (from action handler):
+- Complete → `https://app.tuskdue.com/done?task={task_id}`
+- Snooze → `https://app.tuskdue.com/snoozed?task={task_id}&days={days}`
 
 ---
 
@@ -757,12 +757,12 @@ const stripe = Stripe('pk_live_...');
 stripe.redirectToCheckout({
   lineItems: [{ price: 'price_monthly_3', quantity: 1 }],
   mode: 'subscription',
-  successUrl: 'https://app.nagme.com/settings?payment=success',
-  cancelUrl: 'https://app.nagme.com/settings?payment=cancelled',
+  successUrl: 'https://app.tuskdue.com/settings?payment=success',
+  cancelUrl: 'https://app.tuskdue.com/settings?payment=cancelled',
   clientReferenceId: userId,
   metadata: {
     user_id: userId,
-    app_id: 'nagme'
+    app_id: 'tuskdue'
   }
 });
 ```
@@ -832,15 +832,15 @@ The frontend needs to know the user's tier for each app to gate features. Tier i
 
 ```javascript
 // From GET /platform/settings response
-const nagmeTier = settings.apps.nagme?.tier || "free";  // Note: tier not in current response
-const isFree = nagmeTier === "free";
+const tuskdueTier = settings.apps.tuskdue?.tier || "free";  // Note: tier not in current response
+const isFree = tuskdueTier === "free";
 ```
 
 **Important**: The current `GET /platform/settings` response includes `enabled`, `frequency`, `preferred_day`, and `app_name` per app but the `tier` field needs to be confirmed in the actual response. The backend stores tier in the AppRegistration record.
 
 ### Features Gated by Tier
 
-**NagMe Free Tier Restrictions** (enforce in UI):
+**TuskDue Free Tier Restrictions** (enforce in UI):
 | Feature | Free | Pro |
 |---------|------|-----|
 | Active tasks | Max 15 | Unlimited |
@@ -849,7 +849,7 @@ const isFree = nagmeTier === "free";
 | Custom snooze | Disabled | Enabled |
 | Tags | Hidden | Enabled |
 
-**Check active task count**: count tasks from `GET /apps/nagme/tasks?status=active` where `status` is "active" or "snoozed". Show "{count} of 15" indicator.
+**Check active task count**: count tasks from `GET /apps/tuskdue/tasks?status=active` where `status` is "active" or "snoozed". Show "{count} of 15" indicator.
 
 ---
 
@@ -867,14 +867,14 @@ const isFree = nagmeTier === "free";
 | PUT | `/platform/settings` | Yes | `{timezone?, reminder_time?, push_subscription?, apps?}` | 200 |
 | GET | `/platform/actions/{token}` | No | — | 302 |
 | POST | `/platform/payments/webhook` | No* | Stripe event | 200 |
-| GET | `/apps/nagme/tasks?status={s}` | Yes | — | 200 |
-| POST | `/apps/nagme/tasks` | Yes | `{title, notes?, due_date?}` | 201 |
-| GET | `/apps/nagme/tasks/{id}` | Yes | — | 200 |
-| PUT | `/apps/nagme/tasks/{id}` | Yes | `{title?, notes?, due_date?, notify?}` | 200 |
-| DELETE | `/apps/nagme/tasks/{id}` | Yes | — | 200 |
-| POST | `/apps/nagme/tasks/{id}/activate` | Yes | `{due_date}` | 200 |
-| POST | `/apps/nagme/tasks/{id}/complete` | Yes | — | 200 |
-| POST | `/apps/nagme/tasks/{id}/snooze` | Yes | `{days}` | 200 |
+| GET | `/apps/tuskdue/tasks?status={s}` | Yes | — | 200 |
+| POST | `/apps/tuskdue/tasks` | Yes | `{title, notes?, due_date?}` | 201 |
+| GET | `/apps/tuskdue/tasks/{id}` | Yes | — | 200 |
+| PUT | `/apps/tuskdue/tasks/{id}` | Yes | `{title?, notes?, due_date?, notify?}` | 200 |
+| DELETE | `/apps/tuskdue/tasks/{id}` | Yes | — | 200 |
+| POST | `/apps/tuskdue/tasks/{id}/activate` | Yes | `{due_date}` | 200 |
+| POST | `/apps/tuskdue/tasks/{id}/complete` | Yes | — | 200 |
+| POST | `/apps/tuskdue/tasks/{id}/snooze` | Yes | `{days}` | 200 |
 
 *Auth = Cognito JWT Bearer token. Webhook uses Stripe signature verification.
 

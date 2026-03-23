@@ -1,6 +1,6 @@
 # Frontend Implementation Guide
 
-Decisions and conventions for building the NagMe and MilesAhead frontends.
+Decisions and conventions for building the TuskDue and WrenchDue frontends.
 
 ---
 
@@ -25,7 +25,7 @@ Decisions and conventions for building the NagMe and MilesAhead frontends.
 
 ## 2. Project Structure
 
-Separate repo per app (`nagme-web`, `milesahead-web`), same structure:
+Separate repo per app (`tuskdue-web`, `wrenchdue-web`), same structure:
 
 ```
 src/

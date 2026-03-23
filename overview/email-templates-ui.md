@@ -8,7 +8,7 @@ Design specs for the digest emails sent by each app. The email IS the primary pr
 
 1. **Scannable from preview**: subject line shows the count, first line shows the most urgent item
 2. **No empty emails**: if nothing is actionable, don't send
-3. **One email per app**: NagMe and MilesAhead send separately with different branding
+3. **One email per app**: TuskDue and WrenchDue send separately with different branding
 4. **Action links just work**: one click, no login, instant feedback
 5. **Mobile-first**: most emails read on phones — single column, large tap targets
 6. **Consolidated, not spammy**: all items grouped in one email, never per-item
@@ -62,7 +62,7 @@ All app emails follow the same structural template (rendered by the platform's J
 
 ---
 
-## NagMe Email Template
+## TuskDue Email Template
 
 ### Subject Line
 
@@ -81,7 +81,7 @@ First overdue item title, or first due-today item if nothing overdue.
 ```
 ┌─────────────────────────────────────────────┐
 │                                             │
-│  NagMe                                      │
+│  TuskDue                                      │
 │  Your daily reminder                        │
 │                                             │
 │  ─────────────────────────────────────────  │
@@ -118,9 +118,9 @@ First overdue item title, or first due-today item if nothing overdue.
 │  [+ Add a task]  [View backlog (6 items)]   │
 │                                             │
 │  ─────────────────────────────────────────  │
-│  Manage preferences · Sent by NagMe        │
+│  Manage preferences · Sent by TuskDue        │
 │  You're receiving this because you signed   │
-│  up at nagme.com                            │
+│  up at tuskdue.com                            │
 │                                             │
 └─────────────────────────────────────────────┘
 ```
@@ -149,8 +149,8 @@ First overdue item title, or first due-today item if nothing overdue.
 - Not shown for free tier users
 
 **Footer links**:
-- "+ Add a task" → deep link to `https://app.nagme.com/tasks/new`
-- "View backlog ({N} items)" → deep link to `https://app.nagme.com/?tab=backlog`
+- "+ Add a task" → deep link to `https://app.tuskdue.com/tasks/new`
+- "View backlog ({N} items)" → deep link to `https://app.tuskdue.com/?tab=backlog`
 - "Manage preferences" → signed link to settings page (no login required)
 
 ### Action Button Layout
@@ -170,7 +170,7 @@ Mobile layout:      [Done ✓]  [Snooze 1d]
 
 ---
 
-## MilesAhead Email Template
+## WrenchDue Email Template
 
 ### Subject Line
 
@@ -189,7 +189,7 @@ Most urgent overdue item and vehicle name.
 ```
 ┌─────────────────────────────────────────────┐
 │                                             │
-│  MilesAhead                                 │
+│  WrenchDue                                 │
 │  Your weekly maintenance check              │
 │                                             │
 │  ─────────────────────────────────────────  │
@@ -228,7 +228,7 @@ Most urgent overdue item and vehicle name.
 │  to reach 300,000 miles.                    │
 │                                             │
 │  ─────────────────────────────────────────  │
-│  Manage preferences · Sent by MilesAhead    │
+│  Manage preferences · Sent by WrenchDue    │
 │                                             │
 └─────────────────────────────────────────────┘
 ```
@@ -266,7 +266,7 @@ Most urgent overdue item and vehicle name.
 
 ### Action Button Layout
 
-Simpler than NagMe — fewer actions per item:
+Simpler than TuskDue — fewer actions per item:
 
 ```
 [Log as done]  [Snooze 2 weeks]
@@ -320,7 +320,7 @@ Links to `https://app.{appname}.com/settings` with a signed auth token in the UR
 
 | App | Default Frequency | Options | Empty Email |
 |-----|-------------------|---------|-------------|
-| NagMe | Daily | Daily only (V1) | Not sent |
-| MilesAhead | Weekly | Weekly, Monthly | Not sent |
+| TuskDue | Daily | Daily only (V1) | Not sent |
+| WrenchDue | Weekly | Weekly, Monthly | Not sent |
 
 "Not sent" means: if the digest builder returns `empty=True` (no actionable items), the orchestrator skips email delivery for that app. The user never receives a "nothing to report" email.

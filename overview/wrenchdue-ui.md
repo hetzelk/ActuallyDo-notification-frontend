@@ -1,34 +1,34 @@
-# MilesAhead UI Specification
+# WrenchDue UI Specification
 
 **App tagline**: "Your car's maintenance schedule, on autopilot."
-**Primary URL**: https://app.milesahead.com
-**Email FROM**: reminders@milesahead.com
+**Primary URL**: https://app.wrenchdue.com
+**Email FROM**: reminders@wrenchdue.com
 
 ---
 
 ## API Note
 
-MilesAhead's backend routes are not yet implemented (Phase 3). The API patterns below follow the same conventions as NagMe (`/apps/nagme/*`) and should be implemented under `/apps/milesahead/*`. All endpoints require Cognito JWT auth via the platform's `@require_auth` middleware.
+WrenchDue's backend routes are not yet implemented (Phase 3). The API patterns below follow the same conventions as TuskDue (`/apps/tuskdue/*`) and should be implemented under `/apps/wrenchdue/*`. All endpoints require Cognito JWT auth via the platform's `@require_auth` middleware.
 
-**Expected base path**: `/apps/milesahead`
+**Expected base path**: `/apps/wrenchdue`
 
 **Expected endpoints** (to be built):
 | Method | Path | Purpose |
 |--------|------|---------|
-| GET | `/apps/milesahead/vehicles` | List user's vehicles |
-| POST | `/apps/milesahead/vehicles` | Create vehicle |
-| GET | `/apps/milesahead/vehicles/{id}` | Get vehicle with maintenance items |
-| PUT | `/apps/milesahead/vehicles/{id}` | Update vehicle |
-| DELETE | `/apps/milesahead/vehicles/{id}` | Delete vehicle |
-| PUT | `/apps/milesahead/vehicles/{id}/mileage` | Update odometer |
-| GET | `/apps/milesahead/vehicles/{id}/items` | List maintenance items |
-| POST | `/apps/milesahead/vehicles/{id}/items` | Add custom maintenance item (Pro) |
-| PUT | `/apps/milesahead/vehicles/{id}/items/{item_id}` | Update maintenance item |
-| DELETE | `/apps/milesahead/vehicles/{id}/items/{item_id}` | Delete custom item |
-| POST | `/apps/milesahead/vehicles/{id}/items/{item_id}/complete` | Log maintenance completion |
-| GET | `/apps/milesahead/vehicles/{id}/log` | Get maintenance history |
+| GET | `/apps/wrenchdue/vehicles` | List user's vehicles |
+| POST | `/apps/wrenchdue/vehicles` | Create vehicle |
+| GET | `/apps/wrenchdue/vehicles/{id}` | Get vehicle with maintenance items |
+| PUT | `/apps/wrenchdue/vehicles/{id}` | Update vehicle |
+| DELETE | `/apps/wrenchdue/vehicles/{id}` | Delete vehicle |
+| PUT | `/apps/wrenchdue/vehicles/{id}/mileage` | Update odometer |
+| GET | `/apps/wrenchdue/vehicles/{id}/items` | List maintenance items |
+| POST | `/apps/wrenchdue/vehicles/{id}/items` | Add custom maintenance item (Pro) |
+| PUT | `/apps/wrenchdue/vehicles/{id}/items/{item_id}` | Update maintenance item |
+| DELETE | `/apps/wrenchdue/vehicles/{id}/items/{item_id}` | Delete custom item |
+| POST | `/apps/wrenchdue/vehicles/{id}/items/{item_id}/complete` | Log maintenance completion |
+| GET | `/apps/wrenchdue/vehicles/{id}/log` | Get maintenance history |
 
-**Tier check**: `GET /platform/settings` → `apps.milesahead.tier` ("free" or "pro")
+**Tier check**: `GET /platform/settings` → `apps.wrenchdue.tier` ("free" or "pro")
 
 ---
 
@@ -38,7 +38,7 @@ MilesAhead's backend routes are not yet implemented (Phase 3). The API patterns 
 
 **Layout**: Card-based list of user's vehicles. For free tier users, this is a single card. Pro users see multiple vehicles.
 
-**API Call**: `GET /apps/milesahead/vehicles` (auth required)
+**API Call**: `GET /apps/wrenchdue/vehicles` (auth required)
 
 ### 1.1 Vehicle Card
 
@@ -73,8 +73,8 @@ MilesAhead's backend routes are not yet implemented (Phase 3). The API patterns 
   - Items coming up: "{N} coming up"
   - All clear: "✓ All caught up" (green)
   - Overdue/upcoming calculation uses estimated mileage: `current_mileage + (days_since_update * weekly_miles_estimate / 7)`
-- **Update mileage button**: opens quick mileage check-in modal → `PUT /apps/milesahead/vehicles/{id}/mileage`
-- **View details**: navigates to `/vehicles/{vehicle_id}` → `GET /apps/milesahead/vehicles/{id}`
+- **Update mileage button**: opens quick mileage check-in modal → `PUT /apps/wrenchdue/vehicles/{id}/mileage`
+- **View details**: navigates to `/vehicles/{vehicle_id}` → `GET /apps/wrenchdue/vehicles/{id}`
 
 ### 1.2 Add Vehicle Button
 
@@ -153,7 +153,7 @@ MilesAhead's backend routes are not yet implemented (Phase 3). The API patterns 
 - **Weekly miles estimate** (required): numeric, used for mileage projection
   - Helper text explains the purpose
 
-**API Call**: `POST /apps/milesahead/vehicles` (auth required)
+**API Call**: `POST /apps/wrenchdue/vehicles` (auth required)
 ```
 Request: {
   "year": 2019,
@@ -174,8 +174,8 @@ Errors: 400 (missing required fields)
 
 ### 2.2 Edit Vehicle
 
-**API Call**: `PUT /apps/milesahead/vehicles/{vehicle_id}` — same fields as create, all optional.
-**Delete**: `DELETE /apps/milesahead/vehicles/{vehicle_id}` — confirmation dialog required.
+**API Call**: `PUT /apps/wrenchdue/vehicles/{vehicle_id}` — same fields as create, all optional.
+**Delete**: `DELETE /apps/wrenchdue/vehicles/{vehicle_id}` — confirmation dialog required.
 
 Same form as add, pre-filled. Additional "Delete vehicle" option at bottom with confirmation dialog.
 
@@ -188,9 +188,9 @@ Same form as add, pre-filled. Additional "Delete vehicle" option at bottom with 
 **Layout**: Vehicle header + maintenance items list + action buttons.
 
 **API Calls**:
-- Load vehicle: `GET /apps/milesahead/vehicles/{vehicle_id}`
-- Load items: `GET /apps/milesahead/vehicles/{vehicle_id}/items`
-- Load history: `GET /apps/milesahead/vehicles/{vehicle_id}/log`
+- Load vehicle: `GET /apps/wrenchdue/vehicles/{vehicle_id}`
+- Load items: `GET /apps/wrenchdue/vehicles/{vehicle_id}/items`
+- Load history: `GET /apps/wrenchdue/vehicles/{vehicle_id}/log`
 
 ### 3.1 Vehicle Header
 
@@ -268,11 +268,11 @@ Visual groups within the list:
   - If never done: "Never completed"
 - **Interval line**: "Due every {miles} mi or {months} months"
 - **Next due estimate**: "Due around {mileage_range}" (based on estimation)
-- **Log as done button**: opens completion form → `POST /apps/milesahead/vehicles/{vehicle_id}/items/{item_id}/complete`
+- **Log as done button**: opens completion form → `POST /apps/wrenchdue/vehicles/{vehicle_id}/items/{item_id}/complete`
 - **Overflow menu (···)**:
-  - Edit intervals → `PUT /apps/milesahead/vehicles/{vehicle_id}/items/{item_id}`
+  - Edit intervals → `PUT /apps/wrenchdue/vehicles/{vehicle_id}/items/{item_id}`
   - Disable notifications → same PUT with `{ "notify": false }`
-  - Delete (Pro: custom items only) → `DELETE /apps/milesahead/vehicles/{vehicle_id}/items/{item_id}`
+  - Delete (Pro: custom items only) → `DELETE /apps/wrenchdue/vehicles/{vehicle_id}/items/{item_id}`
 
 ### 3.3 Completed History Tab
 
@@ -294,7 +294,7 @@ Visual groups within the list:
 └─────────────────────────────────────────────┘
 ```
 
-**API Call**: `GET /apps/milesahead/vehicles/{vehicle_id}/log`
+**API Call**: `GET /apps/wrenchdue/vehicles/{vehicle_id}/log`
 
 **Elements per entry**:
 - **Date**: `completed_at`
@@ -336,7 +336,7 @@ Visual groups within the list:
 
 At least one interval (mileage or time) is required.
 
-**API Call**: `POST /apps/milesahead/vehicles/{vehicle_id}/items` (Pro only)
+**API Call**: `POST /apps/wrenchdue/vehicles/{vehicle_id}/items` (Pro only)
 ```
 Request: {
   "name": "Windshield wipers",
@@ -385,7 +385,7 @@ Triggered from vehicle card "Update mileage" button or from email prompt.
   - If significantly different from estimate: "That's {N} miles {more/less} than our estimate. We'll adjust your weekly estimate."
 - **Weekly miles estimate** (optional): can update here for better future estimates
 
-**API Call**: `PUT /apps/milesahead/vehicles/{vehicle_id}/mileage`
+**API Call**: `PUT /apps/wrenchdue/vehicles/{vehicle_id}/mileage`
 ```
 Request: {
   "current_mileage": 87650,
@@ -463,7 +463,7 @@ Triggered from "Log as done" button on a maintenance item.
 - **Shop/Location** (Pro only): text input. Same treatment.
 - **Notes** (optional): text
 
-**API Call**: `POST /apps/milesahead/vehicles/{vehicle_id}/items/{item_id}/complete`
+**API Call**: `POST /apps/wrenchdue/vehicles/{vehicle_id}/items/{item_id}/complete`
 ```
 Request: {
   "completed_at": "2026-03-22",
@@ -528,7 +528,7 @@ Completed history tab shows last 10 entries for free users with a teaser:
 
 ---
 
-## 7. Action Result Screens (MilesAhead-specific)
+## 7. Action Result Screens (WrenchDue-specific)
 
 ### 7.1 Maintenance Logged (`/done?item={id}&vehicle={id}`)
 
@@ -538,7 +538,7 @@ Completed history tab shows last 10 entries for free users with a teaser:
 │      Oil + filter change logged             │
 │      2019 Honda Civic at ~87,400 mi         │
 │                                             │
-│  [Open MilesAhead]      [Close tab]         │
+│  [Open WrenchDue]      [Close tab]         │
 └─────────────────────────────────────────────┘
 ```
 
@@ -550,7 +550,7 @@ Completed history tab shows last 10 entries for free users with a teaser:
 │      Mileage updated to 87,650 mi           │
 │      2019 Honda Civic                       │
 │                                             │
-│  [Open MilesAhead]      [Close tab]         │
+│  [Open WrenchDue]      [Close tab]         │
 └─────────────────────────────────────────────┘
 ```
 
