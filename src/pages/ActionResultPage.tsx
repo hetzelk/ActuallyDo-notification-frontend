@@ -57,9 +57,11 @@ export function ActionResultPage() {
           <p className="text-muted-foreground">
             {message ? decodeURIComponent(message) : config.defaultMessage}
           </p>
-          <Button asChild variant="outline" className="mt-4">
-            <Link to="/">Open ActuallyDo</Link>
-          </Button>
+          <Link to="/">
+            <Button variant="outline" className="mt-4">
+              Open ActuallyDo
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </div>

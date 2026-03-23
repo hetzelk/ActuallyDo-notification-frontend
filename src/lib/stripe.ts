@@ -1,7 +1,4 @@
-import { loadStripe } from '@stripe/stripe-js'
-import { STRIPE_PK, APP_URL } from '@/lib/constants'
-
-const stripePromise = loadStripe(STRIPE_PK)
+import { apiFetch } from '@/api/client'
 
 export const PRICE_IDS = {
   monthly: 'price_monthly_3',
@@ -12,19 +9,17 @@ export const PRICE_IDS = {
 export type PricePlan = keyof typeof PRICE_IDS
 
 export async function redirectToCheckout(plan: PricePlan, userId: string) {
-  const stripe = await stripePromise
-  if (!stripe) {
-    throw new Error('Stripe failed to load. Check your VITE_STRIPE_PK.')
-  }
-
   const priceId = PRICE_IDS[plan]
   const mode = plan === 'lifetime' ? 'payment' : 'subscription'
 
-  await stripe.redirectToCheckout({
-    lineItems: [{ price: priceId, quantity: 1 }],
-    mode,
-    successUrl: `${APP_URL}/settings?payment=success`,
-    cancelUrl: `${APP_URL}/settings?payment=cancelled`,
-    clientReferenceId: userId,
+  const { url } = await apiFetch<{ url: string }>('/platform/checkout', {
+    method: 'POST',
+    body: JSON.stringify({
+      price_id: priceId,
+      mode,
+      client_reference_id: userId,
+    }),
   })
+
+  window.location.href = url
 }
