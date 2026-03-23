@@ -188,10 +188,10 @@
 
 ### Implementation for User Story 7
 
-- [ ] T074 [US7] Install @stripe/stripe-js and create Stripe checkout helper with price IDs and metadata in src/lib/stripe.ts
-- [ ] T075 [US7] Wire pricing buttons in SubscriptionSection to Stripe redirectToCheckout with user_id and app_id metadata
-- [ ] T076 [US7] Handle ?payment=success return URL in SettingsPage — re-fetch settings after 2-3s delay to reflect tier update
-- [ ] T077 [US7] Handle ?payment=cancelled return URL in SettingsPage — show info toast, no action needed
+- [x] T074 [US7] Install @stripe/stripe-js and create Stripe checkout helper with price IDs and metadata in src/lib/stripe.ts
+- [x] T075 [US7] Wire pricing buttons in SubscriptionSection to Stripe redirectToCheckout with user_id and app_id metadata
+- [x] T076 [US7] Handle ?payment=success return URL in SettingsPage — re-fetch settings after 2-3s delay to reflect tier update
+- [x] T077 [US7] Handle ?payment=cancelled return URL in SettingsPage — show info toast, no action needed
 
 **Checkpoint**: Full payment flow works — upgrade, return, tier updated.
 
@@ -268,10 +268,10 @@
 
 ### Implementation for User Story 11
 
-- [ ] T102 [US11] Create PushNotificationSection component with enable/disable toggle, status indicator, browser-blocked message in src/components/settings/PushNotificationSection.tsx
-- [ ] T103 [US11] Implement push subscription flow — request browser permission, get subscription from service worker, send to backend via PUT /platform/settings
-- [ ] T104 [US11] Implement push unsubscribe flow — unsubscribe from browser, send null push_subscription to backend
-- [ ] T105 [US11] Add PushNotificationSection to SettingsPage
+- [x] T102 [US11] Create PushNotificationSection component with enable/disable toggle, status indicator, browser-blocked message in src/components/settings/PushNotificationSection.tsx
+- [x] T103 [US11] Implement push subscription flow — request browser permission, get subscription from service worker, send to backend via PUT /platform/settings
+- [x] T104 [US11] Implement push unsubscribe flow — unsubscribe from browser, send null push_subscription to backend
+- [x] T105 [US11] Add PushNotificationSection to SettingsPage
 
 **Checkpoint**: Push notification toggle works with browser permission and backend sync.
 
