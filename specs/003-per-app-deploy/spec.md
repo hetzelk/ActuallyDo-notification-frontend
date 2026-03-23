@@ -5,6 +5,12 @@
 **Status**: Draft
 **Input**: User description: "Per-app deployment infrastructure with setup, deploy/redeploy scripts, and GitHub Actions for independently deploying each frontend app (TuskDue, WrenchDue, future apps) to S3 + CloudFront."
 
+## Clarifications
+
+### Session 2026-03-23
+
+- Q: How is per-app source code organized in the repository? → A: Single `src/` with per-app entry points (`src/apps/tuskdue/main.tsx`, `src/apps/wrenchdue/main.tsx`) and shared code in `src/`.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Deploy a New App for the First Time (Priority: P1)
@@ -117,5 +123,5 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 - Each app has its own independent domain (e.g., `tuskdue.com`, `wrenchdue.com`) with DNS managed by the team.
 - Cloud provider credentials are available as secrets in the CI/CD environment and on developer machines (for manual deploys).
 - Each app has its own Vite build configuration or entry point that can be built independently.
-- The repository structure will evolve to support per-app source directories (or per-app build configs) as new apps are added.
+- The repository uses a single `src/` directory with per-app entry points under `src/apps/{app-name}/main.tsx` and shared platform code in `src/`. Each app has its own Vite config or build target referencing its entry point.
 - Production is the only deployment environment for now; staging/preview environments may be added later but are out of scope.
