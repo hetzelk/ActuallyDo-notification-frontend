@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report
-- Version change: 0.0.0 → 1.0.0
-- Modified principles: N/A (initial creation)
-- Added sections: Core Principles (6), Tech Stack Constraints, Development Workflow, Governance
+- Version change: 1.0.0 → 1.1.0
+- Modified principles: None
+- Added sections: Core Principles VII (Per-App Deployment)
 - Removed sections: None
 - Templates requiring updates:
   - .specify/templates/plan-template.md ✅ no changes needed (generic)
@@ -38,6 +38,10 @@ Auth tokens MUST be stored in localStorage with expiry tracking. The `id_token` 
 ### VI. Graceful Degradation
 
 Every API call MUST handle loading, success, and error states. Loading states MUST use skeleton screens, not spinners, for initial page loads. Errors MUST show user-friendly messages (never raw error codes or stack traces). Network failures MUST show toast notifications with retry guidance. Optimistic updates are permitted for complete, snooze, and delete operations. Create and activate operations MUST wait for server confirmation (need server-generated IDs or may 403).
+
+### VII. Per-App Deployment
+
+This repository hosts multiple frontend apps (TuskDue, WrenchDue, and future niche apps). Each app MUST be independently deployable to its own hosting infrastructure. App names MUST map to infrastructure using the convention `{app-name}.actuallydo.com`. All deployments MUST go through version-controlled scripts or CI/CD pipelines — no manual console uploads. Hashed/fingerprinted assets MUST use long-lived cache headers (1 year); root HTML documents MUST use short-lived cache headers (5 minutes). Deploying one app MUST NOT affect any other app's availability, cache, or configuration. Environment configuration MUST use `VITE_*` environment variables per app — no hardcoded values. App names MUST contain only lowercase alphanumeric characters and hyphens. Setup scripts MUST be idempotent — re-running for an existing app MUST NOT create duplicate resources.
 
 ## Tech Stack Constraints
 
@@ -80,4 +84,4 @@ Each commit MUST represent a single logical change (one component, one hook, one
 
 This constitution governs all development in the ActuallyDo notification frontend repository. All code contributions MUST comply with these principles. When a principle conflicts with a specific feature requirement, document the conflict and the resolution chosen. Amendments to this constitution require incrementing the version: MAJOR for principle removals/redefinitions, MINOR for new principles or expanded guidance, PATCH for wording clarifications.
 
-**Version**: 1.0.0 | **Ratified**: 2026-03-22 | **Last Amended**: 2026-03-22
+**Version**: 1.1.0 | **Ratified**: 2026-03-22 | **Last Amended**: 2026-03-23
