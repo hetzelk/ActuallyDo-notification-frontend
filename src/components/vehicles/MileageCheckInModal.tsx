@@ -46,7 +46,6 @@ export function MileageCheckInModal({
     resolver: zodResolver(mileageUpdateSchema),
     values: {
       current_mileage: estimatedMileage,
-      weekly_miles_estimate: vehicle?.weekly_miles_estimate,
     },
   })
 
@@ -81,20 +80,6 @@ export function MileageCheckInModal({
             {errors.current_mileage && (
               <p className="text-sm text-destructive">{errors.current_mileage.message}</p>
             )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="weekly-estimate">
-              Update weekly estimate?
-            </Label>
-            <p className="text-xs text-muted-foreground">
-              Currently: {vehicle.weekly_miles_estimate} mi/week
-            </p>
-            <Input
-              id="weekly-estimate"
-              type="number"
-              {...register('weekly_miles_estimate', { valueAsNumber: true })}
-            />
           </div>
 
           <DialogFooter>

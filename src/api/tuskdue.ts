@@ -6,12 +6,16 @@ import type {
   UpdateTaskRequest,
   SnoozeRequest,
   ActivateRequest,
+  TaskHistoryParams,
+  PaginatedResponse,
 } from '@/lib/types'
 
-type TaskStatusFilter = 'active' | 'backlog' | 'completed'
+type TaskStatusFilter = 'active' | 'backlog' | 'completed' | 'snoozed'
 
-export async function listTasks(status: TaskStatusFilter): Promise<TaskListResponse> {
-  return apiFetch<TaskListResponse>(`/apps/tuskdue/tasks?status=${status}`)
+export async function listTasks(status: TaskStatusFilter, tag?: string): Promise<TaskListResponse> {
+  const params = new URLSearchParams({ status })
+  if (tag) params.set('tag', tag)
+  return apiFetch<TaskListResponse>(`/apps/tuskdue/tasks?${params}`)
 }
 
 export async function getTask(taskId: string): Promise<{ data: Task }> {
@@ -55,5 +59,27 @@ export async function snoozeTask(taskId: string, data: SnoozeRequest): Promise<{
   return apiFetch(`/apps/tuskdue/tasks/${taskId}/snooze`, {
     method: 'POST',
     body: JSON.stringify(data),
+  })
+}
+
+// History, export, import
+
+export async function getTaskHistory(params: TaskHistoryParams = {}): Promise<PaginatedResponse<Task>> {
+  const searchParams = new URLSearchParams()
+  if (params.q) searchParams.set('q', params.q)
+  if (params.limit) searchParams.set('limit', String(params.limit))
+  if (params.next_token) searchParams.set('next_token', params.next_token)
+  return apiFetch(`/apps/tuskdue/tasks/history?${searchParams}`)
+}
+
+export async function exportTasks(status?: string): Promise<string> {
+  const params = status ? `?status=${status}` : ''
+  return apiFetch(`/apps/tuskdue/tasks/export${params}`)
+}
+
+export async function importTasks(csv: string): Promise<{ message: string }> {
+  return apiFetch('/apps/tuskdue/tasks/import', {
+    method: 'POST',
+    body: JSON.stringify({ csv }),
   })
 }

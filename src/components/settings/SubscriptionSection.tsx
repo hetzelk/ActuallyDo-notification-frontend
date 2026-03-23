@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Loader2 } from 'lucide-react'
-import { redirectToCheckout, type PricePlan } from '@/lib/stripe'
+import { redirectToCheckout, redirectToPortal, type PricePlan } from '@/lib/stripe'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
 import type { PlatformSettings } from '@/lib/types'
@@ -29,7 +29,9 @@ export function SubscriptionSection({ settings }: SubscriptionSectionProps) {
     if (!user?.email) return
     setLoadingPlan(plan)
     try {
-      await redirectToCheckout(plan, user.email)
+      // Determine which app to upgrade — use the first app from settings
+      const appId = Object.keys(settings.apps)[0] ?? 'tuskdue'
+      await redirectToCheckout(appId, plan)
     } catch {
       toast.error('Failed to open checkout. Please try again.')
       setLoadingPlan(null)
@@ -49,8 +51,7 @@ export function SubscriptionSection({ settings }: SubscriptionSectionProps) {
             Unlimited tasks, custom snooze durations, and heads-up reminders.
           </p>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">Manage subscription</Button>
-            <Button variant="ghost" size="sm" className="text-destructive">Cancel</Button>
+            <Button variant="outline" size="sm" onClick={() => redirectToPortal()}>Manage subscription</Button>
           </div>
         </div>
       </section>

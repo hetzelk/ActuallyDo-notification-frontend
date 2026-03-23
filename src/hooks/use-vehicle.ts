@@ -33,10 +33,10 @@ export function useMaintenanceItems(vehicleId: string) {
 
 export function useMaintenanceLog(vehicleId: string) {
   return useQuery({
-    queryKey: ['wrenchdue', 'vehicles', vehicleId, 'log'],
+    queryKey: ['wrenchdue', 'log', { vehicle_id: vehicleId }],
     queryFn: async () => {
-      const res = await getLog(vehicleId)
-      return res.data.entries
+      const res = await getLog({ vehicle_id: vehicleId })
+      return res.data
     },
     enabled: !!vehicleId,
   })

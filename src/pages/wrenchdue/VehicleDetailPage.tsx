@@ -48,7 +48,7 @@ export function VehicleDetailPage() {
     [vehicle],
   )
 
-  function handleLogCompletion(itemId: string, data: { completed_at: string; mileage_at_completion: number; cost?: number; shop?: string; notes?: string }) {
+  function handleLogCompletion(itemId: string, data: { mileage_at_completion?: number; cost?: number; shop?: string; notes?: string }) {
     logCompletionMutation.mutate(
       { itemId, data },
       { onSuccess: () => setCompletionItem(null) },
