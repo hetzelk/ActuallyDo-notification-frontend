@@ -10,6 +10,7 @@
 ### Session 2026-03-23
 
 - Q: How is per-app source code organized in the repository? → A: Single `src/` with per-app entry points (`src/apps/tuskdue/main.tsx`, `src/apps/wrenchdue/main.tsx`) and shared code in `src/`.
+- Q: Where is the per-app configuration stored? → A: Dedicated config directory with a file per app (`deploy/tuskdue.env`, `deploy/wrenchdue.env`).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -93,7 +94,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 - **FR-003**: The deploy command MUST apply long-lived cache headers (1 year) to hashed/fingerprinted assets and short-lived cache headers (5 minutes) to the root HTML document.
 - **FR-004**: The deploy command MUST exit with a non-zero status and a clear error message if the build fails, without modifying the currently deployed version.
 - **FR-005**: The setup script MUST be idempotent — running it for an already-provisioned app does not create duplicate resources or fail.
-- **FR-006**: Each app MUST have its own environment configuration containing app-specific settings (API URLs, publishable keys, feature flags) that are injected at build time.
+- **FR-006**: Each app MUST have its own environment configuration file in a centralized `deploy/` directory (e.g., `deploy/tuskdue.env`) containing app-specific settings (domain, API URLs, publishable keys, feature flags) that are injected at build time.
 - **FR-007**: The system MUST provide an automated CI/CD pipeline that deploys the correct app(s) when code is pushed to the main branch, based on which files changed.
 - **FR-008**: The CI/CD pipeline MUST support manual triggering with an app-name selector for on-demand deployments.
 - **FR-009**: Deploying one app MUST NOT affect any other app's hosting, cache, or availability.
