@@ -12,6 +12,7 @@
 - Q: How is per-app source code organized in the repository? → A: Single `src/` with per-app entry points (`src/apps/tuskdue/main.tsx`, `src/apps/wrenchdue/main.tsx`) and shared code in `src/`.
 - Q: Where is the per-app configuration stored? → A: Dedicated config directory with a file per app (`deploy/tuskdue.env`, `deploy/wrenchdue.env`).
 - Q: Should deploy scripts handle SSL/TLS certificate provisioning for each app's custom domain? → A: Yes — the setup script provisions SSL certificates automatically via ACM (AWS Certificate Manager) as part of infrastructure setup.
+- Q: How should the deploy script handle the cache invalidation wait time? → A: Wait for completion — the deploy script blocks until CloudFront confirms full cache propagation before exiting successfully.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -91,7 +92,7 @@ In the future, a developer creates a new niche frontend app beyond TuskDue and W
 ### Functional Requirements
 
 - **FR-001**: The system MUST provide a one-time infrastructure setup command that provisions hosting resources for a named app, with the app's custom domain configured via its environment configuration.
-- **FR-002**: The system MUST provide a deploy command that builds a specified app, uploads built assets to the app's hosting, and invalidates the content cache.
+- **FR-002**: The system MUST provide a deploy command that builds a specified app, uploads built assets to the app's hosting, invalidates the content cache, and waits for the invalidation to complete before reporting success.
 - **FR-003**: The deploy command MUST apply long-lived cache headers (1 year) to hashed/fingerprinted assets and short-lived cache headers (5 minutes) to the root HTML document.
 - **FR-004**: The deploy command MUST exit with a non-zero status and a clear error message if the build fails, without modifying the currently deployed version.
 - **FR-005**: The setup script MUST be idempotent — running it for an already-provisioned app does not create duplicate resources or fail.
