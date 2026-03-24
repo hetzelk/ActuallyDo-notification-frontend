@@ -74,7 +74,7 @@ export default defineConfig({
       filename: 'sw.ts',
       strategies: 'injectManifest',
       injectManifest: {
-        globDirectory: app ? path.resolve(__dirname, `dist/${app}`) : undefined,
+        globDirectory: path.resolve(__dirname, app ? `dist/${app}` : 'dist'),
       },
     }),
   ],

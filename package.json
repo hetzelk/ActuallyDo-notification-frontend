@@ -67,5 +67,10 @@
     "workerDirectory": [
       "public"
     ]
+  },
+  "overrides": {
+    "vite-plugin-pwa": {
+      "vite": "$vite"
+    }
   }
 }
