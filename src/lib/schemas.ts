@@ -36,7 +36,6 @@ export type AddVehicleFormValues = z.infer<typeof addVehicleSchema>
 
 export const mileageUpdateSchema = z.object({
   current_mileage: z.number().int().min(0, 'Mileage must be 0 or greater'),
-  weekly_miles_estimate: z.number().int().min(1).optional(),
 })
 
 export type MileageUpdateFormValues = z.infer<typeof mileageUpdateSchema>

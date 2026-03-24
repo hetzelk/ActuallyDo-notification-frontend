@@ -14,11 +14,9 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import type { MaintenanceItem } from '@/lib/types'
-import { format } from 'date-fns'
 
 const completionSchema = z.object({
-  completed_at: z.string().min(1, 'Date is required'),
-  mileage_at_completion: z.number().int().min(0, 'Mileage is required'),
+  mileage_at_completion: z.number().int().min(0).optional(),
   cost: z.number().min(0).optional(),
   shop: z.string().optional(),
   notes: z.string().optional(),
@@ -54,7 +52,6 @@ export function CompletionForm({
   } = useForm<CompletionFormValues>({
     resolver: zodResolver(completionSchema),
     values: {
-      completed_at: format(new Date(), 'yyyy-MM-dd'),
       mileage_at_completion: estimatedMileage,
       cost: undefined,
       shop: undefined,
@@ -81,19 +78,7 @@ export function CompletionForm({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="completion-date">Date completed *</Label>
-            <Input
-              id="completion-date"
-              type="date"
-              {...register('completed_at')}
-            />
-            {errors.completed_at && (
-              <p className="text-sm text-destructive">{errors.completed_at.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="completion-mileage">Mileage at completion *</Label>
+            <Label htmlFor="completion-mileage">Mileage at completion</Label>
             <Input
               id="completion-mileage"
               type="number"

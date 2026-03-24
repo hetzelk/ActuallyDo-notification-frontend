@@ -1,24 +1,28 @@
 import { apiFetch } from '@/api/client'
+import type { CheckoutRequest, PortalRequest } from '@/lib/types'
 
-export const PRICE_IDS = {
-  monthly: 'price_monthly_3',
-  annual: 'price_annual_24',
-  lifetime: 'price_lifetime_49',
-} as const
+export type PricePlan = 'monthly' | 'yearly' | 'lifetime'
 
-export type PricePlan = keyof typeof PRICE_IDS
-
-export async function redirectToCheckout(plan: PricePlan, userId: string) {
-  const priceId = PRICE_IDS[plan]
-  const mode = plan === 'lifetime' ? 'payment' : 'subscription'
-
-  const { url } = await apiFetch<{ url: string }>('/platform/checkout', {
+export async function redirectToCheckout(appId: string, plan: PricePlan) {
+  const { url } = await apiFetch<{ url: string }>('/platform/payments/checkout', {
     method: 'POST',
     body: JSON.stringify({
-      price_id: priceId,
-      mode,
-      client_reference_id: userId,
-    }),
+      app_id: appId,
+      plan,
+      success_url: `${window.location.origin}/settings?checkout=success`,
+      cancel_url: `${window.location.origin}/settings?checkout=cancel`,
+    } satisfies CheckoutRequest),
+  })
+
+  window.location.href = url
+}
+
+export async function redirectToPortal() {
+  const { url } = await apiFetch<{ url: string }>('/platform/payments/portal', {
+    method: 'POST',
+    body: JSON.stringify({
+      return_url: `${window.location.origin}/settings`,
+    } satisfies PortalRequest),
   })
 
   window.location.href = url

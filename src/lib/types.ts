@@ -74,6 +74,11 @@ export interface CreateTaskRequest {
   title: string
   notes?: string
   due_date?: string
+  notify?: boolean
+  recurring?: boolean
+  recurrence_pattern?: 'daily' | 'weekly' | 'monthly' | 'custom'
+  recurrence_interval?: number
+  tags?: string[]
 }
 
 export interface UpdateTaskRequest {
@@ -81,10 +86,15 @@ export interface UpdateTaskRequest {
   notes?: string
   due_date?: string
   notify?: boolean
+  recurring?: boolean
+  recurrence_pattern?: 'daily' | 'weekly' | 'monthly' | 'custom'
+  recurrence_interval?: number
+  tags?: string[]
 }
 
 export interface SnoozeRequest {
-  days: number
+  days?: number
+  until?: string
 }
 
 export interface ActivateRequest {
@@ -136,8 +146,7 @@ export interface CreateVehicleRequest {
 }
 
 export interface LogCompletionRequest {
-  completed_at: string
-  mileage_at_completion: number
+  mileage_at_completion?: number
   cost?: number
   shop?: string
   notes?: string
@@ -145,7 +154,53 @@ export interface LogCompletionRequest {
 
 export interface UpdateMileageRequest {
   current_mileage: number
+}
+
+export interface UpdateVehicleRequest {
+  nickname?: string
   weekly_miles_estimate?: number
+}
+
+// Checkout types
+export interface CheckoutRequest {
+  app_id: string
+  plan: 'monthly' | 'yearly' | 'lifetime'
+  success_url: string
+  cancel_url: string
+}
+
+export interface PortalRequest {
+  return_url: string
+}
+
+// Task history/pagination
+export interface PaginatedResponse<T> {
+  data: T[]
+  next_token?: string
+}
+
+export interface TaskHistoryParams {
+  q?: string
+  limit?: number
+  next_token?: string
+}
+
+export interface MaintenanceLogParams {
+  vehicle_id?: string
+  q?: string
+  limit?: number
+  next_token?: string
+}
+
+export interface CostSummaryParams {
+  vehicle_id?: string
+  start_date: string
+  end_date: string
+}
+
+export interface CostSummary {
+  total_cost: number
+  per_item: Array<{ name: string; cost: number }>
 }
 
 export type MaintenanceUrgency = 'overdue' | 'coming-up' | 'all-clear'
