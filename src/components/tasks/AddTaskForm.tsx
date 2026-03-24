@@ -19,9 +19,10 @@ interface AddTaskFormProps {
   open: boolean
   onClose: () => void
   onSubmit: (data: AddTaskFormValues) => Promise<void>
+  initialValues?: { title?: string; notes?: string }
 }
 
-export function AddTaskForm({ open, onClose, onSubmit }: AddTaskFormProps) {
+export function AddTaskForm({ open, onClose, onSubmit, initialValues }: AddTaskFormProps) {
   const {
     register,
     handleSubmit,
@@ -29,7 +30,11 @@ export function AddTaskForm({ open, onClose, onSubmit }: AddTaskFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<AddTaskFormValues>({
     resolver: zodResolver(addTaskSchema),
-    defaultValues: { title: '', notes: '', due_date: '' },
+    values: {
+      title: initialValues?.title ?? '',
+      notes: initialValues?.notes ?? '',
+      due_date: '',
+    },
   })
 
   async function handleFormSubmit(data: AddTaskFormValues) {

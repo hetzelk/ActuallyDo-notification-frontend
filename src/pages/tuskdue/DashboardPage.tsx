@@ -24,6 +24,7 @@ import type { CreateTaskRequest } from '@/lib/types'
 export function DashboardPage() {
   const [activeTab, setActiveTab] = useState('active')
   const [showAddTask, setShowAddTask] = useState(false)
+  const [addTaskInitial, setAddTaskInitial] = useState<{ title?: string; notes?: string } | undefined>()
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false)
 
   const activeTasks = useTasks('active')
@@ -77,7 +78,7 @@ export function DashboardPage() {
     },
   })
 
-  const handleNewTask = useCallback(() => setShowAddTask(true), [])
+  const handleNewTask = useCallback(() => { setAddTaskInitial(undefined); setShowAddTask(true) }, [])
   useKeyboardShortcuts({ onNewTask: handleNewTask, onSwitchTab: setActiveTab })
 
   const activeCount = activeTasks.data?.data.count ?? 0
@@ -205,7 +206,14 @@ export function DashboardPage() {
           ) : (
             <div className="space-y-2">
               {completedTasks.data?.data.tasks.map((task) => (
-                <CompletedTaskCard key={task.task_id} task={task} />
+                <CompletedTaskCard
+                  key={task.task_id}
+                  task={task}
+                  onDuplicate={(t) => {
+                    setAddTaskInitial({ title: t.title, notes: t.notes ?? undefined })
+                    setShowAddTask(true)
+                  }}
+                />
               ))}
             </div>
           )}
@@ -223,10 +231,12 @@ export function DashboardPage() {
 
       <AddTaskForm
         open={showAddTask}
-        onClose={() => setShowAddTask(false)}
+        onClose={() => { setShowAddTask(false); setAddTaskInitial(undefined) }}
         onSubmit={async (data) => {
           await createTaskMutation.mutateAsync(data)
+          setAddTaskInitial(undefined)
         }}
+        initialValues={addTaskInitial}
       />
     </div>
   )
