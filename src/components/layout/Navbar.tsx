@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -49,10 +50,10 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" sideOffset={8}>
               {user?.email && (
-                <>
+                <DropdownMenuGroup>
                   <DropdownMenuLabel className="max-w-[200px] truncate">{user.email}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                </>
+                </DropdownMenuGroup>
               )}
               <DropdownMenuItem onClick={() => navigate('/settings')}>
                 <Settings className="h-4 w-4" />
