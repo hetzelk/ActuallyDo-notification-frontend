@@ -37,6 +37,12 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    {
+      name: 'html-title',
+      transformIndexHtml(html) {
+        return html.replace(/<title>.*?<\/title>/, `<title>${manifest.name}</title>`)
+      },
+    },
     VitePWA({
       registerType: 'prompt',
       includeAssets: ['favicon.svg'],
@@ -78,13 +84,17 @@ export default defineConfig({
       },
     }),
   ],
-  root: app ? path.resolve(__dirname, `src/apps/${app}`) : undefined,
   build: app
     ? {
         outDir: path.resolve(__dirname, `dist/${app}`),
         emptyOutDir: true,
       }
     : undefined,
+  server: {
+    fs: {
+      allow: [path.resolve(__dirname)],
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
